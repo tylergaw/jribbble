@@ -4,9 +4,8 @@
  * 
  * A jQuery plugin to fetch data from the Dribbble API - http://dribbble.com/api
  *
- * $LastChangedDate: 2010-06-29 15:09:29 -0400 (Tue, 29 Jun 2010) $
  *
- * NOTE: Big caveat for this plugin (for now). The dribbble api does not currently offer a
+ * NOTE: Big ass caveat for this plugin (for now). The dribbble api does not currently offer a
  * callback for jsonp. Because of cross-domain Ajax call restrictions, this plugin
  * will not work without a proxy.
  *
