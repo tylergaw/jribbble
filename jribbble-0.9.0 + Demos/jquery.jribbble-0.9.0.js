@@ -1,16 +1,15 @@
 /**
- * jQuery Plugin "dribbble" 0.9.0
+ * jQuery Plugin "jribbble" 0.9.0
  * Author: Tyler Gaw - http://tylergaw.com
  * 
  * A jQuery plugin to fetch data from the Dribbble API - http://dribbble.com/api
  *
- * 
  */
 
 (function ($) {
 	
 	// @return OBJ
-	$.fn.dribbble = function ()
+	$.fn.jribbble = function ()
 	{				
 		// Make a request to the API
 		// @param STRING url
@@ -32,7 +31,7 @@
 					dataType: 'jsonp',
 					success: successHandler,
 					type: 'GET',
-					url: $.fn.dribbble.baseUrl + url
+					url: $.fn.jribbble.baseUrl + url
 				}
 			);
 		};
@@ -42,23 +41,23 @@
     };
 	
 	// Public Static Members
-	// Can be set globally for all jquery.dribbble requests
+	// Can be set globally for all jquery.jribbble requests
 	
 	// @member baseUrl - Will be prepended to all API requests
-	$.fn.dribbble.baseUrl = 'http://api.dribbble.com/';
+	$.fn.jribbble.baseUrl = 'http://api.dribbble.com/';
 	
 	// Public Static Methods
 	// These are available at any time, you do not have to
-	// instantiate the dribbble plugin on an element to use
+	// instantiate the jribbble plugin on an element to use
 	
 	// Retrieve the shot specified by shotId
 	// @param INT id - The id of the shot you want.
 	// @param FUNCTION callback - Function that will be called once the
 	//                            request has successfully completed. The data
 	//                            from the request will be passed to the callback
-	$.fn.dribbble.getShotById = function (shotId, callback)
+	$.fn.jribbble.getShotById = function (shotId, callback)
 	{
-		$.fn.dribbble().makeRequest('shots/' + shotId, callback);
+		$.fn.jribbble().makeRequest('shots/' + shotId, callback);
 	};
 	
 	// @param STRING listName - One of the following: 'debuts', 'everyone', 'popular'
@@ -67,9 +66,9 @@
 	//                             from the request will be passed to the callback
 	// @param OBJ OPTIONAL pagingOpts - { page: 1, per_page: 15 } 
 	//                                  @see http://dribbble.com/api#pagination
-	$.fn.dribbble.getShotsByList = function (listName, callback, pagingOpts)
+	$.fn.jribbble.getShotsByList = function (listName, callback, pagingOpts)
 	{			
-		$.fn.dribbble().makeRequest('shots/' + listName, callback, pagingOpts);
+		$.fn.jribbble().makeRequest('shots/' + listName, callback, pagingOpts);
 	};
 	
 	// Retrieve the most recent shots for the player specified by playerId
@@ -79,9 +78,9 @@
 	//                            from the request will be passed to the callback.
 	// @param OBJ OPTIONAL pagingOpts - { page: 1, per_page: 15 } 
 	//                                  @see http://dribbble.com/api#pagination
-	$.fn.dribbble.getShotsByPlayerId = function (playerId, callback, pagingOpts)
+	$.fn.jribbble.getShotsByPlayerId = function (playerId, callback, pagingOpts)
 	{			
-		$.fn.dribbble().makeRequest('players/' + playerId + '/shots', callback, pagingOpts);
+		$.fn.jribbble().makeRequest('players/' + playerId + '/shots', callback, pagingOpts);
 	};
 	
 	// Retrieve the most recent shots published by those the player, specified by playerId, follows
@@ -91,9 +90,9 @@
 	//                            from the request will be passed to the callback.
 	// @param OBJ OPTIONAL pagingOpts - { page: 1, per_page: 15 } 
 	//                                  @see http://dribbble.com/api#pagination
-	$.fn.dribbble.getShotsThatPlayerFollows = function (playerId, callback, pagingOpts)
+	$.fn.jribbble.getShotsThatPlayerFollows = function (playerId, callback, pagingOpts)
 	{		
-		$.fn.dribbble().makeRequest('players/' + playerId + '/shots/following', callback, pagingOpts);
+		$.fn.jribbble().makeRequest('players/' + playerId + '/shots/following', callback, pagingOpts);
 	};
 	
 	// Retrieve profile details for the player specified by playerId
@@ -101,9 +100,9 @@
 	// @param FUNCTION callback - Function that will be called once the
 	//                            request has successfully completed. The data
 	//                            from the request will be passed to the callback.
-	$.fn.dribbble.getPlayerById = function (playerId, callback)
+	$.fn.jribbble.getPlayerById = function (playerId, callback)
 	{			
-		$.fn.dribbble().makeRequest('players/' + playerId, callback);
+		$.fn.jribbble().makeRequest('players/' + playerId, callback);
 	};
 
 }(jQuery));
