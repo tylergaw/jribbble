@@ -1,11 +1,6 @@
 $(document).ready(
 	function ()
-	{
-		// NOTE: Since the API does not yet support JSONP we are setting 
-		// the baseUrl to point to my Apache proxyPass
-		// Dan, can we get some JSONP love?
-		$.fn.dribbble.baseUrl = '/api.dribbble/';
-		
+	{		
 		// API Ref: http://api.dribbble/shots/:id
 		$.fn.dribbble.getShotById(21188, 
 			function (shotDetails)

@@ -1,13 +1,8 @@
 /**
- * jQuery Plugin "dribbble"
+ * jQuery Plugin "dribbble" 0.9.0
  * Author: Tyler Gaw - http://tylergaw.com
  * 
  * A jQuery plugin to fetch data from the Dribbble API - http://dribbble.com/api
- *
- *
- * NOTE: Big ass caveat for this plugin (for now). The dribbble api does not currently offer a
- * callback for jsonp. Because of cross-domain Ajax call restrictions, this plugin
- * will not work without a proxy.
  *
  * 
  */
@@ -34,7 +29,7 @@
 			$.ajax(
 				{
 					data: options,
-					dataType: 'json',
+					dataType: 'jsonp',
 					success: successHandler,
 					type: 'GET',
 					url: $.fn.dribbble.baseUrl + url
