@@ -21,19 +21,13 @@
 	
 	<hr />
 	
-	<section>
-		<header>
-			<h1>Get a Shot by its Id</h1>
-			<h2>$.fn.jribbble.getShotById(playerId, callback)</h2>
-		</header>
-		
 		<section class="example-usage">
 		<label>Example Usage:</label>
 		<pre><code>
 $.fn.jribbble.getShotById(21188, 
     function (shotDetails) 
     {
-        doAwesomeThingsWith(shotDetails);
+        $('#shotById').val(JSON.stringify(shotDetails));
     }
 );</code>
 		</pre>
@@ -58,7 +52,7 @@ $.fn.jribbble.getShotById(21188,
 $.fn.jribbble.getShotsByList('popular',
     function (listDetails)
     {
-        doAwesomeThingsWith(listDetails);
+        $('#shotsByList').val(JSON.stringify(listDetails));
     },
     {page: 1, per_page: 5}
 );</code>
@@ -84,7 +78,7 @@ $.fn.jribbble.getShotsByList('popular',
 $.fn.jribbble.getShotsByPlayerId('tylergaw',
     function (shots)
     {
-        doAwesomeThingsWith(shots);
+        $('#shotsByPlayer').val(JSON.stringify(shots));
     },
     {page: 1, per_page: 5}
 );</code>
@@ -110,7 +104,7 @@ $.fn.jribbble.getShotsByPlayerId('tylergaw',
 $.fn.jribbble.getShotsThatPlayerFollows('tylergaw',
     function (shots)
     {
-        doAwesomeThingsWith(shots);
+        $('#shotsThatPlayerFollows').val(JSON.stringify(shots));
     },
     {page: 1, per_page: 5}
 );</code>
@@ -136,7 +130,7 @@ $.fn.jribbble.getShotsThatPlayerFollows('tylergaw',
 $.fn.jribbble.getPlayerById('tylergaw',
     function (playerDetails)
     {
-        doAwesomeThingsWith(playerDetails);
+        $('#playerDetails').val(JSON.stringify(playerDetails));
     }
 );</code>
 		</pre>
