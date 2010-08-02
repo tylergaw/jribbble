@@ -9,42 +9,74 @@
 	<![endif]-->
 	
 	<link rel="stylesheet" href="css/core.css">
-	
+	<link rel="stylesheet" href="css/shCoreFadeToGrey.css" />
 </head>
 <body>
 <div id="content">
 	<header>
 		<h1>Jribbble</h1>
-		<p>A jQuery plugin to fetch data from the Dribbble API - <a href="http://dribbble.com/api">http://dribbble.com/api</a></p>
+		<p>A jQuery plugin to for the Dribbble API - <a href="http://dribbble.com/api">http://dribbble.com/api</a></p>
 	</header>
 	
 	<section id="download">
 		Download:
 		<a href="releases/0.9.1/jribbble-0.9.1.zip">Jribbble 0.9.1</a>
-		<a href="releases/0.9.1/jribbble-0.9.1 + Demos.zip">Jribbble 0.9.1 <i>+ demos</i></a>
+		<a href="releases/0.9.1/jribbble-0.9.1%20+%20Demos.zip">Jribbble 0.9.1 <i>+ demos</i></a>
 	</section>
 	
 	<hr />
-	<section>
+	<section class="jribbble-feature" id="getShotById">
 		<header>
 			<h1>Get a Shot by its Id</h1>
 			<h2>$.jribbble.getShotById(playerId, callback)</h2>
 		</header>
-		<section class="example-usage">
-		<label>Example Usage:</label>
-		<pre><code>
-$.jribbble.getShotById(21188, 
-    function (shotDetails) 
+		
+		<div class="feature-examples">
+			<div class="example-usage">
+				<pre class="brush: js jribbble-example" title="Example Usage">
+$.jribbble.getShotById(31340, 
+    function (shot) 
     {
-        $('#shotById').val(JSON.stringify(shotDetails));
+        var image = $('&lt;img/&gt;',
+        {
+            'src': shot.image_url,
+            'alt': shot.title,
+            'width': shot.width,
+            'height': shot.height
+        });
+
+        $('#shotById').html(image);
     }
-);</code>
-		</pre>
-		</section>
-		<section class="json-response">
-			<label>JSON Response:</label>
-			<textarea id="shotById" rows="10" cols="100" readonly></textarea>
-		</section>
+);</pre>
+			</div>
+		
+			<div id="shotById">
+			
+			</div>
+			
+			<div class="example-json">
+				<pre class="brush: js jribbble-example; collapse: true;" title="Full JSON response">
+{
+    "created_at": "2010/06/28 23:37:48 -0400", 
+    "image_url": "http://dribbble.com/system/users/1119/screenshots/31340/shot_1277782668.png",
+    "title": "The Blue Box",
+    "url": "http://dribbble.com/shots/31340-The-Blue-Box", 
+    "id": 31340,
+    "image_teaser_url": "http://dribbble.com/system/users/1119/screenshots/31340/shot_1277782668_teaser.png",
+    "height": 300,
+    "width": 400,
+	"player": {
+        "avatar_url": "http://dribbble.com/system/users/1119/avatars/thumb/MatthewRexSquare.png?1280350947",
+        "name": "Matthew Rex",
+        "created_at": "2010/03/18 10:41:47 -0400",
+        "location": "Orlando, FL",
+        "url": "http://dribbble.com/players/matthewrex",
+        "id":1119
+    }
+}
+</pre>
+			</div>
+		</div>
 	</section>
 	
 	<hr />
@@ -156,17 +188,20 @@ $.jribbble.getPlayerById('tylergaw',
 		<a href="http://github.com/tylergaw/jribbble">Fork Me</a> on github <span>Follow <a href="http://twitter.com/thegaw">@thegaw</a> on Twitter</span>
 	</footer>
 </div>
+	<script src="js/shCore.js"></script>
+	<script src="js/shBrushJScript.js"></script>
 	<script src="js/jquery-1.4.2.min.js"></script>
 	<script src="js/jquery.jribbble-0.9.1.min.js"></script>
-	
-	<script src="js/demo/json2.js"></script>
-	<script src="js/demo/jribbble.demos.js"></script>
-	
+	<script src="js/json2.js"></script>
+	<script src="js/jribbble.home.js"></script>
+	<script src="js/jribbble.demos.js"></script>
+
 	<script type="text/javascript"> 
 		var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
 	</script> 
 	<script type="text/javascript"> 
 		try { var pageTracker = _gat._getTracker("UA-1104578-1");pageTracker._trackPageview();} catch(err) {}
 	</script>
+	-->
 </body>
 </html>

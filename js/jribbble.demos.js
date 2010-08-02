@@ -2,10 +2,18 @@ $(document).ready(
 	function ()
 	{		
 		// API Ref: http://api.dribbble/shots/:id
-		$.jribbble.getShotById(21188, 
-			function (shotDetails)
+		$.jribbble.getShotById(31340, 
+			function (shot)
 			{
-				$('#shotById').val(JSON.stringify(shotDetails));
+				var image = $('<img/>',
+				{
+					'src': shot.image_url,
+					'alt': shot.title,
+					'width': shot.width,
+					'height': shot.height
+				});
+				
+				$('#shotById').html(image);
 			}
 		);
 		
