@@ -4,7 +4,7 @@ hr { display: none; }
 h1, h2, h3, h4, h5, h6 { font-size: 100%; }
 section, header, nav, footer { display: block; }
 li { list-style: none inside;}
-fieldset { border: none; }
+fieldset, img { border: none; }
 
 
 body
@@ -53,89 +53,8 @@ a
 		position: relative;
 		top: -10px;
 	}
-	
-	.feature-examples
-	{
-		overflow: hidden;
-	}
-	
-section
-{
-	border-top: 1px solid #c74174;
-	border-bottom: 1px solid #ed679a;
-	padding: 35px 0;
-	vertical-align: top;
-	overflow: hidden;
-}
-	
-	section header h1
-	{
-		font-size: 22px;
-	}
-	
-	section header h2
-	{
-		color: #fff;
-		font-family: courier, monospace;
-		font-size: 18px;
-		font-weight: normal;
-		padding: 8px;
-		background-color: rgba(255, 255, 255, 0.1);
-		margin: 8px 0 20px 0;
-		border: 1px solid #ed679a;
-		text-shadow: #e13c7a 1px 1px 1px;
-	}
-	
-	div.example-usage
-	{
-		float: left;
-		font-size: 16px;
-		width: 53%;
-	}
-	
-	div.example-json
-	{
-		clear: both;
-		font-size: 14px;
-		padding-top: 10px;
-		width: 932px;
-	}
-	
-	#content .jribbble-example
-	{
-		border: 4px solid #ec5e94;
-		margin: 0 !important;
-		padding: 10px;
-	}
-	
-	section label
-	{
-		display: block;
-		font-weight: bold;	
-		padding-bottom: 10px;
-	}
-	
-	#shotById
-	{
-		border: 4px solid #ec5e94;
-		float: right;
-	}
-	
-		#shotById img
-		{
-			display: block;
-		}
-	
-	.json-response textarea
-	{
-		width: 900px;
-		padding: 6px;
-		background-color: #f4f4f4;
-		border-top: 1px solid #c74174;
-		border-left: 1px solid #c74174;
-		border-bottom: 1px solid #ed679a;
-		border-right: 1px solid #ed679a;
-	}
+
+/*- Download Links -----------------------------------------------------------------------------------*/
 	
 	section#download
 	{
@@ -173,6 +92,8 @@ section
 			background-color: #0a2f78;
 		}
 		
+/*- Footer -------------------------------------------------------------------------------------------*/
+
 footer
 {
 	font-size: 16px;
@@ -184,3 +105,214 @@ footer
 	{
 		float: right;
 	}
+	
+/*- Examples -----------------------------------------------------------------------------------------*/
+
+	.feature-examples
+	{
+		overflow: hidden;
+	}
+	
+section
+{
+	border-top: 1px solid #c74174;
+	border-bottom: 1px solid #ed679a;
+	padding: 60px 0;
+	vertical-align: top;
+	overflow: hidden;
+}
+	
+	section header h1
+	{
+		font-size: 22px;
+	}
+	
+	section header h2
+	{
+		color: #fff;
+		font-family: courier, monospace;
+		font-size: 18px;
+		font-weight: normal;
+		padding: 8px;
+		background-color: rgba(255, 255, 255, 0.1);
+		margin: 8px 0 20px 0;
+		border: 1px solid #ed679a;
+		text-shadow: #e13c7a 1px 1px 1px;
+	}
+	
+	div.example-usage
+	{
+		float: left;
+		font-size: 16px;
+		width: 53%;
+	}
+	
+	div.example-usage.fullsize
+	{
+		clear: both;
+		float: none;
+		width: 932px;
+	}
+	
+	div.example-json
+	{
+		clear: both;
+		font-size: 14px;
+		padding-top: 10px;
+		width: 932px;
+	}
+	
+	#content .jribbble-example
+	{
+		border: 4px solid #ec5e94;
+		margin: 0 !important;
+		padding: 10px;
+	}
+	
+	section label
+	{
+		display: block;
+		font-weight: bold;	
+		padding-bottom: 10px;
+	}
+	
+	.json-response textarea
+	{
+		width: 900px;
+		padding: 6px;
+		background-color: #f4f4f4;
+		border-top: 1px solid #c74174;
+		border-left: 1px solid #c74174;
+		border-bottom: 1px solid #ed679a;
+		border-right: 1px solid #ed679a;
+	}
+
+/*- A List of teaser shots ---------------------------------------------------------------------------*/
+
+.teaser-list
+{
+	overflow: hidden;
+	padding: 0px 0 12px 8px;
+}
+
+	.teaser-list li
+	{
+		display: block;
+		float: left;
+		padding: 4px 12px 12px 12px;
+	}
+	
+	.teaser-list li h3
+	{
+		font-size: 14px;
+	}
+	
+	.teaser-list li h4
+	{
+		color: #EBC8D5;
+		font-style: italic;
+		font-size: 11px;
+		font-weight: normal;
+		padding: 2px 4px 0 0;
+		text-align: right;
+	}
+	
+	.teaser-list li a
+	{
+		background-color: #fff;
+		border: 4px solid #ec5e94;
+		display: inline-block;
+		max-height: 150px;
+		overflow: hidden;
+	}
+	
+	.teaser-list li a:hover
+	{
+		border-color: #fff;
+	}
+	
+	.teaser-list a img
+	{
+		display: block;
+	}
+
+/*- Shot By ID ---------------------------------------------------------------------------------------*/
+
+#shotById
+{
+	font-size: 16px;
+}
+
+	#shotById h3
+	{
+		font-size: 18px;
+	}
+	
+	#shotById ul
+	{
+		padding-bottom: 4px;
+	}
+	
+	#shotById li
+	{
+		padding: 2px;
+	}
+
+/*- Player -------------------------------------------------------------------------------------------*/
+
+#player,
+#shotById
+{
+	background-color: #fff;
+	border: 4px solid #ec5e94;
+	color: #646464;
+	overflow: hidden;
+	margin-bottom: 15px;
+	padding: 8px;
+}
+	
+	#player a,
+	#shotById a
+	{
+		display: inline-block;
+		float: left;
+		margin-right: 14px;
+	}
+	
+	#player img,
+	#shotById img
+	{
+		display: block;
+	}
+	
+	#player-url,
+	#shot-url
+	{
+		border: none;
+		color: #ea4c88;
+		float: none;
+		margin-right: none;
+	}
+	
+		#player-url:hover,
+		#shot-url:hover
+		{
+			background-color: #ea4c88;
+			color: #fff;
+		}
+	
+	#player h3
+	{
+		font-size: 14px;
+	}
+	
+	#player ul
+	{
+		font-size: 12px;
+		padding-bottom: 3px;
+	}
+	
+		#player li
+		{
+			padding: 1px 0;
+		}

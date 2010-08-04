@@ -2,18 +2,16 @@ $(document).ready(
 	function ()
 	{		
 		// API Ref: http://api.dribbble/shots/:id
-		$.jribbble.getShotById(31340, 
+		$.jribbble.getShotById(37388, 
 			function (shot)
 			{
-				var image = $('<img/>',
-				{
-					'src': shot.image_url,
-					'alt': shot.title,
-					'width': shot.width,
-					'height': shot.height
-				});
-				
-				$('#shotById').html(image);
+				$('#shotById a:first').attr('href', shot.url);
+				$('#shotById img').attr('src', shot.image_url);
+				$('#shotById h3').text(shot.title);
+				$('#shot-player').append(shot.player.name);
+				$('#shot-views').append(shot.views_count);
+				$('#shot-likes').append(shot.likes_count);
+				$('#shot-url').attr('href', shot.url).text(shot.url);
 			}
 		);
 		
@@ -21,35 +19,76 @@ $(document).ready(
 		$.jribbble.getShotsByList('popular',
 			function (listDetails)
 			{
-				$('#shotsByList').val(JSON.stringify(listDetails));
+				var html = '';
+				$.each(listDetails.shots, function (i, shot)
+				{
+					html += '<li><h3>' + shot.player.name + '</h3>';
+					html += '<a href="' + shot.url + '">';
+					html += '<img src="' + shot.image_teaser_url + '" ';
+					html += 'alt="' + shot.title + '">';
+					html += '</a>';
+					html += '<h4>' + shot.title + '</h4></li>';
+				});
+				
+				$('#shotsByList').html(html);
 			},
-			{page: 1, per_page: 5}
+			{page: 2, per_page: 8}
 		);
 		
 		// API Ref: http://api.dribbble/players/:id/shots
 		$.jribbble.getShotsByPlayerId('tylergaw',
-			function (shots)
+			function (playerShots)
 			{
-				$('#shotsByPlayer').val(JSON.stringify(shots));
+				var html = '';
+				
+				$.each(playerShots.shots, function (i, shot)
+				{
+					html += '<li><a href="' + shot.url + '">';
+					html += '<img src="' + shot.image_teaser_url + '" ';
+					html += 'alt="' + shot.title + '"></a>';
+					html += '<h4>' + shot.title + '</h4></li>';
+				});
+				
+				$('#shotsByPlayerId').html(html);
 			},
-			{page: 1, per_page: 5}
+			{page: 1, per_page: 4}
 		);
 		
 		// API Ref: http://api.dribbble/players/:id/shots/following
 		$.jribbble.getShotsThatPlayerFollows('tylergaw',
-			function (shots)
+			function (followedShots)
 			{
-				$('#shotsThatPlayerFollows').val(JSON.stringify(shots));
+				var html = '';
+				$.each(followedShots.shots, function (i, shot)
+				{
+					html += '<li><h3>' + shot.player.name + '</h3>';
+					html += '<a href="' + shot.url + '">';
+					html += '<img src="' + shot.image_teaser_url + '" ';
+					html += 'alt="' + shot.title + '">';
+					html += '</a>';
+					html += '<h4>' + shot.title + '</h4></li>';
+				});
+				
+				$('#shotsPlayerFollows').html(html);
 			},
-			{page: 1, per_page: 5}
+			{page: 3, per_page: 8}
 		);
 		
 		// API Ref: http://api.dribbble/players/:id
 		$.jribbble.getPlayerById('tylergaw',
-			function (playerDetails)
+			function (player)
 			{
-				$('#playerDetails').val(JSON.stringify(playerDetails));
+				$('#player a').attr('href', player.url);
+				$('#player img').attr('src', player.avatar_url);
+				$('#player h3').html(player.name + ' - <i>' + player.location + '</i>');
+				$('#player-shots').append(player.shots_count);
+				$('#player-following').append(player.following_count);
+				$('#player-followers').append(player.followers_count);
+				$('#player-url').text(player.url);
 			}
 		);
+		
+		// Run Syntax Highlighter
+		JRB.prettyThisBitchUp();
 	}
 );
