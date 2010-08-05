@@ -6,3 +6,9 @@ JRB.prettyThisBitchUp = function ()
 	SyntaxHighlighter.defaults['gutter'] = false;
 	SyntaxHighlighter.all();
 };
+
+// I just use this while testing
+JRB.logResponse = function (data)
+{
+	console.log(JSON.stringify(data));
+};

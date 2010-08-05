@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Jribbble | Demos</title>
+	<script src="jquery-1.4.2.min.js"></script>
+	<script src="jquery.jribbble-0.10.0.min.js"></script>
+	<script src="jribbble.demos.js"></script>
+</head>
+<body>
+<div id="content">
+	<section>
+		<header>
+			<h1>Get a Shot</h1>
+			<h2>$.jribbble.getShotById(playerId, callback)</h2>
+			<dl>
+				<dt>playerId STRING or INT</dt> 
+				<dd>Example 'username' or 9999</dd>
+				<dt>callback FUNCTION</dt>
+				<dd>Function to call once the request as completed successfully. One parameter will be passed containing the contents of the request; callback(data).</dd>
+			</dl>
+		</header>
+		
+		<div>
+			<div class="example-usage fullsize">
+				<pre>
+$.jribbble.getShotById(31340, 
+    function (shot)
+    {
+        $('#shotById a:first').attr('href', shot.url);
+        $('#shotById img').attr('src', shot.image_url);
+        $('#shotById h3').text(shot.title);
+        $('#shot-player').append(shot.player.name);
+        $('#shot-views').append(shot.views_count);
+        $('#shot-likes').append(shot.likes_count);
+        $('#shot-url').attr('href', shot.url).text(shot.url);
+    }
+);</pre>
+			</div>
+			
+			<div id="shotById">
+				<a href="">
+					<img src="" alt="">
+				</a>
+				
+				<div>
+					<h3></h3>
+					<ul>
+						<li id="shot-player"><b>Player: </b></li>
+						<li id="shot-views"><b>Views: </b></li>
+						<li id="shot-likes"><b>Likes: </b></li>
+					</ul>
+					<a id="shot-url" href=""></a>
+				</div>
+			</div>
+			
+		</div>
+	</section>
+	
+	
+	
+	<hr />
+	
+	
+	
+	
+	<section>
+		<header>
+			<h1>Get a List of Shots by the List Name</h1>
+			<h2>$.jribbble.getShotsByList(listName, callback, [pagingOpts])</h2>
+			<dl>
+				<dt>listName STRING</dt> 
+				<dd>Can be one of: "popular", "everyone", "debuts"</dd>
+				<dt>callback FUNCTION</dt>
+				<dd>Function to call once the request as completed successfully. One parameter will be passed containing the contents of the request; callback(data).</dd>
+				<dt>pagingOpts OPTIONAL OBJECT</dt> 
+				<dd>Example: {page: 1, per_page: 15}</dd>
+			</dl>
+		</header>
+		
+		<div>
+			
+			
+			
+			<div>
+				<pre>
+$.jribbble.getShotsByList('popular',
+    function (listDetails)
+    {
+        var html = '';
+        $.each(listDetails.shots, function (i, shot)
+        {
+            html += '&lt;li&gt;&lt;h3&gt;' + shot.player.name + '&lt;/h3&gt;';
+            html += '&lt;a href="' + shot.url + '"&gt;';
+            html += '&lt;img src="' + shot.image_teaser_url + '" ';
+            html += 'alt="' + shot.title + '"&gt;';
+            html += '&lt;/a&gt;';
+            html += '&lt;h4&gt;' + shot.title + '&lt;/h4&gt;&lt;/li&gt;';
+        });
+
+        $('#shotsByList').html(html);
+    },
+    {page: 2, per_page: 8}
+);</pre>
+			</div>
+			<ul id="shotsByList"></ul>
+		</div>
+	</section>
+	
+	
+	
+	<hr />
+	
+	
+	
+	
+	<section>
+		<header>
+			<h1>Get a List of a Player's Shots</h1>
+			<h2>$.jribbble.getShotsByPlayerId(playerId, callback, [pagingOpts])</h2>
+			<dl>
+				<dt>playerId STRING or INT</dt> 
+				<dd>Example 'username' or 9999</dd>
+				<dt>callback FUNCTION</dt>
+				<dd>Function to call once the request as completed successfully. One parameter will be passed containing the contents of the request; callback(data).</dd>
+				<dt>pagingOpts OPTIONAL OBJECT</dt> 
+				<dd>Example: {page: 1, per_page: 15}</dd>
+			</dl>
+		</header>
+		
+		<div>
+			
+			
+			
+			<div>
+				<pre>
+$.jribbble.getShotsByPlayerId('tylergaw',
+    function (playerShots)
+    {
+        var html = '';
+        
+        $.each(playerShots.shots, function (i, shot)
+        {
+            html += '&lt;li&gt;&lt;a href="' + shot.url + '"&gt;';
+            html += '&lt;img src="' + shot.image_teaser_url + '" ';
+            html += 'alt="' + shot.title + '"&gt;&lt;/a&gt;';
+            html += '&lt;h4&gt;' + shot.title + '&lt;/h4&gt;&lt;/li&gt;';
+        });
+        				
+        $('#shotsByPlayerId').html(html);
+    },
+    {page: 1, per_page: 4}
+);</pre>
+			</div>
+			<ul id="shotsByPlayerId"></ul>
+		</div>
+	</section>
+	
+	
+	
+	<hr />
+	
+	
+	
+	
+	<section>
+		<header>
+			<h1>Get a List of Shots a Player is Following</h1>
+			<h2>$.jribbble.getShotsThatPlayerFollows(playerId, callback, [pagingOpts])</h2>
+			<dl>
+				<dt>playerId STRING or INT</dt> 
+				<dd>Example 'username' or 9999</dd>
+				<dt>callback FUNCTION</dt>
+				<dd>Function to call once the request as completed successfully. One parameter will be passed containing the contents of the request; callback(data).</dd>
+				<dt>pagingOpts OPTIONAL OBJECT</dt> 
+				<dd>Example: {page: 1, per_page: 15}</dd>
+			</dl>
+		</header>
+		<div>
+			
+			
+			
+			<div>
+				<pre>
+$.jribbble.getShotsThatPlayerFollows('tylergaw',
+    function (followedShots)
+    {
+        var html = '';
+        $.each(followedShots.shots, function (i, shot)
+        {
+            html += '&lt;li&gt;&lt;h3&gt;' + shot.player.name + '&lt;/h3&gt;';
+            html += '&lt;a href="' + shot.url + '"&gt;';
+            html += '&lt;img src="' + shot.image_teaser_url + '" ';
+            html += 'alt="' + shot.title + '"&gt;';
+            html += '&lt;/a&gt;';
+            html += '&lt;h4&gt;' + shot.title + '&lt;/h4&gt;&lt;/li&gt;';
+        });
+
+        $('#shotsByList').html(html);
+    },
+    {page: 2, per_page: 8}
+);</pre>
+			</div>
+			<ul id="shotsPlayerFollows"></ul>
+		</div>
+		
+	</section>
+	
+	
+	
+	<hr />
+	
+	
+	
+	
+	
+	
+	<section>
+		<header>
+			<h1>Get the Profile Details of a Player</h1>
+			<h2>$.jribbble.getPlayerById(playerId, callback)</h2>
+			<dl>
+				<dt>playerId STRING or INT</dt> 
+				<dd>Example 'username' or 9999</dd>
+				<dt>callback FUNCTION</dt>
+				<dd>Function to call once the request as completed successfully. One parameter will be passed containing the contents of the request; callback(data).</dd>
+			</dl>
+		</header>
+		<div>
+			
+			
+			
+			<div>
+				<pre>
+$.jribbble.getPlayerById('tylergaw',
+    function (player)
+    {
+        $('#player a').attr('href', player.url);
+        $('#player img').attr('src', player.avatar_url);
+        $('#player h3').html(player.name + ' - &lt;i&gt;' + player.location + '&lt;/i&gt;');
+        $('#player-shots').append(player.shots_count);
+        $('#player-following').append(player.following_count);
+        $('#player-followers').append(player.followers_count);
+        $('#player-draftees').append(player.draftees_count);
+        $('#player-url').text(player.url);
+    }
+);</pre>
+			</div>
+			
+			<div id="player">
+				<a href="">
+					<img src="" alt="">
+				</a>
+				<h3></h3>
+				<ul>
+					<li id="player-shots"><b>Shots: </b></li>
+					<li id="player-following"><b>Following: </b></li>
+					<li id="player-followers"><b>Followers: </b></li>
+					<li id="player-draftees"><b>Draftees: </b></li>
+				</ul>
+				<a id="player-url" href=""></a>
+			</div>
+		</div>
+	</section>
+	
+	
+	
+	<hr />
+
+
+	<section>
+		<header>
+			<h1>Get the Followers of a Player</h1>
+			<h2>$.jribbble.getPlayerFollowers(playerId, callback, [pagingOpts])</h2>
+			<dl>
+				<dt>playerId STRING or INT</dt> 
+				<dd>Example 'username' or 9999</dd>
+				<dt>callback FUNCTION</dt>
+				<dd>Function to call once the request as completed successfully. One parameter will be passed containing the contents of the request; callback(data).</dd>
+				<dt>pagingOpts OPTIONAL OBJECT</dt> 
+				<dd>Example: {page: 1, per_page: 15} <br><em>(NOTE: per_page is not currently functional see: <a href="http://getsatisfaction.com/dribbble/topics/api_feedback#reply_3146089">http://getsatisfaction.com/dribbble/topics/api_feedback#reply_3146089</a></em>)</dd>
+			</dl>
+		</header>
+		<div class="feature-examples">
+			
+			
+			
+			<div>
+				<pre>
+$.jribbble.getPlayerFollowers('hoefler',
+    function (followers)
+    {
+        var html = '';
+        $.each(followers.players, function (i, player)
+        {
+            html += '&lt;li&gt;&lt;h3&gt;' + player.name + '&lt;/h3&gt;';
+            html += '&lt;a href="' + player.url + '"&gt;';
+            html += '&lt;img src="' + player.avatar_url + '" ';
+            html += 'alt=""&gt;&lt;/a&gt;&lt;/li&gt;';
+        });
+        $('#playerFollowers').html(html);
+    }, 
+    {page: 2}
+);</pre>
+			</div>
+			
+			<ul id="playerFollowers">
+			</ul>
+		</div>
+	</section>
+	
+	
+	
+	<hr />
+	
+	
+	<section>
+		<header>
+			<h1>Get the Players a Player is Following</h1>
+			<h2>$.jribbble.getPlayerFollowing(playerId, callback, [pagingOpts])</h2>
+			<dl>
+				<dt>playerId STRING or INT</dt> 
+				<dd>Example 'username' or 9999</dd>
+				<dt>callback FUNCTION</dt>
+				<dd>Function to call once the request as completed successfully. One parameter will be passed containing the contents of the request; callback(data).</dd>
+				<dt>pagingOpts OPTIONAL OBJECT</dt> 
+				<dd>Example: {page: 1, per_page: 15} <br><em>(NOTE: per_page is not currently functional see: <a href="http://getsatisfaction.com/dribbble/topics/api_feedback#reply_3146089">http://getsatisfaction.com/dribbble/topics/api_feedback#reply_3146089</a></em>)</dd>
+			</dl>
+		</header>
+		<div>
+			
+			
+			
+			<div>
+				<pre>
+$.jribbble.getPlayerFollowing('tylergaw',
+    function (following)
+    {
+        var html = '';
+        $.each(following.players, function (i, player)
+        {
+            html += '&lt;li&gt;&lt;h3&gt;' + player.name + '&lt;/h3&gt;';
+            html += '&lt;a href="' + player.url + '"&gt;';
+            html += '&lt;img src="' + player.avatar_url + '" ';
+            html += 'alt=""&gt;&lt;/a&gt;&lt;/li&gt;';
+        });
+        $('#playerFollowing').html(html);
+    }, 
+    {page: 2}
+);</pre>
+			</div>
+			
+			<ul id="playerFollowing">
+				
+			</ul>
+		</div>
+	</section>
+	
+	
+	
+	<hr />
+	
+	
+<section>
+		<header>
+			<h1>Get the Draftees of a Player</h1>
+			<h2>$.jribbble.getPlayerDraftees(playerId, callback, [pagingOpts])</h2>
+			<dl>
+				<dt>playerId STRING or INT</dt> 
+				<dd>Example 'username' or 9999</dd>
+				<dt>callback FUNCTION</dt>
+				<dd>Function to call once the request as completed successfully. One parameter will be passed containing the contents of the request; callback(data).</dd>
+				<dt>pagingOpts OPTIONAL OBJECT</dt> 
+				<dd>Example: {page: 1, per_page: 15} <br><em>(NOTE: per_page is not currently functional see: <a href="http://getsatisfaction.com/dribbble/topics/api_feedback#reply_3146089">http://getsatisfaction.com/dribbble/topics/api_feedback#reply_3146089</a></em>)</dd>
+			</dl>
+		</header>
+		<div>
+			<div>
+				<pre>
+$.jribbble.getPlayerDraftees('cameronmoll',
+    function (draftees)
+    {
+        var html = '';
+        $.each(draftees.players, function (i, player)
+        {
+            html += '&lt;li&gt;&lt;h3&gt;' + player.name + '&lt;/h3&gt;';
+            html += '&lt;a href="' + player.url + '"&gt;';
+            html += '&lt;img src="' + player.avatar_url + '" ';
+            html += 'alt=""&gt;&lt;/a&gt;&lt;/li&gt;';
+        });
+        $('#playerDraftees').html(html);
+    }
+);</pre>
+			</div>
+			
+			<ul id="playerDraftees">
+				
+			</ul>
+		</div>
+	</section>
+</div>
+</body>
+</html>

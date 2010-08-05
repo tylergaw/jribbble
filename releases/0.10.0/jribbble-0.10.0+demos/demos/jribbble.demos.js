@@ -137,8 +137,5 @@ $(document).ready(
 				$('#playerDraftees').html(html);
 			}
 		);
-		
-		// Run Syntax Highlighter
-		JRB.prettyThisBitchUp();
 	}
 );

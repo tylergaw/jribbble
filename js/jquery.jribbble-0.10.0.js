@@ -1,6 +1,7 @@
 /**
- * jQuery Plugin "jribbble" 0.9.1
+ * jQuery Plugin "jribbble" 0.10.0
  * Author: Tyler Gaw - http://tylergaw.com
+ * LastChanged: 08/05/2010
  * 
  * A jQuery plugin to fetch data from the Dribbble API - http://dribbble.com/api
  *
@@ -106,6 +107,36 @@
 	$.jribbble.getPlayerById = function (playerId, callback)
 	{			
 		$.fn.jribbble().makeRequest('players/' + playerId, callback);
+	};
+	
+	// Retrieve followers of a player by the playerId
+	// @param STRING | INT playerId - Can be 'username' or 2318
+	// @param FUNCTION callback - Function that will be called once the
+	//                            request has successfully completed. The data
+	//                            from the request will be passed to the callback.
+	$.jribbble.getPlayerFollowers = function (playerId, callback, pagingOpts)
+	{
+		$.fn.jribbble().makeRequest('players/' + playerId + '/followers', callback, pagingOpts);
+	};
+	
+	// Retrieve the list of players that are following playerId
+	// @param STRING | INT playerId - Can be 'username' or 2318
+	// @param FUNCTION callback - Function that will be called once the
+	//                            request has successfully completed. The data
+	//                            from the request will be passed to the callback.
+	$.jribbble.getPlayerFollowing = function (playerId, callback, pagingOpts)
+	{
+		$.fn.jribbble().makeRequest('players/' + playerId + '/following', callback, pagingOpts);
+	};
+	
+	// Retrieve the list of players drafted by the playerId
+	// @param STRING | INT playerId - Can be 'username' or 2318
+	// @param FUNCTION callback - Function that will be called once the
+	//                            request has successfully completed. The data
+	//                            from the request will be passed to the callback.
+	$.jribbble.getPlayerDraftees = function (playerId, callback, pagingOpts)
+	{
+		$.fn.jribbble().makeRequest('players/' + playerId + '/draftees', callback, pagingOpts);
 	};
 
 }(jQuery));

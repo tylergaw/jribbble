@@ -131,13 +131,13 @@ section
 	{
 		color: #fff;
 		font-family: courier, monospace;
-		font-size: 18px;
+		font-size: 20px;
 		font-weight: normal;
 		padding: 8px;
 		background-color: rgba(255, 255, 255, 0.1);
-		margin: 8px 0 20px 0;
+		margin: 8px 0 0px 0;
 		border: 1px solid #ed679a;
-		text-shadow: #e13c7a 1px 1px 1px;
+		border-bottom: none;
 	}
 	
 	div.example-usage
@@ -186,6 +186,36 @@ section
 		border-bottom: 1px solid #ed679a;
 		border-right: 1px solid #ed679a;
 	}
+	
+/*- Method descriptions -----------------------------------------------------------------------------------------*/
+	
+.method-description
+{
+	background-color: rgba(255, 255, 255, 0.05);
+	border: 1px solid #ed679a;
+	border-top: none;
+	font-size: 13px;
+	margin-bottom: 15px;
+	overflow: hidden;
+	padding: 14px 10px 5px 10px;
+}
+	
+	.method-description dt
+	{
+		clear: left;
+		float: left;
+		font-weight: bold;
+		padding-bottom: 30px;
+		width: 25%;
+	}
+	
+	.method-description dd
+	{
+		float: right;
+		line-height: 1.2em;
+		width: 75%;
+		vertical-align: top;
+	}
 
 /*- A List of teaser shots ---------------------------------------------------------------------------*/
 
@@ -222,7 +252,7 @@ section
 		background-color: #fff;
 		border: 4px solid #ec5e94;
 		display: inline-block;
-		max-height: 150px;
+		height: 150px;
 		overflow: hidden;
 	}
 	
@@ -234,6 +264,53 @@ section
 	.teaser-list a img
 	{
 		display: block;
+	}
+
+/*- A List of players --------------------------------------------------------------------------------*/
+
+.player-list
+{
+	overflow: hidden;
+	padding: 0px 0 12px 4px;
+}
+
+	.player-list li
+	{
+		display: block;
+		float: left;
+		padding: 8px 12px 12px 12px;
+		
+	}
+	
+	.player-list li h3
+	{
+		font-size: 12px;
+		max-width: 80px;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+	
+	.player-list li a
+	{
+		background-color: #fff;
+		border: 4px solid #ec5e94;
+		display: inline-block;
+		height: 80px;
+		overflow: hidden;
+		text-align: center;
+		width: 80px;
+	}
+	
+	.player-list li a:hover
+	{
+		border-color: #fff;
+	}
+	
+	.player-list a img
+	{
+		display: block;
+		margin: 0 auto;
 	}
 
 /*- Shot By ID ---------------------------------------------------------------------------------------*/

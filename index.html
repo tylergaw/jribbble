@@ -20,15 +20,21 @@
 	
 	<section id="download">
 		Download:
-		<a href="releases/0.9.1/jribbble-0.9.1.zip">Jribbble 0.9.1</a>
-		<a href="releases/0.9.1/jribbble-0.9.1%20+%20Demos.zip">Jribbble 0.9.1 <i>+ demos</i></a>
+		<a href="releases/0.10.0/jribbble-0.10.0.zip">Jribbble 0.10.0</a>
+		<a href="releases/0.10.0/jribbble-0.10.0+demos.zip">Jribbble 0.10.0 <i>+ demos</i></a>
 	</section>
 	
 	<hr />
 	<section class="jribbble-feature" id="getShotById">
 		<header>
-			<h1>Get a Shot by its Id</h1>
+			<h1>Get a Shot</h1>
 			<h2>$.jribbble.getShotById(playerId, callback)</h2>
+			<dl class="method-description">
+				<dt>playerId STRING or INT</dt> 
+				<dd>Example 'username' or 9999</dd>
+				<dt>callback FUNCTION</dt>
+				<dd>Function to call once the request as completed successfully. One parameter will be passed containing the contents of the request; callback(data).</dd>
+			</dl>
 		</header>
 		
 		<div class="feature-examples">
@@ -108,6 +114,14 @@ $.jribbble.getShotById(31340,
 		<header>
 			<h1>Get a List of Shots by the List Name</h1>
 			<h2>$.jribbble.getShotsByList(listName, callback, [pagingOpts])</h2>
+			<dl class="method-description">
+				<dt>listName STRING</dt> 
+				<dd>Can be one of: "popular", "everyone", "debuts"</dd>
+				<dt>callback FUNCTION</dt>
+				<dd>Function to call once the request as completed successfully. One parameter will be passed containing the contents of the request; callback(data).</dd>
+				<dt>pagingOpts OPTIONAL OBJECT</dt> 
+				<dd>Example: {page: 1, per_page: 15}</dd>
+			</dl>
 		</header>
 		
 		<div class="feature-examples">
@@ -289,8 +303,16 @@ $.jribbble.getShotsByList('popular',
 	
 	<section>
 		<header>
-			<h1>Get a List of Shots by a Player Id</h1>
+			<h1>Get a List of a Player's Shots</h1>
 			<h2>$.jribbble.getShotsByPlayerId(playerId, callback, [pagingOpts])</h2>
+			<dl class="method-description">
+				<dt>playerId STRING or INT</dt> 
+				<dd>Example 'username' or 9999</dd>
+				<dt>callback FUNCTION</dt>
+				<dd>Function to call once the request as completed successfully. One parameter will be passed containing the contents of the request; callback(data).</dd>
+				<dt>pagingOpts OPTIONAL OBJECT</dt> 
+				<dd>Example: {page: 1, per_page: 15}</dd>
+			</dl>
 		</header>
 		
 		<div class="feature-examples">
@@ -445,8 +467,16 @@ $.jribbble.getShotsByPlayerId('tylergaw',
 	
 	<section>
 		<header>
-			<h1>Get a List of Shots a Player is Following by the Player Id</h1>
+			<h1>Get a List of Shots a Player is Following</h1>
 			<h2>$.jribbble.getShotsThatPlayerFollows(playerId, callback, [pagingOpts])</h2>
+			<dl class="method-description">
+				<dt>playerId STRING or INT</dt> 
+				<dd>Example 'username' or 9999</dd>
+				<dt>callback FUNCTION</dt>
+				<dd>Function to call once the request as completed successfully. One parameter will be passed containing the contents of the request; callback(data).</dd>
+				<dt>pagingOpts OPTIONAL OBJECT</dt> 
+				<dd>Example: {page: 1, per_page: 15}</dd>
+			</dl>
 		</header>
 		<div class="feature-examples">
 			
@@ -608,84 +638,6 @@ $.jribbble.getShotsThatPlayerFollows('tylergaw',
             "views_count": 1429,
             "comments_count": 15,
             "width": 400
-        },
-        {
-            "player": {
-                "shots_count": 22,
-                "avatar_url": "http://dribbble.com/system/users/347/avatars/thumb/avatar134x134.jpg?1263050778",
-                "name": "Darren Hoyt",
-                "created_at": "2009/12/18 07:46:40 -0500",
-                "location": "New York, NY",
-                "following_count": 128,
-                "url": "http://dribbble.com/players/darrenhoyt",
-                "draftees_count": 5,
-                "id": 347,
-                "followers_count": 121
-            },
-            "created_at": "2010/07/16 18:06:07 -0400",
-            "image_url": "http://dribbble.com/system/users/347/screenshots/35939/shot_1279317967.png",
-            "title": "Idea Filtering",
-            "likes_count": 5,
-            "url": "http://dribbble.com/shots/35939-Idea-Filtering",
-            "rebounds_count": 0,
-            "id": 35939,
-            "image_teaser_url": "http://dribbble.com/system/users/347/screenshots/35939/shot_1279317967_teaser.png",
-            "height": 300,
-            "views_count": 218,
-            "comments_count": 2,
-            "width": 400
-        },
-        {
-            "player": {
-                "shots_count": 114,
-                "avatar_url": "http://dribbble.com/system/users/4/avatars/thumb/Picture_3.png?1248347239",
-                "name": "Meagan Fisher",
-                "created_at": "2009/07/21 19:32:24 -0400",
-                "location": "Salem, MA",
-                "following_count": 165,
-                "url": "http://dribbble.com/players/owltastic",
-                "draftees_count": 24,
-                "id": 4,
-                "followers_count": 1465
-            },
-            "created_at": "2010/07/15 23:19:53 -0400",
-            "image_url": "http://dribbble.com/system/users/4/screenshots/35700/shot_1279250393.png",
-            "title": "Five color",
-            "likes_count": 78,
-            "url": "http://dribbble.com/shots/35700-Five-color",
-            "rebounds_count": 0,
-            "id": 35700,
-            "image_teaser_url": "http://dribbble.com/system/users/4/screenshots/35700/shot_1279250393_teaser.png",
-            "height": 300,
-            "views_count": 1232,
-            "comments_count": 11,
-            "width": 400
-        },
-        {
-            "player": {
-                "shots_count": 114,
-                "avatar_url": "http://dribbble.com/system/users/4/avatars/thumb/Picture_3.png?1248347239",
-                "name": "Meagan Fisher",
-                "created_at": "2009/07/21 19:32:24 -0400",
-                "location": "Salem, MA",
-                "following_count": 165,
-                "url": "http://dribbble.com/players/owltastic",
-                "draftees_count": 24,
-                "id": 4,
-                "followers_count": 1465
-            },
-            "created_at": "2010/07/15 22:03:53 -0400",
-            "image_url": "http://dribbble.com/system/users/4/screenshots/35690/shot_1279245833.png",
-            "title": "Roar",
-            "likes_count": 32,
-            "url": "http://dribbble.com/shots/35690-Roar",
-            "rebounds_count": 0,
-            "id": 35690,
-            "image_teaser_url": "http://dribbble.com/system/users/4/screenshots/35690/shot_1279245833_teaser.png",
-            "height": 300,
-            "views_count": 722,
-            "comments_count": 5,
-            "width": 400
         }
     ],
     "pages": 53,
@@ -708,8 +660,14 @@ $.jribbble.getShotsThatPlayerFollows('tylergaw',
 	
 	<section>
 		<header>
-			<h1>Get the Profile Details of a Player by the Player Id</h1>
+			<h1>Get the Profile Details of a Player</h1>
 			<h2>$.jribbble.getPlayerById(playerId, callback)</h2>
+			<dl class="method-description">
+				<dt>playerId STRING or INT</dt> 
+				<dd>Example 'username' or 9999</dd>
+				<dt>callback FUNCTION</dt>
+				<dd>Function to call once the request as completed successfully. One parameter will be passed containing the contents of the request; callback(data).</dd>
+			</dl>
 		</header>
 		<div class="feature-examples">
 			
@@ -722,6 +680,7 @@ $.jribbble.getShotsThatPlayerFollows('tylergaw',
 					<li id="player-shots"><b>Shots: </b></li>
 					<li id="player-following"><b>Following: </b></li>
 					<li id="player-followers"><b>Followers: </b></li>
+					<li id="player-draftees"><b>Draftees: </b></li>
 				</ul>
 				<a id="player-url" href=""></a>
 			</div>
@@ -737,6 +696,7 @@ $.jribbble.getPlayerById('tylergaw',
         $('#player-shots').append(player.shots_count);
         $('#player-following').append(player.following_count);
         $('#player-followers').append(player.followers_count);
+        $('#player-draftees').append(player.draftees_count);
         $('#player-url').text(player.url);
     }
 );</pre>
@@ -750,11 +710,377 @@ $.jribbble.getPlayerById('tylergaw',
     "name": "Tyler Gaw",
     "created_at": "2010/03/18 11:03:05 -0400",
     "location": "New York",
-    "following_count": 15,
+    "following_count": 16,
     "url": "http://dribbble.com/players/tylergaw",
     "draftees_count": 2,
     "id": 1142,
+    "drafted_by_player_id": 347,
     "followers_count": 5
+}</pre>
+			</div>
+		</div>
+	</section>
+	
+	
+	
+	<hr />
+
+
+	<section>
+		<header>
+			<h1>Get the Followers of a Player</h1>
+			<h2>$.jribbble.getPlayerFollowers(playerId, callback, [pagingOpts])</h2>
+			<dl class="method-description">
+				<dt>playerId STRING or INT</dt> 
+				<dd>Example 'username' or 9999</dd>
+				<dt>callback FUNCTION</dt>
+				<dd>Function to call once the request as completed successfully. One parameter will be passed containing the contents of the request; callback(data).</dd>
+				<dt>pagingOpts OPTIONAL OBJECT</dt> 
+				<dd>Example: {page: 1, per_page: 15} <br><em>(NOTE: per_page is not currently functional see: <a href="http://getsatisfaction.com/dribbble/topics/api_feedback#reply_3146089">http://getsatisfaction.com/dribbble/topics/api_feedback#reply_3146089</a></em>)</dd>
+			</dl>
+		</header>
+		<div class="feature-examples">
+			
+			<ul id="playerFollowers" class="player-list">
+				
+			</ul>
+			
+			<div class="example-usage fullsize">
+				<pre class="brush: js jribbble-example" title="Example Usage">
+$.jribbble.getPlayerFollowers('hoefler',
+    function (followers)
+    {
+        var html = '';
+        $.each(followers.players, function (i, player)
+        {
+            html += '&lt;li&gt;&lt;h3&gt;' + player.name + '&lt;/h3&gt;';
+            html += '&lt;a href="' + player.url + '"&gt;';
+            html += '&lt;img src="' + player.avatar_url + '" ';
+            html += 'alt=""&gt;&lt;/a&gt;&lt;/li&gt;';
+        });
+        $('#playerFollowers').html(html);
+    }, 
+    {page: 2}
+);</pre>
+			</div>
+			
+			<div class="example-json">
+				<pre class="brush: js jribbble-example; collapse: true;" title="Example JSON response">
+{
+    "players": [
+        {
+            "shots_count": 5,
+            "avatar_url": "http://dribbble.com/system/users/2074/avatars/thumb/8327_520572867167_152601705_30820902_2668189_n.jpg?1273594069",
+            "name": "Scott Burkhalter",
+            "created_at": "2010/05/11 12:06:04 -0400",
+            "location": "Abilene, TX",
+            "following_count": 21,
+            "url": "http://dribbble.com/players/ScottBurkhalter",
+            "draftees_count": 0,
+            "id": 2074,
+            "drafted_by_player_id": 195,
+            "followers_count": 4
+        },
+        {
+            "shots_count": 4,
+            "avatar_url": "http://dribbble.com/system/users/3207/avatars/thumb/3120084558_bd2b4a0fb5_m.jpg?1277245374",
+            "name": "PJ Macklin",
+            "created_at": "2010/06/22 18:18:06 -0400",
+            "location": "Chicago, IL",
+            "following_count": 21,
+            "url": "http://dribbble.com/players/pjmacklin",
+            "draftees_count": 0,
+            "id": 3207,
+            "drafted_by_player_id": 1815,
+            "followers_count": 8
+        },
+        {
+            "shots_count": 5,
+            "avatar_url": "http://dribbble.com/system/users/3019/avatars/thumb/Imagen_6.jpg?1276535533",
+            "name": "chicoroca",
+            "created_at": "2010/06/11 14:45:52 -0400",
+            "location": "spain",
+            "following_count": 13,
+            "url": "http://dribbble.com/players/lafabricaderocas",
+            "draftees_count": 0,
+            "id": 3019,
+            "drafted_by_player_id": 259,
+            "followers_count": 1
+        },
+        {
+            "shots_count": 16,
+            "avatar_url": "http://dribbble.com/system/users/826/avatars/thumb/headshot.jpg?1264763961",
+            "name": "Paul Stanton",
+            "created_at": "2010/01/29 06:14:20 -0500",
+            "location": "Leeds, UK",
+            "following_count": 68,
+            "url": "http://dribbble.com/players/stanton",
+            "draftees_count": 4,
+            "id": 826,
+            "drafted_by_player_id": 37,
+            "followers_count": 66
+        },
+        {
+            "shots_count": 5,
+            "avatar_url": "http://dribbble.com/system/users/3692/avatars/thumb/me.png?1280288921",
+            "name": "Justin Belcher",
+            "created_at": "2010/07/27 23:47:15 -0400",
+            "location": "Durham, NC",
+            "following_count": 47,
+            "url": "http://dribbble.com/players/justinbelcher",
+            "draftees_count": 0,
+            "id": 3692,
+            "drafted_by_player_id": 60,
+            "followers_count": 6
+        }
+    ],
+    "total": 453,
+    "pages": 31,
+    "page": 1,
+    "per_page": 15
+}</pre>
+			</div>
+		</div>
+	</section>
+	
+	
+	
+	<hr />
+	
+	
+	<section>
+		<header>
+			<h1>Get the Players a Player is Following</h1>
+			<h2>$.jribbble.getPlayerFollowing(playerId, callback, [pagingOpts])</h2>
+			<dl class="method-description">
+				<dt>playerId STRING or INT</dt> 
+				<dd>Example 'username' or 9999</dd>
+				<dt>callback FUNCTION</dt>
+				<dd>Function to call once the request as completed successfully. One parameter will be passed containing the contents of the request; callback(data).</dd>
+				<dt>pagingOpts OPTIONAL OBJECT</dt> 
+				<dd>Example: {page: 1, per_page: 15} <br><em>(NOTE: per_page is not currently functional see: <a href="http://getsatisfaction.com/dribbble/topics/api_feedback#reply_3146089">http://getsatisfaction.com/dribbble/topics/api_feedback#reply_3146089</a></em>)</dd>
+			</dl>
+		</header>
+		<div class="feature-examples">
+			
+			<ul id="playerFollowing" class="player-list">
+				
+			</ul>
+			
+			<div class="example-usage fullsize">
+				<pre class="brush: js jribbble-example" title="Example Usage">
+$.jribbble.getPlayerFollowing('tylergaw',
+    function (following)
+    {
+        var html = '';
+        $.each(following.players, function (i, player)
+        {
+            html += '&lt;li&gt;&lt;h3&gt;' + player.name + '&lt;/h3&gt;';
+            html += '&lt;a href="' + player.url + '"&gt;';
+            html += '&lt;img src="' + player.avatar_url + '" ';
+            html += 'alt=""&gt;&lt;/a&gt;&lt;/li&gt;';
+        });
+        $('#playerFollowing').html(html);
+    }, 
+    {page: 2}
+);</pre>
+			</div>
+			
+			<div class="example-json">
+				<pre class="brush: js jribbble-example; collapse: true;" title="Example JSON response">
+{
+    "players": [
+        {
+            "shots_count": 14,
+            "avatar_url": "http://dribbble.com/system/users/548/avatars/thumb/rb_avatar.png?1269262478",
+            "name": "Ryan Berg",
+            "created_at": "2010/01/19 08:41:41 -0500",
+            "location": "Knoxville, TN",
+            "following_count": 25,
+            "url": "http://dribbble.com/players/ryanberg",
+            "draftees_count": 2,
+            "id": 548,
+            "drafted_by_player_id": 169,
+            "followers_count": 18
+        },
+        {
+            "shots_count": 5,
+            "avatar_url": "http://dribbble.com/system/users/3171/avatars/thumb/Pic_2010-06-21_at_1.38.30_PM.png?1277098733",
+            "name": "Rico Sta Cruz",
+            "created_at": "2010/06/20 23:13:27 -0400",
+            "location": null,
+            "following_count": 43,
+            "url": "http://dribbble.com/players/rstacruz",
+            "draftees_count": 0,
+            "id": 3171,
+            "drafted_by_player_id": 1142,
+            "followers_count": 23
+        },
+        {
+            "shots_count": 0,
+            "avatar_url": "http://dribbble.com/system/users/2874/avatars/thumb/profile_pic02.png?1277252173",
+            "name": "Levin Sadsad",
+            "created_at": "2010/06/08 12:03:27 -0400",
+            "location": "Seattle, WA",
+            "following_count": 3,
+            "url": "http://dribbble.com/players/lsadsad",
+            "draftees_count": 0,
+            "id": 2874,
+            "drafted_by_player_id": 1993,
+            "followers_count": 3
+        },
+        {
+            "shots_count": 12,
+            "avatar_url": "http://dribbble.com/system/users/2807/avatars/thumb/luca.png?1275915851",
+            "name": "Luca Paulina",
+            "created_at": "2010/06/07 09:00:40 -0400",
+            "location": "London, UK",
+            "following_count": 61,
+            "url": "http://dribbble.com/players/Lucapaulina",
+            "draftees_count": 0,
+            "id": 2807,
+            "drafted_by_player_id": 1142,
+            "followers_count": 2
+        },
+        {
+            "shots_count": 25,
+            "avatar_url": "http://dribbble.com/system/users/929/avatars/thumb/profile.jpg?1266601187",
+            "name": "Yaron Schoen",
+            "created_at": "2010/02/19 12:27:45 -0500",
+            "location": "New York",
+            "following_count": 36,
+            "url": "http://dribbble.com/players/Yaron",
+            "draftees_count": 2,
+            "id": 929,
+            "drafted_by_player_id": 1,
+            "followers_count": 215
+        }
+    ],
+    "total": 16,
+    "pages": 2,
+    "page": 1,
+    "per_page": 15
+}</pre>
+			</div>
+		</div>
+	</section>
+	
+	
+	
+	<hr />
+	
+	
+<section>
+		<header>
+			<h1>Get the Draftees of a Player</h1>
+			<h2>$.jribbble.getPlayerDraftees(playerId, callback, [pagingOpts])</h2>
+			<dl class="method-description">
+				<dt>playerId STRING or INT</dt> 
+				<dd>Example 'username' or 9999</dd>
+				<dt>callback FUNCTION</dt>
+				<dd>Function to call once the request as completed successfully. One parameter will be passed containing the contents of the request; callback(data).</dd>
+				<dt>pagingOpts OPTIONAL OBJECT</dt> 
+				<dd>Example: {page: 1, per_page: 15} <br><em>(NOTE: per_page is not currently functional see: <a href="http://getsatisfaction.com/dribbble/topics/api_feedback#reply_3146089">http://getsatisfaction.com/dribbble/topics/api_feedback#reply_3146089</a></em>)</dd>
+			</dl>
+		</header>
+		<div class="feature-examples">
+			
+			<ul id="playerDraftees" class="player-list">
+				
+			</ul>
+			
+			<div class="example-usage fullsize">
+				<pre class="brush: js jribbble-example" title="Example Usage">
+$.jribbble.getPlayerDraftees('cameronmoll',
+    function (draftees)
+    {
+        var html = '';
+        $.each(draftees.players, function (i, player)
+        {
+            html += '&lt;li&gt;&lt;h3&gt;' + player.name + '&lt;/h3&gt;';
+            html += '&lt;a href="' + player.url + '"&gt;';
+            html += '&lt;img src="' + player.avatar_url + '" ';
+            html += 'alt=""&gt;&lt;/a&gt;&lt;/li&gt;';
+        });
+        $('#playerDraftees').html(html);
+    }
+);</pre>
+			</div>
+			
+			<div class="example-json">
+				<pre class="brush: js jribbble-example; collapse: true;" title="Example JSON response">
+{
+    "players": [
+        {
+            "shots_count": 6,
+            "avatar_url": "http://dribbble.com/system/users/2255/avatars/thumb/me.jpg?1275493597",
+            "name": "Jared Lewandowski",
+            "created_at": "2010/06/02 11:44:48 -0400",
+            "location": "Salt Lake City, UT",
+            "following_count": 32,
+            "url": "http://dribbble.com/players/jared42",
+            "draftees_count": 0,
+            "id": 2255,
+            "drafted_by_player_id": 11,
+            "followers_count": 4
+        },
+        {
+            "shots_count": 27,
+            "avatar_url": "http://dribbble.com/system/users/1967/avatars/thumb/Picture_1.png?1271468387",
+            "name": "Caroline Hadilaksono",
+            "created_at": "2010/04/16 21:37:18 -0400",
+            "location": "Los Angeles",
+            "following_count": 16,
+            "url": "http://dribbble.com/players/chadilaksono",
+            "draftees_count": 3,
+            "id": 1967,
+            "drafted_by_player_id": 11,
+            "followers_count": 63
+        },
+        {
+            "shots_count": 9,
+            "avatar_url": "http://dribbble.com/system/users/1966/avatars/thumb/jonathan-speir.jpg?1271468114",
+            "name": "Jonathan Speir",
+            "created_at": "2010/04/16 21:33:03 -0400",
+            "location": "Seattle",
+            "following_count": 22,
+            "url": "http://dribbble.com/players/jonathan_speir",
+            "draftees_count": 1,
+            "id": 1966,
+            "drafted_by_player_id": 11,
+            "followers_count": 16
+        },
+        {
+            "shots_count": 14,
+            "avatar_url": "http://dribbble.com/system/users/1956/avatars/thumb/logo-Ge.jpg?1271369212",
+            "name": "Gerardo Diaz",
+            "created_at": "2010/04/15 18:04:41 -0400",
+            "location": "Boston, MA",
+            "following_count": 39,
+            "url": "http://dribbble.com/players/gerardodiaz",
+            "draftees_count": 0,
+            "id": 1956,
+            "drafted_by_player_id": 11,
+            "followers_count": 53
+        },
+        {
+            "shots_count": 15,
+            "avatar_url": "http://dribbble.com/system/users/1954/avatars/thumb/profile_bw.jpg?1271346119",
+            "name": "Michael Paoletti",
+            "created_at": "2010/04/15 11:34:12 -0400",
+            "location": "Kansas City, MO",
+            "following_count": 39,
+            "url": "http://dribbble.com/players/michaelpaoletti",
+            "draftees_count": 0,
+            "id": 1954,
+            "drafted_by_player_id": 11,
+            "followers_count": 17
+        }
+    ],
+    "total": 10,
+    "pages": 1,
+    "page": 1,
+    "per_page": 15
 }</pre>
 			</div>
 		</div>
@@ -766,7 +1092,6 @@ $.jribbble.getPlayerById('tylergaw',
 	
 	
 	
-	
 	<footer>
 		<a href="http://github.com/tylergaw/jribbble">Fork Me</a> on github <span>Follow <a href="http://twitter.com/thegaw">@thegaw</a> on Twitter</span>
 	</footer>
@@ -774,7 +1099,7 @@ $.jribbble.getPlayerById('tylergaw',
 	<script src="js/shCore.js"></script>
 	<script src="js/shBrushJScript.js"></script>
 	<script src="js/jquery-1.4.2.min.js"></script>
-	<script src="js/jquery.jribbble-0.9.1.min.js"></script>
+	<script src="js/jquery.jribbble-0.10.0.min.js"></script>
 	<script src="js/json2.js"></script>
 	<script src="js/jribbble.home.js"></script>
 	<script src="js/jribbble.demos.js"></script>
