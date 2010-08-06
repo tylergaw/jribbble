@@ -736,7 +736,7 @@ $.jribbble.getPlayerById('tylergaw',
 				<dt>callback FUNCTION</dt>
 				<dd>Function to call once the request as completed successfully. One parameter will be passed containing the contents of the request; callback(data).</dd>
 				<dt>pagingOpts OPTIONAL OBJECT</dt> 
-				<dd>Example: {page: 1, per_page: 15} <br><em>(NOTE: per_page is not currently functional see: <a href="http://getsatisfaction.com/dribbble/topics/api_feedback#reply_3146089">http://getsatisfaction.com/dribbble/topics/api_feedback#reply_3146089</a></em>)</dd>
+				<dd>Example: {page: 1, per_page: 15}</dd>
 			</dl>
 		</header>
 		<div class="feature-examples">
@@ -760,7 +760,7 @@ $.jribbble.getPlayerFollowers('hoefler',
         });
         $('#playerFollowers').html(html);
     }, 
-    {page: 2}
+    {page: 2, per_page: 8}
 );</pre>
 			</div>
 			
@@ -837,7 +837,7 @@ $.jribbble.getPlayerFollowers('hoefler',
     "total": 453,
     "pages": 31,
     "page": 1,
-    "per_page": 15
+    "per_page": 8
 }</pre>
 			</div>
 		</div>
@@ -858,7 +858,7 @@ $.jribbble.getPlayerFollowers('hoefler',
 				<dt>callback FUNCTION</dt>
 				<dd>Function to call once the request as completed successfully. One parameter will be passed containing the contents of the request; callback(data).</dd>
 				<dt>pagingOpts OPTIONAL OBJECT</dt> 
-				<dd>Example: {page: 1, per_page: 15} <br><em>(NOTE: per_page is not currently functional see: <a href="http://getsatisfaction.com/dribbble/topics/api_feedback#reply_3146089">http://getsatisfaction.com/dribbble/topics/api_feedback#reply_3146089</a></em>)</dd>
+				<dd>Example: {page: 1, per_page: 15}</dd>
 			</dl>
 		</header>
 		<div class="feature-examples">
@@ -882,7 +882,7 @@ $.jribbble.getPlayerFollowing('tylergaw',
         });
         $('#playerFollowing').html(html);
     }, 
-    {page: 2}
+    {page: 2, per_page: 8}
 );</pre>
 			</div>
 			
@@ -959,7 +959,7 @@ $.jribbble.getPlayerFollowing('tylergaw',
     "total": 16,
     "pages": 2,
     "page": 1,
-    "per_page": 15
+    "per_page": 8
 }</pre>
 			</div>
 		</div>
@@ -980,7 +980,7 @@ $.jribbble.getPlayerFollowing('tylergaw',
 				<dt>callback FUNCTION</dt>
 				<dd>Function to call once the request as completed successfully. One parameter will be passed containing the contents of the request; callback(data).</dd>
 				<dt>pagingOpts OPTIONAL OBJECT</dt> 
-				<dd>Example: {page: 1, per_page: 15} <br><em>(NOTE: per_page is not currently functional see: <a href="http://getsatisfaction.com/dribbble/topics/api_feedback#reply_3146089">http://getsatisfaction.com/dribbble/topics/api_feedback#reply_3146089</a></em>)</dd>
+				<dd>Example: {page: 1, per_page: 15}</dd>
 			</dl>
 		</header>
 		<div class="feature-examples">
@@ -1003,7 +1003,8 @@ $.jribbble.getPlayerDraftees('cameronmoll',
             html += 'alt=""&gt;&lt;/a&gt;&lt;/li&gt;';
         });
         $('#playerDraftees').html(html);
-    }
+    }, 
+    {page: 2, per_page: 8}
 );</pre>
 			</div>
 			
@@ -1080,7 +1081,7 @@ $.jribbble.getPlayerDraftees('cameronmoll',
     "total": 10,
     "pages": 1,
     "page": 1,
-    "per_page": 15
+    "per_page": 8
 }</pre>
 			</div>
 		</div>

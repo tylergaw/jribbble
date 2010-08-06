@@ -103,7 +103,7 @@ $(document).ready(
 				});
 				$('#playerFollowers').html(html);
 			}, 
-			{page: 2}
+			{page: 2, per_page: 8}
 		);
 		
 		// API Ref: http://api.dribbble/players/:id/following
@@ -119,7 +119,8 @@ $(document).ready(
 					html += 'alt=""></a></li>';
 				});
 				$('#playerFollowing').html(html);
-			}
+			},
+			{per_page: 8}
 		);
 		
 		// API Ref: http://api.dribbble/players/:id/draftees
@@ -135,7 +136,8 @@ $(document).ready(
 					html += 'alt=""></a></li>';
 				});
 				$('#playerDraftees').html(html);
-			}
+			},
+			{per_page: 8}
 		);
 		
 		// Run Syntax Highlighter
