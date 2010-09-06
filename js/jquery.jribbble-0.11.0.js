@@ -1,7 +1,7 @@
 /**
- * jQuery Plugin "jribbble" 0.10.0
+ * jQuery Plugin "jribbble" 0.11.0
  * Author: Tyler Gaw - http://tylergaw.com
- * LastChanged: 08/05/2010
+ * LastChanged: 09/06/2010
  * 
  * A jQuery plugin to fetch data from the Dribbble API - http://dribbble.com/api
  *
@@ -24,7 +24,10 @@
 				{
 					callback(data);
 				}
-			};
+			},
+			
+			// Catch any double '/' that may be caused by our pathname storage
+			cleanURL = url.replace('//', '/');
 
 			$.ajax(
 				{
@@ -32,7 +35,7 @@
 					dataType: 'jsonp',
 					success: successHandler,
 					type: 'GET',
-					url: $.jribbble.baseUrl + url
+					url: $.jribbble.baseUrl + cleanURL
 				}
 			);
 		};
@@ -47,21 +50,46 @@
 	// Public Static Members
 	// Can be set globally for all jquery.jribbble requests
 	
-	// @member baseUrl - Will be prepended to all API requests
-	$.jribbble.baseUrl = 'http://api.dribbble.com/';
+	// @member STRING baseUrl - Will be prepended to all API requests
+	$.jribbble.baseUrl = 'http://api.dribbble.com';
+	
+	// @member OBJ paths - Pathnames to resourses
+	$.jribbble.paths = {
+		shots:     '/shots/',
+		rebounds:  '/rebounds/',
+		following: '/following/',
+		players:   '/players/',
+		followers: '/followers/',
+		draftees:  '/draftees/',
+		comments:  '/comments/'
+	};
 	
 	// Public Static Methods
 	// These are available at any time, you do not have to
 	// instantiate the jribbble plugin on an element to use
 	
 	// Retrieve the shot specified by shotId
-	// @param INT id - The id of the shot you want.
+	// @param INT shotId - The id of the shot you want.
 	// @param FUNCTION callback - Function that will be called once the
 	//                            request has successfully completed. The data
 	//                            from the request will be passed to the callback
 	$.jribbble.getShotById = function (shotId, callback)
 	{
-		$.fn.jribbble().makeRequest('shots/' + shotId, callback);
+		var resource = $.jribbble.paths.shots + shotId;
+		$.fn.jribbble().makeRequest(resource, callback);
+	};
+	
+	// Retrieve the rebounds of a shot specified by shotId
+	// @param INT shotId - The id of the shot you want rebounds for.
+	// @param FUNCTION callback - Function that will be called once the
+	//                            request has successfully completed. The data
+	//                            from the request will be passed to the callback
+	// @param OBJ OPTIONAL pagingOpts - { page: 1, per_page: 15 } 
+	//                                  @see http://dribbble.com/api#pagination
+	$.jribbble.getReboundsOfShot = function (shotId, callback, pagingOpts)
+	{
+		var resource = $.jribbble.paths.shots + shotId + $.jribbble.paths.rebounds;
+		$.fn.jribbble().makeRequest(resource, callback, pagingOpts);
 	};
 	
 	// @param STRING listName - One of the following: 'debuts', 'everyone', 'popular'
@@ -71,8 +99,9 @@
 	// @param OBJ OPTIONAL pagingOpts - { page: 1, per_page: 15 } 
 	//                                  @see http://dribbble.com/api#pagination
 	$.jribbble.getShotsByList = function (listName, callback, pagingOpts)
-	{			
-		$.fn.jribbble().makeRequest('shots/' + listName, callback, pagingOpts);
+	{
+		var resource = $.jribbble.paths.shots + listName;
+		$.fn.jribbble().makeRequest(resource, callback, pagingOpts);
 	};
 	
 	// Retrieve the most recent shots for the player specified by playerId
@@ -83,8 +112,9 @@
 	// @param OBJ OPTIONAL pagingOpts - { page: 1, per_page: 15 } 
 	//                                  @see http://dribbble.com/api#pagination
 	$.jribbble.getShotsByPlayerId = function (playerId, callback, pagingOpts)
-	{			
-		$.fn.jribbble().makeRequest('players/' + playerId + '/shots', callback, pagingOpts);
+	{	
+		var resource = $.jribbble.paths.players + playerId + $.jribbble.paths.shots;
+		$.fn.jribbble().makeRequest(resource, callback, pagingOpts);
 	};
 	
 	// Retrieve the most recent shots published by those the player, specified by playerId, follows
@@ -96,7 +126,8 @@
 	//                                  @see http://dribbble.com/api#pagination
 	$.jribbble.getShotsThatPlayerFollows = function (playerId, callback, pagingOpts)
 	{		
-		$.fn.jribbble().makeRequest('players/' + playerId + '/shots/following', callback, pagingOpts);
+		var resource = $.jribbble.paths.players + playerId + $.jribbble.paths.shots + $.jribbble.paths.following;
+		$.fn.jribbble().makeRequest(resource, callback, pagingOpts);
 	};
 	
 	// Retrieve profile details for the player specified by playerId
@@ -105,8 +136,9 @@
 	//                            request has successfully completed. The data
 	//                            from the request will be passed to the callback.
 	$.jribbble.getPlayerById = function (playerId, callback)
-	{			
-		$.fn.jribbble().makeRequest('players/' + playerId, callback);
+	{
+		var resource = $.jribbble.paths.players + playerId;
+		$.fn.jribbble().makeRequest(resource, callback);
 	};
 	
 	// Retrieve followers of a player by the playerId
@@ -116,7 +148,8 @@
 	//                            from the request will be passed to the callback.
 	$.jribbble.getPlayerFollowers = function (playerId, callback, pagingOpts)
 	{
-		$.fn.jribbble().makeRequest('players/' + playerId + '/followers', callback, pagingOpts);
+		var resource = $.jribbble.paths.players + playerId + $.jribbble.paths.followers;
+		$.fn.jribbble().makeRequest(resource, callback, pagingOpts);
 	};
 	
 	// Retrieve the list of players that are following playerId
@@ -126,7 +159,8 @@
 	//                            from the request will be passed to the callback.
 	$.jribbble.getPlayerFollowing = function (playerId, callback, pagingOpts)
 	{
-		$.fn.jribbble().makeRequest('players/' + playerId + '/following', callback, pagingOpts);
+		var resource = $.jribbble.paths.players + playerId + $.jribbble.paths.following;
+		$.fn.jribbble().makeRequest(resource, callback, pagingOpts);
 	};
 	
 	// Retrieve the list of players drafted by the playerId
@@ -136,7 +170,21 @@
 	//                            from the request will be passed to the callback.
 	$.jribbble.getPlayerDraftees = function (playerId, callback, pagingOpts)
 	{
-		$.fn.jribbble().makeRequest('players/' + playerId + '/draftees', callback, pagingOpts);
+		var resource = $.jribbble.paths.players + playerId + $.jribbble.paths.draftees;
+		$.fn.jribbble().makeRequest(resource, callback, pagingOpts);
+	};
+	
+	// Retrieve the set of comments for the shot specified by shotId
+	// @param INT shotId - The id of the shot you want comments for.
+	// @param FUNCTION callback - Function that will be called once the
+	//                            request has successfully completed. The data
+	//                            from the request will be passed to the callback.
+	// @param OBJ OPTIONAL pagingOpts - { page: 1, per_page: 15 } 
+	//                                  @see http://dribbble.com/api#pagination
+	$.jribbble.getCommentsOfShot = function (shotId, callback, pagingOpts)
+	{
+		var resource = $.jribbble.paths.shots + shotId + $.jribbble.paths.comments;
+		$.fn.jribbble().makeRequest(resource, callback, pagingOpts);
 	};
 
 }(jQuery));

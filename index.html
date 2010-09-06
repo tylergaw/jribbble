@@ -20,18 +20,18 @@
 	
 	<section id="download">
 		Download:
-		<a href="releases/0.10.0/jribbble-0.10.0.zip">Jribbble 0.10.0</a>
-		<a href="releases/0.10.0/jribbble-0.10.0+demos.zip">Jribbble 0.10.0 <i>+ demos</i></a>
+		<a href="releases/0.11.0/jribbble-0.11.0.zip">Jribbble 0.11.0</a>
+		<a href="releases/0.11.0/jribbble-0.11.0+demos.zip">Jribbble 0.11.0 <i>+ demos</i></a>
 	</section>
 	
 	<hr />
 	<section class="jribbble-feature" id="getShotById">
 		<header>
 			<h1>Get a Shot</h1>
-			<h2>$.jribbble.getShotById(playerId, callback)</h2>
+			<h2>$.jribbble.getShotById(shotId, callback)</h2>
 			<dl class="method-description">
-				<dt>playerId STRING or INT</dt> 
-				<dd>Example 'username' or 9999</dd>
+				<dt>shotId INT</dt> 
+				<dd>The ID of the shot you're looking for.</dd>
 				<dt>callback FUNCTION</dt>
 				<dd>Function to call once the request as completed successfully. One parameter will be passed containing the contents of the request; callback(data).</dd>
 			</dl>
@@ -39,7 +39,7 @@
 		
 		<div class="feature-examples">
 			
-			<div id="shotById">
+			<div id="shotById" class="shot-container">
 				<a href="">
 					<img src="" alt="">
 				</a>
@@ -50,6 +50,8 @@
 						<li id="shot-player"><b>Player: </b></li>
 						<li id="shot-views"><b>Views: </b></li>
 						<li id="shot-likes"><b>Likes: </b></li>
+						<li id="shot-comments"><b>Comments: </b></li>
+						<li id="shot-rebounds"><b>Rebounds: </b></li>
 					</ul>
 					<a id="shot-url" href=""></a>
 				</div>
@@ -66,6 +68,8 @@ $.jribbble.getShotById(31340,
         $('#shot-player').append(shot.player.name);
         $('#shot-views').append(shot.views_count);
         $('#shot-likes').append(shot.likes_count);
+        $('#shot-comments').append(shot.comments_count);
+        $('#shot-rebounds').append(shot.rebounds_count);
         $('#shot-url').attr('href', shot.url).text(shot.url);
     }
 );</pre>
@@ -75,29 +79,227 @@ $.jribbble.getShotById(31340,
 				<pre class="brush: js jribbble-example; collapse: true;" title="Example JSON response">
 {
     "player": {
-        "shots_count": 10,
+        "shots_count": 12,
+        "twitter_screen_name": "mikekus",
         "avatar_url": "http://dribbble.com/system/users/108/avatars/thumb/mike.jpg?1269264248",
+        "likes_received_count": 303,
         "name": "Mike Kus",
         "created_at": "2009/11/10 12:05:08 -0500",
         "location": "Bath, UK",
         "following_count": 33,
+        "likes_count": 0,
+        "website_url": "http://thethingswemake.co.uk",
         "url": "http://dribbble.com/players/mikekus",
+        "rebounds_count": 0,
         "draftees_count": 0,
         "id": 108,
-        "followers_count": 260
+        "drafted_by_player_id": 34,
+        "followers_count": 288,
+        "comments_received_count": 72,
+        "comments_count": 11,
+        "rebounds_received_count": 0
     },
     "created_at": "2010/07/22 18:35:34 -0400",
     "image_url": "http://dribbble.com/system/users/108/screenshots/37388/shot_1279838134.jpg",
     "title": "Logo for a site I'm launching soon",
-    "likes_count": 78,
+    "likes_count": 81,
     "url": "http://dribbble.com/shots/37388-Logo-for-a-site-I-m-launching-soon",
     "rebounds_count": 0,
     "id": 37388,
     "image_teaser_url": "http://dribbble.com/system/users/108/screenshots/37388/shot_1279838134_teaser.jpg",
     "height": 300,
-    "views_count": 990,
+    "views_count": 1505,
     "comments_count": 15,
     "width": 400
+}</pre>
+			</div>
+		</div>
+	</section>
+
+
+	<hr />
+	
+	
+<section>
+		<header>
+			<h1>Get the Comments of a Shot <i>Added in version: 0.11.0</i></h1>
+			<h2>$.jribbble.getCommentsOfShot(shotId, callback, [pagingOpts])</h2>
+			<dl class="method-description">
+				<dt>shotId INT</dt> 
+				<dd>The ID of the shot you want comments.</dd>
+				<dt>callback FUNCTION</dt>
+				<dd>Function to call once the request as completed successfully. One parameter will be passed containing the contents of the request; callback(data).</dd>
+				<dt>pagingOpts OPTIONAL OBJECT</dt> 
+				<dd>Example: {page: 1, per_page: 15}</dd>
+			</dl>
+		</header>
+		<div class="feature-examples">
+			
+			<div id="shotComments" class="shot-container">
+				<a href="">
+					<img src="" alt="">
+				</a>
+				
+				<div>
+					<h3></h3>
+					<ul id="shotCommentsList">
+						
+					</ul>
+				</div>
+			</div>
+			
+			<div class="example-usage fullsize">
+				<pre class="brush: js jribbble-example" title="Example Usage">
+$.jribbble.getCommentsOfShot(51986,
+    function (response)
+    {
+        var html = [];
+        $.each(response.comments, function (i, comment)
+        {
+            html.push('&lt;li&gt;');
+            html.push('&lt;a href="' + comment.player.url + '"&gt;');
+            html.push('&lt;img src="' + comment.player.avatar_url + '" alt="" width="30" height="30"&gt;&lt;/a&gt;');
+            html.push('&lt;h5&gt;' + comment.player.name + '&lt;/h5&gt;');
+            html.push('&lt;p&gt;' + comment.body + '&lt;/p&gt;');
+            html.push('&lt;/li&gt;');
+        });
+        $('#shotCommentsList').html(html.join(''));
+    }
+);</pre>
+			</div>
+			
+			<div class="example-json">
+				<pre class="brush: js jribbble-example; collapse: true;" title="Example JSON response">
+{
+    "comments": [
+        {
+            "player": {
+                "shots_count": 29,
+                "twitter_screen_name": "yarcom",
+                "avatar_url": "http://dribbble.com/system/users/929/avatars/thumb/profile.jpg?1266601187",
+                "likes_received_count": 533,
+                "name": "Yaron Schoen",
+                "created_at": "2010/02/19 12:27:45 -0500",
+                "location": "New York",
+                "following_count": 41,
+                "likes_count": 227,
+                "website_url": "http://www.yaronschoen.com",
+                "url": "http://dribbble.com/players/Yaron",
+                "rebounds_count": 5,
+                "draftees_count": 3,
+                "id": 929,
+                "drafted_by_player_id": 1,
+                "followers_count": 273,
+                "comments_received_count": 196,
+                "comments_count": 173,
+                "rebounds_received_count": 9
+            },
+            "created_at": "2010/09/03 13:53:16 -0400",
+            "body": "This is the concept art for a DJ set I am about to release. The style of the set is VERY different than my normal. ",
+            "likes_count": 0,
+            "id": 131378
+        },
+        ...
+    ],
+    "total": 5,
+    "pages": 1,
+    "page": 1,
+    "per_page": 15
+}</pre>
+			</div>
+		</div>
+	</section>
+
+	
+	<hr />
+	
+	
+	<section class="jribbble-feature" id="getReboundsOfShot">
+		<header>
+			<h1>Get the Rebounds of a Shot <i>Added in version: 0.11.0</i></h1>
+			<h2>$.jribbble.getReboundsOfShot(shotId, callback, [pagingOpts])</h2>
+			<dl class="method-description">
+				<dt>shotId INT</dt> 
+				<dd>The ID of the shot you want rebounds.</dd>
+				<dt>callback FUNCTION</dt>
+				<dd>Function to call once the request as completed successfully. One parameter will be passed containing the contents of the request; callback(data).</dd>
+				<dt>pagingOpts OPTIONAL OBJECT</dt> 
+				<dd>Example: {page: 1, per_page: 15}</dd>
+			</dl>
+		</header>
+		
+		<div class="feature-examples">
+			
+			<ul id="reboundsOfShot" class="teaser-list"></ul>
+			
+			<div class="example-usage fullsize">
+				<pre class="brush: js jribbble-example" title="Example Usage">
+$.jribbble.getReboundsOfShot(10745, 
+    function (rebounds)
+    {
+        var html = [];
+        
+        $.each(rebounds.shots, function (i, shot)
+        {
+            html.push('&lt;li&gt;&lt;h3&gt;' + shot.player.name + '&lt;/h3&gt;');
+            html.push('&lt;a href="' + shot.url + '"&gt;');
+            html.push('&lt;img src="' + shot.image_teaser_url + '" ');
+            html.push('alt="' + shot.title + '"&gt;');
+            html.push('&lt;/a&gt;');
+            html.push('&lt;h4&gt;' + shot.title + '&lt;/h4&gt;&lt;/li&gt;');
+        });
+    	
+        $('#reboundsOfShot').html(html.join(''));
+    },
+    {page: 1, per_page: 8}
+);</pre>
+			</div>
+
+			<div class="example-json">
+				<pre class="brush: js jribbble-example; collapse: true;" title="Example JSON response">
+{
+    "total": 90,
+    "shots": [
+        {
+            "player": {
+                "shots_count": 5,
+                "twitter_screen_name": "andrewhyde",
+                "avatar_url": "http://dribbble.com/system/users/1618/avatars/thumb/profilekk.jpg?1269387871",
+                "likes_received_count": 8,
+                "name": "Andrew Hyde",
+                "created_at": "2010/03/23 17:26:33 -0400",
+                "location": "Boulder, CO",
+                "following_count": 38,
+                "likes_count": 32,
+                "website_url": "http://www.andrewhy.de",
+                "url": "http://dribbble.com/players/andrewhyde",
+                "rebounds_count": 1,
+                "draftees_count": 0,
+                "id": 1618,
+                "drafted_by_player_id": 717,
+                "followers_count": 24,
+                "comments_received_count": 8,
+                "comments_count": 13,
+                "rebounds_received_count": 0
+            },
+            "created_at": "2010/03/26 15:05:36 -0400",
+            "image_url": "http://dribbble.com/system/users/1618/screenshots/11767/hellno.jpg",
+            "title": "Hell No",
+            "likes_count": 0,
+            "url": "http://dribbble.com/shots/11767-Hell-No",
+            "rebounds_count": 0,
+            "id": 11767,
+            "image_teaser_url": "http://dribbble.com/system/users/1618/screenshots/11767/hellno_teaser.jpg",
+            "height": 300,
+            "views_count": 43,
+            "comments_count": 1,
+            "width": 400
+        },
+        ...
+    ],
+    "pages": 12,
+    "page": 1,
+    "per_page": 8
 }</pre>
 			</div>
 		</div>
@@ -133,18 +335,18 @@ $.jribbble.getShotById(31340,
 $.jribbble.getShotsByList('popular',
     function (listDetails)
     {
-        var html = '';
+        var html = [];
         $.each(listDetails.shots, function (i, shot)
         {
-            html += '&lt;li&gt;&lt;h3&gt;' + shot.player.name + '&lt;/h3&gt;';
-            html += '&lt;a href="' + shot.url + '"&gt;';
-            html += '&lt;img src="' + shot.image_teaser_url + '" ';
-            html += 'alt="' + shot.title + '"&gt;';
-            html += '&lt;/a&gt;';
-            html += '&lt;h4&gt;' + shot.title + '&lt;/h4&gt;&lt;/li&gt;';
+            html.push('&lt;li&gt;&lt;h3&gt;' + shot.player.name + '&lt;/h3&gt;');
+            html.push('&lt;a href="' + shot.url + '"&gt;');
+            html.push('&lt;img src="' + shot.image_teaser_url + '" ');
+            html.push('alt="' + shot.title + '"&gt;');
+            html.push('&lt;/a&gt;');
+            html.push('&lt;h4&gt;' + shot.title + '&lt;/h4&gt;&lt;/li&gt;');
         });
 
-        $('#shotsByList').html(html);
+        $('#shotsByList').html(html.join(''));
     },
     {page: 2, per_page: 8}
 );</pre>
@@ -157,138 +359,44 @@ $.jribbble.getShotsByList('popular',
     "shots": [
         {
             "player": {
-                "shots_count": 24,
-                "avatar_url": "http://dribbble.com/system/users/2514/avatars/thumb/IMG_0169-2.jpg?1275567681",
-                "name": "Robin Raszka",
-                "created_at": "2010/06/03 08:19:38 -0400",
-                "location": "Prague, Czech Republic",
-                "following_count": 57,
-                "url": "http://dribbble.com/players/robin",
-                "draftees_count": 1,
-                "id": 2514,
-                "followers_count": 221
+                "shots_count": 23,
+                "twitter_screen_name": "EliasKeppens",
+                "avatar_url": "http://dribbble.com/system/users/1720/avatars/thumb/Foto_op_19-03-2010_om_22.12_2.jpg?1269882062",
+                "likes_received_count": 365,
+                "name": "Elias Keppens",
+                "created_at": "2010/03/29 08:00:59 -0400",
+                "location": "Opwijk",
+                "following_count": 233,
+                "likes_count": 994,
+                "website_url": "http://www.elajes.deviantart.com",
+                "url": "http://dribbble.com/players/EliasKeppens",
+                "rebounds_count": 2,
+                "draftees_count": 2,
+                "id": 1720,
+                "drafted_by_player_id": 70,
+                "followers_count": 163,
+                "comments_received_count": 176,
+                "comments_count": 379,
+                "rebounds_received_count": 2
             },
-            "created_at": "2010/08/02 10:01:46 -0400",
-            "image_url": "http://dribbble.com/system/users/2514/screenshots/40799/shot_1280757706.png",
-            "title": "Dribbblr App Icon",
-            "likes_count": 158,
-            "url": "http://dribbble.com/shots/40799-Dribbblr-App-Icon",
+            "created_at": "2010/09/05 15:57:41 -0400",
+            "image_url": "http://dribbble.com/system/users/1720/screenshots/52394/shot_1283716661.png",
+            "title": "Which one?",
+            "likes_count": 44,
+            "url": "http://dribbble.com/shots/52394-Which-one-",
             "rebounds_count": 0,
-            "id": 40799,
-            "image_teaser_url": "http://dribbble.com/system/users/2514/screenshots/40799/shot_1280757706_teaser.png",
+            "id": 52394,
+            "image_teaser_url": "http://dribbble.com/system/users/1720/screenshots/52394/shot_1283716661_teaser.png",
             "height": 300,
-            "views_count": 4285,
-            "comments_count": 41,
+            "views_count": 1006,
+            "comments_count": 32,
             "width": 400
         },
-        {
-            "player": {
-                "shots_count": 15,
-                "avatar_url": "http://dribbble.com/system/users/1906/avatars/thumb/Dribbble-Avatar.png?1272319306",
-                "name": "Taylor Carrigan",
-                "created_at": "2010/04/11 10:45:33 -0400",
-                "location": "Minneapolis, MN",
-                "following_count": 56,
-                "url": "http://dribbble.com/players/taylorcarrigan",
-                "draftees_count": 1,
-                "id": 1906,
-                "followers_count": 65
-            },
-            "created_at": "2010/08/03 23:35:22 -0400",
-            "image_url": "http://dribbble.com/system/users/1906/screenshots/41520/shot_1280892922.png",
-            "title": "App Icon",
-            "likes_count": 51,
-            "url": "http://dribbble.com/shots/41520-App-Icon",
-            "rebounds_count": 0,
-            "id": 41520,
-            "image_teaser_url": "http://dribbble.com/system/users/1906/screenshots/41520/shot_1280892922_teaser.png",
-            "height": 300,
-            "views_count": 636,
-            "comments_count": 11,
-            "width": 400
-        },
-        {
-            "player": {
-                "shots_count": 4,
-                "avatar_url": "http://dribbble.com/system/users/771/avatars/thumb/avatar.jpg?1277394428",
-                "name": "Dave Ruiz",
-                "created_at": "2010/01/22 11:55:53 -0500",
-                "location": "Hamilton, ON Canada ",
-                "following_count": 54,
-                "url": "http://dribbble.com/players/foundationsix",
-                "draftees_count": 0,
-                "id": 771,
-                "followers_count": 93
-            },
-            "created_at": "2010/08/03 11:03:33 -0400",
-            "image_url": "http://dribbble.com/system/users/771/screenshots/41247/shot_1280847813.jpg",
-            "title": "Foundation Six Launch",
-            "likes_count": 76,
-            "url": "http://dribbble.com/shots/41247-Foundation-Six-Launch",
-            "rebounds_count": 0,
-            "id": 41247,
-            "image_teaser_url": "http://dribbble.com/system/users/771/screenshots/41247/shot_1280847813_teaser.jpg",
-            "height": 300,
-            "views_count": 1981,
-            "comments_count": 31,
-            "width": 400
-        },
-        {
-            "player": {
-                "shots_count": 114,
-                "avatar_url": "http://dribbble.com/system/users/12/avatars/thumb/avatar-me-short-hair-256x256.jpg?1273741903",
-                "name": "Veerle Pieters",
-                "created_at": "2009/08/07 01:21:29 -0400",
-                "location": "Vinkt, Belgium",
-                "following_count": 66,
-                "url": "http://dribbble.com/players/veerlepieters",
-                "draftees_count": 11,
-                "id": 12,
-                "followers_count": 1253
-            },
-            "created_at": "2010/08/03 05:18:34 -0400",
-            "image_url": "http://dribbble.com/system/users/12/screenshots/41158/shot_1280827114.png",
-            "title": "act…",
-            "likes_count": 71,
-            "url": "http://dribbble.com/shots/41158-act-",
-            "rebounds_count": 1,
-            "id": 41158,
-            "image_teaser_url": "http://dribbble.com/system/users/12/screenshots/41158/shot_1280827114_teaser.png",
-            "height": 300,
-            "views_count": 1531,
-            "comments_count": 22,
-            "width": 400
-        },
-        {
-            "player": {
-                "shots_count": 61,
-                "avatar_url": "http://dribbble.com/system/users/1317/avatars/thumb/JesseDodds.png?1279069010",
-                "name": "Jesse Dodds",
-                "created_at": "2010/03/18 16:06:56 -0400",
-                "location": "Sydney, Australia",
-                "following_count": 122,
-                "url": "http://dribbble.com/players/jessedodds",
-                "draftees_count": 3,
-                "id": 1317,
-                "followers_count": 363
-            },
-            "created_at": "2010/08/04 01:07:31 -0400",
-            "image_url": "http://dribbble.com/system/users/1317/screenshots/41525/shot_1280898451.png",
-            "title": "Mail Pop-out",
-            "likes_count": 36,
-            "url": "http://dribbble.com/shots/41525-Mail-Pop-out",
-            "rebounds_count": 0,
-            "id": 41525,
-            "image_teaser_url": "http://dribbble.com/system/users/1317/screenshots/41525/shot_1280898451_teaser.png",
-            "height": 300,
-            "views_count": 435,
-            "comments_count": 7,
-            "width": 400
-        }
+        ...
     ],
-    "pages": 150,
-    "page": 1,
-    "per_page": 5
+    "pages": 94,
+    "page": 2,
+    "per_page": 8
 }</pre>
 			</div>
 		</div>
@@ -324,17 +432,16 @@ $.jribbble.getShotsByList('popular',
 $.jribbble.getShotsByPlayerId('tylergaw',
     function (playerShots)
     {
-        var html = '';
-        
+        var html = [];
         $.each(playerShots.shots, function (i, shot)
         {
-            html += '&lt;li&gt;&lt;a href="' + shot.url + '"&gt;';
-            html += '&lt;img src="' + shot.image_teaser_url + '" ';
-            html += 'alt="' + shot.title + '"&gt;&lt;/a&gt;';
-            html += '&lt;h4&gt;' + shot.title + '&lt;/h4&gt;&lt;/li&gt;';
+            html.push('&lt;li&gt;&lt;a href="' + shot.url + '"&gt;');
+            html.push('&lt;img src="' + shot.image_teaser_url + '" ');
+            html.push('alt="' + shot.title + '"&gt;&lt;/a&gt;');
+            html.push('&lt;h4&gt;' + shot.title + '&lt;/h4&gt;&lt;/li&gt;');
         });
         				
-        $('#shotsByPlayerId').html(html);
+        $('#shotsByPlayerId').html(html.join(''));
     },
     {page: 1, per_page: 4}
 );</pre>
@@ -343,114 +450,46 @@ $.jribbble.getShotsByPlayerId('tylergaw',
 			<div class="example-json">
 				<pre class="brush: js jribbble-example; collapse: true;" title="Example JSON response">
 {
-    "total": 12,
+    "total": 13,
     "shots": [
         {
             "player": {
-                "shots_count": 12,
+                "shots_count": 13,
+                "twitter_screen_name": "thegaw",
                 "avatar_url": "http://dribbble.com/system/users/1142/avatars/thumb/06_2010_interwebs.jpg?1277934350",
+                "likes_received_count": 16,
                 "name": "Tyler Gaw",
                 "created_at": "2010/03/18 11:03:05 -0400",
                 "location": "New York",
-                "following_count": 15,
+                "following_count": 18,
+                "likes_count": 7,
+                "website_url": "http://tylergaw.com",
                 "url": "http://dribbble.com/players/tylergaw",
+                "rebounds_count": 3,
                 "draftees_count": 2,
                 "id": 1142,
-                "followers_count": 5
+                "drafted_by_player_id": 347,
+                "followers_count": 9,
+                "comments_received_count": 11,
+                "comments_count": 14,
+                "rebounds_received_count": 2
             },
-            "created_at": "2010/05/18 22:24:34 -0400",
-            "image_url": "http://dribbble.com/system/users/1142/screenshots/21188/shot_1274235874.png",
-            "title": "Whatcha Doin' CSS?",
-            "likes_count": 0,
-            "url": "http://dribbble.com/shots/21188-Whatcha-Doin-CSS-",
+            "created_at": "2010/08/13 17:28:56 -0400",
+            "image_url": "http://dribbble.com/system/users/1142/screenshots/45287/shot_1281734936.jpg",
+            "title": "Full Court Shots",
+            "likes_count": 2,
+            "url": "http://dribbble.com/shots/45287-Full-Court-Shots",
             "rebounds_count": 0,
-            "id": 21188,
-            "image_teaser_url": "http://dribbble.com/system/users/1142/screenshots/21188/shot_1274235874_teaser.png",
+            "id": 45287,
+            "image_teaser_url": "http://dribbble.com/system/users/1142/screenshots/45287/shot_1281734936_teaser.jpg",
             "height": 300,
-            "views_count": 228,
-            "comments_count": 0,
-            "width": 400
-        },
-        {
-            "player": {
-                "shots_count": 12,
-                "avatar_url": "http://dribbble.com/system/users/1142/avatars/thumb/06_2010_interwebs.jpg?1277934350",
-                "name": "Tyler Gaw",
-                "created_at": "2010/03/18 11:03:05 -0400",
-                "location": "New York",
-                "following_count": 15,
-                "url": "http://dribbble.com/players/tylergaw",
-                "draftees_count": 2,
-                "id": 1142,
-                "followers_count": 5
-            },
-            "created_at": "2010/05/13 23:21:28 -0400",
-            "image_url": "http://dribbble.com/system/users/1142/screenshots/20570/shot_1273807288.png",
-            "title": "App UI",
-            "likes_count": 0,
-            "url": "http://dribbble.com/shots/20570-App-UI",
-            "rebounds_count": 0,
-            "id": 20570,
-            "image_teaser_url": "http://dribbble.com/system/users/1142/screenshots/20570/shot_1273807288_teaser.png",
-            "height": 300,
-            "views_count": 221,
+            "views_count": 91,
             "comments_count": 1,
             "width": 400
         },
-        {
-            "player": {
-                "shots_count": 12,
-                "avatar_url": "http://dribbble.com/system/users/1142/avatars/thumb/06_2010_interwebs.jpg?1277934350",
-                "name": "Tyler Gaw",
-                "created_at": "2010/03/18 11:03:05 -0400",
-                "location": "New York",
-                "following_count": 15,
-                "url": "http://dribbble.com/players/tylergaw",
-                "draftees_count": 2,
-                "id": 1142,
-                "followers_count": 5
-            },
-            "created_at": "2010/05/13 23:20:05 -0400",
-            "image_url": "http://dribbble.com/system/users/1142/screenshots/20569/shot_1273807205.png",
-            "title": "App UI",
-            "likes_count": 1,
-            "url": "http://dribbble.com/shots/20569-App-UI",
-            "rebounds_count": 0,
-            "id": 20569,
-            "image_teaser_url": "http://dribbble.com/system/users/1142/screenshots/20569/shot_1273807205_teaser.png",
-            "height": 300,
-            "views_count": 223,
-            "comments_count": 1,
-            "width": 400
-        },
-        {
-            "player": {
-                "shots_count": 12,
-                "avatar_url": "http://dribbble.com/system/users/1142/avatars/thumb/06_2010_interwebs.jpg?1277934350",
-                "name": "Tyler Gaw",
-                "created_at": "2010/03/18 11:03:05 -0400",
-                "location": "New York",
-                "following_count": 15,
-                "url": "http://dribbble.com/players/tylergaw",
-                "draftees_count": 2,
-                "id": 1142,
-                "followers_count": 5
-            },
-            "created_at": "2010/04/26 23:42:26 -0400",
-            "image_url": "http://dribbble.com/system/users/1142/screenshots/17877/shot_1272339746.png",
-            "title": "CBW Nav",
-            "likes_count": 1,
-            "url": "http://dribbble.com/shots/17877-CBW-Nav",
-            "rebounds_count": 0,
-            "id": 17877,
-            "image_teaser_url": "http://dribbble.com/system/users/1142/screenshots/17877/shot_1272339746_teaser.png",
-            "height": 300,
-            "views_count": 38,
-            "comments_count": 0,
-            "width": 400
-        }
+        ...
     ],
-    "pages": 3,
+    "pages": 4,
     "page": 1,
     "per_page": 4
 }</pre>
@@ -487,18 +526,18 @@ $.jribbble.getShotsByPlayerId('tylergaw',
 $.jribbble.getShotsThatPlayerFollows('tylergaw',
     function (followedShots)
     {
-        var html = '';
+        var html = [];
         $.each(followedShots.shots, function (i, shot)
         {
-            html += '&lt;li&gt;&lt;h3&gt;' + shot.player.name + '&lt;/h3&gt;';
-            html += '&lt;a href="' + shot.url + '"&gt;';
-            html += '&lt;img src="' + shot.image_teaser_url + '" ';
-            html += 'alt="' + shot.title + '"&gt;';
-            html += '&lt;/a&gt;';
-            html += '&lt;h4&gt;' + shot.title + '&lt;/h4&gt;&lt;/li&gt;';
+            html.push('&lt;li&gt;&lt;h3&gt;' + shot.player.name + '&lt;/h3&gt;');
+            html.push('&lt;a href="' + shot.url + '"&gt;');
+            html.push('&lt;img src="' + shot.image_teaser_url + '" ');
+            html.push('alt="' + shot.title + '"&gt;');
+            html.push('&lt;/a&gt;');
+            html.push('&lt;h4&gt;' + shot.title + '&lt;/h4&gt;&lt;/li&gt;');
         });
 
-        $('#shotsByList').html(html);
+        $('#shotsByList').html(html.join(''));
     },
     {page: 2, per_page: 8}
 );</pre>
@@ -507,140 +546,46 @@ $.jribbble.getShotsThatPlayerFollows('tylergaw',
 			<div class="example-json">
 				<pre class="brush: js jribbble-example; collapse: true;" title="Example JSON response">
 {
-    "total": 423,
+    "total": 501,
     "shots": [
         {
             "player": {
-                "shots_count": 10,
-                "avatar_url": "http://dribbble.com/system/users/1933/avatars/thumb/_justwokeup.jpg?1271185817",
-                "name": "Jay Quercia",
-                "created_at": "2010/04/13 15:08:37 -0400",
-                "location": "brooklyn, ny",
-                "following_count": 30,
-                "url": "http://dribbble.com/players/jayquercia",
-                "draftees_count": 2,
-                "id": 1933,
-                "followers_count": 19
-            },
-            "created_at": "2010/07/20 15:51:28 -0400",
-            "image_url": "http://dribbble.com/system/users/1933/screenshots/36712/shot_1279655487.jpg",
-            "title": "Teepee",
-            "likes_count": 4,
-            "url": "http://dribbble.com/shots/36712-Teepee",
-            "rebounds_count": 0,
-            "id": 36712,
-            "image_teaser_url": "http://dribbble.com/system/users/1933/screenshots/36712/shot_1279655487_teaser.jpg",
-            "height": 300,
-            "views_count": 133,
-            "comments_count": 5,
-            "width": 400
-        },
-        {
-            "player": {
-                "shots_count": 25,
-                "avatar_url": "http://dribbble.com/system/users/929/avatars/thumb/profile.jpg?1266601187",
-                "name": "Yaron Schoen",
-                "created_at": "2010/02/19 12:27:45 -0500",
-                "location": "New York",
-                "following_count": 36,
-                "url": "http://dribbble.com/players/Yaron",
-                "draftees_count": 2,
-                "id": 929,
-                "followers_count": 215
-            },
-            "created_at": "2010/07/20 02:08:19 -0400",
-            "image_url": "http://dribbble.com/system/users/929/screenshots/36535/shot_1279606099.jpg",
-            "title": "Charitywater",
-            "likes_count": 2,
-            "url": "http://dribbble.com/shots/36535-Charitywater",
-            "rebounds_count": 0,
-            "id": 36535,
-            "image_teaser_url": "http://dribbble.com/system/users/929/screenshots/36535/shot_1279606099_teaser.jpg",
-            "height": 300,
-            "views_count": 684,
-            "comments_count": 2,
-            "width": 400
-        },
-        {
-            "player": {
-                "shots_count": 114,
+                "shots_count": 121,
+                "twitter_screen_name": "meaganfisher",
                 "avatar_url": "http://dribbble.com/system/users/4/avatars/thumb/Picture_3.png?1248347239",
+                "likes_received_count": 3791,
                 "name": "Meagan Fisher",
                 "created_at": "2009/07/21 19:32:24 -0400",
                 "location": "Salem, MA",
-                "following_count": 165,
+                "following_count": 174,
+                "likes_count": 424,
+                "website_url": "http://owltastic.com",
                 "url": "http://dribbble.com/players/owltastic",
-                "draftees_count": 24,
+                "rebounds_count": 1,
+                "draftees_count": 26,
                 "id": 4,
-                "followers_count": 1465
+                "drafted_by_player_id": 1,
+                "followers_count": 1673,
+                "comments_received_count": 1095,
+                "comments_count": 162,
+                "rebounds_received_count": 5
             },
-            "created_at": "2010/07/19 15:15:50 -0400",
-            "image_url": "http://dribbble.com/system/users/4/screenshots/36415/shot_1279566950.png",
-            "title": "Division",
-            "likes_count": 23,
-            "url": "http://dribbble.com/shots/36415-Division",
+            "created_at": "2010/08/27 18:31:29 -0400",
+            "image_url": "http://dribbble.com/system/users/4/screenshots/49985/shot_1282948289.png",
+            "title": "Subtle lines",
+            "likes_count": 25,
+            "url": "http://dribbble.com/shots/49985-Subtle-lines",
             "rebounds_count": 0,
-            "id": 36415,
-            "image_teaser_url": "http://dribbble.com/system/users/4/screenshots/36415/shot_1279566950_teaser.png",
+            "id": 49985,
+            "image_teaser_url": "http://dribbble.com/system/users/4/screenshots/49985/shot_1282948289_teaser.png",
             "height": 300,
-            "views_count": 789,
-            "comments_count": 7,
+            "views_count": 578,
+            "comments_count": 4,
             "width": 400
         },
-        {
-            "player": {
-                "shots_count": 114,
-                "avatar_url": "http://dribbble.com/system/users/4/avatars/thumb/Picture_3.png?1248347239",
-                "name": "Meagan Fisher",
-                "created_at": "2009/07/21 19:32:24 -0400",
-                "location": "Salem, MA",
-                "following_count": 165,
-                "url": "http://dribbble.com/players/owltastic",
-                "draftees_count": 24,
-                "id": 4,
-                "followers_count": 1465
-            },
-            "created_at": "2010/07/18 22:28:25 -0400",
-            "image_url": "http://dribbble.com/system/users/4/screenshots/36246/shot_1279506505.png",
-            "title": "Film &",
-            "likes_count": 83,
-            "url": "http://dribbble.com/shots/36246-Film-",
-            "rebounds_count": 0,
-            "id": 36246,
-            "image_teaser_url": "http://dribbble.com/system/users/4/screenshots/36246/shot_1279506505_teaser.png",
-            "height": 300,
-            "views_count": 2056,
-            "comments_count": 11,
-            "width": 400
-        },
-        {
-            "player": {
-                "shots_count": 114,
-                "avatar_url": "http://dribbble.com/system/users/4/avatars/thumb/Picture_3.png?1248347239",
-                "name": "Meagan Fisher",
-                "created_at": "2009/07/21 19:32:24 -0400",
-                "location": "Salem, MA",
-                "following_count": 165,
-                "url": "http://dribbble.com/players/owltastic",
-                "draftees_count": 24,
-                "id": 4,
-                "followers_count": 1465
-            },
-            "created_at": "2010/07/18 16:40:00 -0400",
-            "image_url": "http://dribbble.com/system/users/4/screenshots/36193/shot_1279485600.png",
-            "title": "tastic",
-            "likes_count": 58,
-            "url": "http://dribbble.com/shots/36193-tastic",
-            "rebounds_count": 0,
-            "id": 36193,
-            "image_teaser_url": "http://dribbble.com/system/users/4/screenshots/36193/shot_1279485600_teaser.png",
-            "height": 300,
-            "views_count": 1429,
-            "comments_count": 15,
-            "width": 400
-        }
+        ...
     ],
-    "pages": 53,
+    "pages": 63,
     "page": 3,
     "per_page": 8
 }</pre>
@@ -705,17 +650,25 @@ $.jribbble.getPlayerById('tylergaw',
 			<div class="example-json">
 				<pre class="brush: js jribbble-example; collapse: true;" title="Example JSON response">
 {
-    "shots_count": 12,
+    "shots_count": 13,
+    "twitter_screen_name": "thegaw",
     "avatar_url": "http://dribbble.com/system/users/1142/avatars/thumb/06_2010_interwebs.jpg?1277934350",
+    "likes_received_count": 16,
     "name": "Tyler Gaw",
     "created_at": "2010/03/18 11:03:05 -0400",
     "location": "New York",
-    "following_count": 16,
+    "following_count": 18,
+    "likes_count": 7,
+    "website_url": "http://tylergaw.com",
     "url": "http://dribbble.com/players/tylergaw",
+    "rebounds_count": 3,
     "draftees_count": 2,
     "id": 1142,
     "drafted_by_player_id": 347,
-    "followers_count": 5
+    "followers_count": 9,
+    "comments_received_count": 11,
+    "comments_count": 14,
+    "rebounds_received_count": 2
 }</pre>
 			</div>
 		</div>
@@ -728,7 +681,7 @@ $.jribbble.getPlayerById('tylergaw',
 
 	<section>
 		<header>
-			<h1>Get the Followers of a Player</h1>
+			<h1>Get the Followers of a Player <i>Added in version: 0.10.0</i></h1>
 			<h2>$.jribbble.getPlayerFollowers(playerId, callback, [pagingOpts])</h2>
 			<dl class="method-description">
 				<dt>playerId STRING or INT</dt> 
@@ -750,15 +703,15 @@ $.jribbble.getPlayerById('tylergaw',
 $.jribbble.getPlayerFollowers('hoefler',
     function (followers)
     {
-        var html = '';
+        var html = [];
         $.each(followers.players, function (i, player)
         {
-            html += '&lt;li&gt;&lt;h3&gt;' + player.name + '&lt;/h3&gt;';
-            html += '&lt;a href="' + player.url + '"&gt;';
-            html += '&lt;img src="' + player.avatar_url + '" ';
-            html += 'alt=""&gt;&lt;/a&gt;&lt;/li&gt;';
+            html.push('&lt;li&gt;&lt;h3&gt;' + player.name + '&lt;/h3&gt;');
+            html.push('&lt;a href="' + player.url + '"&gt;');
+            html.push('&lt;img src="' + player.avatar_url + '" ');
+            html.push('alt=""&gt;&lt;/a&gt;&lt;/li&gt;');
         });
-        $('#playerFollowers').html(html);
+        $('#playerFollowers').html(html.join(''));
     }, 
     {page: 2, per_page: 8}
 );</pre>
@@ -769,74 +722,31 @@ $.jribbble.getPlayerFollowers('hoefler',
 {
     "players": [
         {
-            "shots_count": 5,
-            "avatar_url": "http://dribbble.com/system/users/2074/avatars/thumb/8327_520572867167_152601705_30820902_2668189_n.jpg?1273594069",
-            "name": "Scott Burkhalter",
-            "created_at": "2010/05/11 12:06:04 -0400",
-            "location": "Abilene, TX",
-            "following_count": 21,
-            "url": "http://dribbble.com/players/ScottBurkhalter",
+            "shots_count": 3,
+            "twitter_screen_name": "jcwpdx",
+            "avatar_url": "http://dribbble.com/system/users/4293/avatars/thumb/jcwpdx_new03.png?1282861774",
+            "likes_received_count": 35,
+            "name": "Jeff Wheeler",
+            "created_at": "2010/08/26 18:27:35 -0400",
+            "location": "Portland, OR",
+            "following_count": 29,
+            "likes_count": 73,
+            "website_url": "http://www.jeffwheelerpdx.com",
+            "url": "http://dribbble.com/players/jeffwheeler",
+            "rebounds_count": 0,
             "draftees_count": 0,
-            "id": 2074,
-            "drafted_by_player_id": 195,
-            "followers_count": 4
+            "id": 4293,
+            "drafted_by_player_id": 1,
+            "followers_count": 12,
+            "comments_received_count": 16,
+            "comments_count": 15,
+            "rebounds_received_count": 0
         },
-        {
-            "shots_count": 4,
-            "avatar_url": "http://dribbble.com/system/users/3207/avatars/thumb/3120084558_bd2b4a0fb5_m.jpg?1277245374",
-            "name": "PJ Macklin",
-            "created_at": "2010/06/22 18:18:06 -0400",
-            "location": "Chicago, IL",
-            "following_count": 21,
-            "url": "http://dribbble.com/players/pjmacklin",
-            "draftees_count": 0,
-            "id": 3207,
-            "drafted_by_player_id": 1815,
-            "followers_count": 8
-        },
-        {
-            "shots_count": 5,
-            "avatar_url": "http://dribbble.com/system/users/3019/avatars/thumb/Imagen_6.jpg?1276535533",
-            "name": "chicoroca",
-            "created_at": "2010/06/11 14:45:52 -0400",
-            "location": "spain",
-            "following_count": 13,
-            "url": "http://dribbble.com/players/lafabricaderocas",
-            "draftees_count": 0,
-            "id": 3019,
-            "drafted_by_player_id": 259,
-            "followers_count": 1
-        },
-        {
-            "shots_count": 16,
-            "avatar_url": "http://dribbble.com/system/users/826/avatars/thumb/headshot.jpg?1264763961",
-            "name": "Paul Stanton",
-            "created_at": "2010/01/29 06:14:20 -0500",
-            "location": "Leeds, UK",
-            "following_count": 68,
-            "url": "http://dribbble.com/players/stanton",
-            "draftees_count": 4,
-            "id": 826,
-            "drafted_by_player_id": 37,
-            "followers_count": 66
-        },
-        {
-            "shots_count": 5,
-            "avatar_url": "http://dribbble.com/system/users/3692/avatars/thumb/me.png?1280288921",
-            "name": "Justin Belcher",
-            "created_at": "2010/07/27 23:47:15 -0400",
-            "location": "Durham, NC",
-            "following_count": 47,
-            "url": "http://dribbble.com/players/justinbelcher",
-            "draftees_count": 0,
-            "id": 3692,
-            "drafted_by_player_id": 60,
-            "followers_count": 6
-        }
+        ...
     ],
-    "total": 453,
-    "pages": 31,
-    "page": 1,
+    "total": 529,
+    "pages": 67,
+    "page": 2,
     "per_page": 8
 }</pre>
 			</div>
@@ -850,7 +760,7 @@ $.jribbble.getPlayerFollowers('hoefler',
 	
 	<section>
 		<header>
-			<h1>Get the Players a Player is Following</h1>
+			<h1>Get the Players a Player is Following <i>Added in version: 0.10.0</i></h1>
 			<h2>$.jribbble.getPlayerFollowing(playerId, callback, [pagingOpts])</h2>
 			<dl class="method-description">
 				<dt>playerId STRING or INT</dt> 
@@ -872,15 +782,15 @@ $.jribbble.getPlayerFollowers('hoefler',
 $.jribbble.getPlayerFollowing('tylergaw',
     function (following)
     {
-        var html = '';
+        var html = [];
         $.each(following.players, function (i, player)
         {
-            html += '&lt;li&gt;&lt;h3&gt;' + player.name + '&lt;/h3&gt;';
-            html += '&lt;a href="' + player.url + '"&gt;';
-            html += '&lt;img src="' + player.avatar_url + '" ';
-            html += 'alt=""&gt;&lt;/a&gt;&lt;/li&gt;';
+            html.push('&lt;li&gt;&lt;h3&gt;' + player.name + '&lt;/h3&gt;');
+            html.push('&lt;a href="' + player.url + '"&gt;');
+            html.push('&lt;img src="' + player.avatar_url + '" ');
+            html.push('alt=""&gt;&lt;/a&gt;&lt;/li&gt;');
         });
-        $('#playerFollowing').html(html);
+        $('#playerFollowing').html(html.join(''));
     }, 
     {page: 2, per_page: 8}
 );</pre>
@@ -891,73 +801,30 @@ $.jribbble.getPlayerFollowing('tylergaw',
 {
     "players": [
         {
-            "shots_count": 14,
-            "avatar_url": "http://dribbble.com/system/users/548/avatars/thumb/rb_avatar.png?1269262478",
-            "name": "Ryan Berg",
-            "created_at": "2010/01/19 08:41:41 -0500",
-            "location": "Knoxville, TN",
-            "following_count": 25,
-            "url": "http://dribbble.com/players/ryanberg",
-            "draftees_count": 2,
-            "id": 548,
-            "drafted_by_player_id": 169,
-            "followers_count": 18
-        },
-        {
-            "shots_count": 5,
-            "avatar_url": "http://dribbble.com/system/users/3171/avatars/thumb/Pic_2010-06-21_at_1.38.30_PM.png?1277098733",
-            "name": "Rico Sta Cruz",
-            "created_at": "2010/06/20 23:13:27 -0400",
-            "location": null,
-            "following_count": 43,
-            "url": "http://dribbble.com/players/rstacruz",
+            "shots_count": 6,
+            "twitter_screen_name": null,
+            "avatar_url": "http://dribbble.com/system/users/4108/avatars/thumb/Me.jpg?1281952365",
+            "likes_received_count": 96,
+            "name": "Romain Diguet",
+            "created_at": "2010/08/13 03:49:03 -0400",
+            "location": "France",
+            "following_count": 10,
+            "likes_count": 9,
+            "website_url": "http://www.sad-graphism.com/",
+            "url": "http://dribbble.com/players/diguetromain",
+            "rebounds_count": 0,
             "draftees_count": 0,
-            "id": 3171,
-            "drafted_by_player_id": 1142,
-            "followers_count": 23
+            "id": 4108,
+            "drafted_by_player_id": 1646,
+            "followers_count": 30,
+            "comments_received_count": 17,
+            "comments_count": 5,
+            "rebounds_received_count": 2
         },
-        {
-            "shots_count": 0,
-            "avatar_url": "http://dribbble.com/system/users/2874/avatars/thumb/profile_pic02.png?1277252173",
-            "name": "Levin Sadsad",
-            "created_at": "2010/06/08 12:03:27 -0400",
-            "location": "Seattle, WA",
-            "following_count": 3,
-            "url": "http://dribbble.com/players/lsadsad",
-            "draftees_count": 0,
-            "id": 2874,
-            "drafted_by_player_id": 1993,
-            "followers_count": 3
-        },
-        {
-            "shots_count": 12,
-            "avatar_url": "http://dribbble.com/system/users/2807/avatars/thumb/luca.png?1275915851",
-            "name": "Luca Paulina",
-            "created_at": "2010/06/07 09:00:40 -0400",
-            "location": "London, UK",
-            "following_count": 61,
-            "url": "http://dribbble.com/players/Lucapaulina",
-            "draftees_count": 0,
-            "id": 2807,
-            "drafted_by_player_id": 1142,
-            "followers_count": 2
-        },
-        {
-            "shots_count": 25,
-            "avatar_url": "http://dribbble.com/system/users/929/avatars/thumb/profile.jpg?1266601187",
-            "name": "Yaron Schoen",
-            "created_at": "2010/02/19 12:27:45 -0500",
-            "location": "New York",
-            "following_count": 36,
-            "url": "http://dribbble.com/players/Yaron",
-            "draftees_count": 2,
-            "id": 929,
-            "drafted_by_player_id": 1,
-            "followers_count": 215
-        }
+        ...
     ],
-    "total": 16,
-    "pages": 2,
+    "total": 18,
+    "pages": 3,
     "page": 1,
     "per_page": 8
 }</pre>
@@ -972,7 +839,7 @@ $.jribbble.getPlayerFollowing('tylergaw',
 	
 <section>
 		<header>
-			<h1>Get the Draftees of a Player</h1>
+			<h1>Get the Draftees of a Player <i>Added in version: 0.10.0</i></h1>
 			<h2>$.jribbble.getPlayerDraftees(playerId, callback, [pagingOpts])</h2>
 			<dl class="method-description">
 				<dt>playerId STRING or INT</dt> 
@@ -994,15 +861,15 @@ $.jribbble.getPlayerFollowing('tylergaw',
 $.jribbble.getPlayerDraftees('cameronmoll',
     function (draftees)
     {
-        var html = '';
+        var html = [];
         $.each(draftees.players, function (i, player)
         {
-            html += '&lt;li&gt;&lt;h3&gt;' + player.name + '&lt;/h3&gt;';
-            html += '&lt;a href="' + player.url + '"&gt;';
-            html += '&lt;img src="' + player.avatar_url + '" ';
-            html += 'alt=""&gt;&lt;/a&gt;&lt;/li&gt;';
+            html.push('&lt;li&gt;&lt;h3&gt;' + player.name + '&lt;/h3&gt;');
+            html.push('&lt;a href="' + player.url + '"&gt;');
+            html.push('&lt;img src="' + player.avatar_url + '" ');
+            html.push('alt=""&gt;&lt;/a&gt;&lt;/li&gt;');
         });
-        $('#playerDraftees').html(html);
+        $('#playerDraftees').html(html.join(''));
     }, 
     {page: 2, per_page: 8}
 );</pre>
@@ -1013,73 +880,30 @@ $.jribbble.getPlayerDraftees('cameronmoll',
 {
     "players": [
         {
-            "shots_count": 6,
-            "avatar_url": "http://dribbble.com/system/users/2255/avatars/thumb/me.jpg?1275493597",
+            "shots_count": 7,
+            "twitter_screen_name": "jared42",
+            "avatar_url": "http://dribbble.com/system/users/2255/avatars/thumb/me-dribbble.jpg?1281496131",
+            "likes_received_count": 13,
             "name": "Jared Lewandowski",
             "created_at": "2010/06/02 11:44:48 -0400",
             "location": "Salt Lake City, UT",
-            "following_count": 32,
+            "following_count": 33,
+            "likes_count": 11,
+            "website_url": "http://jaredlewandowski.com",
             "url": "http://dribbble.com/players/jared42",
+            "rebounds_count": 2,
             "draftees_count": 0,
             "id": 2255,
             "drafted_by_player_id": 11,
-            "followers_count": 4
+            "followers_count": 7,
+            "comments_received_count": 6,
+            "comments_count": 5,
+            "rebounds_received_count": 2
         },
-        {
-            "shots_count": 27,
-            "avatar_url": "http://dribbble.com/system/users/1967/avatars/thumb/Picture_1.png?1271468387",
-            "name": "Caroline Hadilaksono",
-            "created_at": "2010/04/16 21:37:18 -0400",
-            "location": "Los Angeles",
-            "following_count": 16,
-            "url": "http://dribbble.com/players/chadilaksono",
-            "draftees_count": 3,
-            "id": 1967,
-            "drafted_by_player_id": 11,
-            "followers_count": 63
-        },
-        {
-            "shots_count": 9,
-            "avatar_url": "http://dribbble.com/system/users/1966/avatars/thumb/jonathan-speir.jpg?1271468114",
-            "name": "Jonathan Speir",
-            "created_at": "2010/04/16 21:33:03 -0400",
-            "location": "Seattle",
-            "following_count": 22,
-            "url": "http://dribbble.com/players/jonathan_speir",
-            "draftees_count": 1,
-            "id": 1966,
-            "drafted_by_player_id": 11,
-            "followers_count": 16
-        },
-        {
-            "shots_count": 14,
-            "avatar_url": "http://dribbble.com/system/users/1956/avatars/thumb/logo-Ge.jpg?1271369212",
-            "name": "Gerardo Diaz",
-            "created_at": "2010/04/15 18:04:41 -0400",
-            "location": "Boston, MA",
-            "following_count": 39,
-            "url": "http://dribbble.com/players/gerardodiaz",
-            "draftees_count": 0,
-            "id": 1956,
-            "drafted_by_player_id": 11,
-            "followers_count": 53
-        },
-        {
-            "shots_count": 15,
-            "avatar_url": "http://dribbble.com/system/users/1954/avatars/thumb/profile_bw.jpg?1271346119",
-            "name": "Michael Paoletti",
-            "created_at": "2010/04/15 11:34:12 -0400",
-            "location": "Kansas City, MO",
-            "following_count": 39,
-            "url": "http://dribbble.com/players/michaelpaoletti",
-            "draftees_count": 0,
-            "id": 1954,
-            "drafted_by_player_id": 11,
-            "followers_count": 17
-        }
+        ...
     ],
     "total": 10,
-    "pages": 1,
+    "pages": 2,
     "page": 1,
     "per_page": 8
 }</pre>
@@ -1088,8 +912,7 @@ $.jribbble.getPlayerDraftees('cameronmoll',
 	</section>
 	
 	
-	
-	<hr />
+	<hr/>
 	
 	
 	
@@ -1100,7 +923,7 @@ $.jribbble.getPlayerDraftees('cameronmoll',
 	<script src="js/shCore.js"></script>
 	<script src="js/shBrushJScript.js"></script>
 	<script src="js/jquery-1.4.2.min.js"></script>
-	<script src="js/jquery.jribbble-0.10.0.min.js"></script>
+	<script src="js/jquery.jribbble-0.11.0.js"></script>
 	<script src="js/json2.js"></script>
 	<script src="js/jribbble.home.js"></script>
 	<script src="js/jribbble.demos.js"></script>

@@ -7,8 +7,13 @@ JRB.prettyThisBitchUp = function ()
 	SyntaxHighlighter.all();
 };
 
-// I just use this while testing
+// I just use these while testing
 JRB.logResponse = function (data)
 {
 	console.log(JSON.stringify(data));
+};
+
+JRB.dirResponse = function (data)
+{
+	console.dir(data);
 };
