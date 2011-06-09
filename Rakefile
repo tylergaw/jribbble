@@ -1,12 +1,14 @@
 require 'find'
 
+version = `cat version.txt`.gsub(/\n/, "")
+
 ## Rake file for building jquery.jribbble.js
 prefix   = File.dirname(__FILE__)
 src_dir  = File.join(prefix, 'src')
 dist_dir = File.join(prefix, 'dist')
 
-filename      = 'jquery.jribbble.js'
-filename_ugly = 'jquery.jribbble.ugly.js'
+filename      = "jquery.jribbble-#{version}.js"
+filename_ugly = "jquery.jribbble-#{version}.ugly.js"
 
 # This is not really necessary, but it's working so we'll leave it
 base_files = %w{
