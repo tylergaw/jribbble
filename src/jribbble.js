@@ -1,43 +1,61 @@
 /**
- * jQuery Plugin "jribbble" 0.11.0
- * Author: Tyler Gaw - http://tylergaw.com
- * LastChanged: 09/06/2010
+ * jQuery Plugin - Jribbble v@VERSION
+ * A jQuery plugin to fetch shot and player data from the Dribbble API, 
+ * http://dribbble.com/api
  * 
- * A jQuery plugin to fetch data from the Dribbble API - http://dribbble.com/api
+ * Copyright (c) 2011 Tyler Gaw
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining
+ * a copy of this software and associated documentation files (the
+ * "Software"), to deal in the Software without restriction, including
+ * without limitation the rights to use, copy, modify, merge, publish,
+ * distribute, sublicense, and/or sell copies of the Software, and to
+ * permit persons to whom the Software is furnished to do so, subject to
+ * the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be
+ * included in all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+ * LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+ * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+ * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ * 
+ *
+ * Date: @DATE
  *
  */
 
 (function ($) {
+	'use strict';
 	
 	// @return OBJ
-	$.fn.jribbble = function ()
-	{				
+	$.fn.jribbble = function () {
+						
 		// Make a request to the API
 		// @param STRING url
 		// @param FUNCTION callback
 		// @param OBJ OPTIONAL options
-		this.makeRequest = function (url, callback, options)
-		{
-			var successHandler = function (data)
-			{
-				if ($.isFunction(callback))
-				{
+		this.makeRequest = function (url, callback, options) {
+			var successHandler = function (data) {
+				if ($.isFunction(callback)) {
 					callback(data);
 				}
 			},
 			
-			// Catch any double '/' that may be caused by our pathname storage
-			cleanURL = url.replace('//', '/');
+				// Catch any double '/' that may be caused by our pathname storage
+				cleanURL = url.replace('//', '/');
 
-			$.ajax(
-				{
-					data: options,
-					dataType: 'jsonp',
-					success: successHandler,
-					type: 'GET',
-					url: $.jribbble.baseUrl + cleanURL
-				}
-			);
+			$.ajax({
+				data: options,
+				dataType: 'jsonp',
+				success: successHandler,
+				type: 'GET',
+				url: $.jribbble.baseUrl + cleanURL
+			});
 		};
 
         // Returning "this", allows this plugin to be chainable
@@ -73,8 +91,7 @@
 	// @param FUNCTION callback - Function that will be called once the
 	//                            request has successfully completed. The data
 	//                            from the request will be passed to the callback
-	$.jribbble.getShotById = function (shotId, callback)
-	{
+	$.jribbble.getShotById = function (shotId, callback) {
 		var resource = $.jribbble.paths.shots + shotId;
 		$.fn.jribbble().makeRequest(resource, callback);
 	};
@@ -86,8 +103,7 @@
 	//                            from the request will be passed to the callback
 	// @param OBJ OPTIONAL pagingOpts - { page: 1, per_page: 15 } 
 	//                                  @see http://dribbble.com/api#pagination
-	$.jribbble.getReboundsOfShot = function (shotId, callback, pagingOpts)
-	{
+	$.jribbble.getReboundsOfShot = function (shotId, callback, pagingOpts) {
 		var resource = $.jribbble.paths.shots + shotId + $.jribbble.paths.rebounds;
 		$.fn.jribbble().makeRequest(resource, callback, pagingOpts);
 	};
@@ -98,8 +114,7 @@
 	//                             from the request will be passed to the callback
 	// @param OBJ OPTIONAL pagingOpts - { page: 1, per_page: 15 } 
 	//                                  @see http://dribbble.com/api#pagination
-	$.jribbble.getShotsByList = function (listName, callback, pagingOpts)
-	{
+	$.jribbble.getShotsByList = function (listName, callback, pagingOpts) {
 		var resource = $.jribbble.paths.shots + listName;
 		$.fn.jribbble().makeRequest(resource, callback, pagingOpts);
 	};
@@ -111,8 +126,7 @@
 	//                            from the request will be passed to the callback.
 	// @param OBJ OPTIONAL pagingOpts - { page: 1, per_page: 15 } 
 	//                                  @see http://dribbble.com/api#pagination
-	$.jribbble.getShotsByPlayerId = function (playerId, callback, pagingOpts)
-	{	
+	$.jribbble.getShotsByPlayerId = function (playerId, callback, pagingOpts) {	
 		var resource = $.jribbble.paths.players + playerId + $.jribbble.paths.shots;
 		$.fn.jribbble().makeRequest(resource, callback, pagingOpts);
 	};
@@ -124,8 +138,7 @@
 	//                            from the request will be passed to the callback.
 	// @param OBJ OPTIONAL pagingOpts - { page: 1, per_page: 15 } 
 	//                                  @see http://dribbble.com/api#pagination
-	$.jribbble.getShotsThatPlayerFollows = function (playerId, callback, pagingOpts)
-	{		
+	$.jribbble.getShotsThatPlayerFollows = function (playerId, callback, pagingOpts) {		
 		var resource = $.jribbble.paths.players + playerId + $.jribbble.paths.shots + $.jribbble.paths.following;
 		$.fn.jribbble().makeRequest(resource, callback, pagingOpts);
 	};
@@ -135,8 +148,7 @@
 	// @param FUNCTION callback - Function that will be called once the
 	//                            request has successfully completed. The data
 	//                            from the request will be passed to the callback.
-	$.jribbble.getPlayerById = function (playerId, callback)
-	{
+	$.jribbble.getPlayerById = function (playerId, callback) {
 		var resource = $.jribbble.paths.players + playerId;
 		$.fn.jribbble().makeRequest(resource, callback);
 	};
@@ -146,8 +158,7 @@
 	// @param FUNCTION callback - Function that will be called once the
 	//                            request has successfully completed. The data
 	//                            from the request will be passed to the callback.
-	$.jribbble.getPlayerFollowers = function (playerId, callback, pagingOpts)
-	{
+	$.jribbble.getPlayerFollowers = function (playerId, callback, pagingOpts) {
 		var resource = $.jribbble.paths.players + playerId + $.jribbble.paths.followers;
 		$.fn.jribbble().makeRequest(resource, callback, pagingOpts);
 	};
@@ -157,8 +168,7 @@
 	// @param FUNCTION callback - Function that will be called once the
 	//                            request has successfully completed. The data
 	//                            from the request will be passed to the callback.
-	$.jribbble.getPlayerFollowing = function (playerId, callback, pagingOpts)
-	{
+	$.jribbble.getPlayerFollowing = function (playerId, callback, pagingOpts) {
 		var resource = $.jribbble.paths.players + playerId + $.jribbble.paths.following;
 		$.fn.jribbble().makeRequest(resource, callback, pagingOpts);
 	};
@@ -168,8 +178,7 @@
 	// @param FUNCTION callback - Function that will be called once the
 	//                            request has successfully completed. The data
 	//                            from the request will be passed to the callback.
-	$.jribbble.getPlayerDraftees = function (playerId, callback, pagingOpts)
-	{
+	$.jribbble.getPlayerDraftees = function (playerId, callback, pagingOpts) {
 		var resource = $.jribbble.paths.players + playerId + $.jribbble.paths.draftees;
 		$.fn.jribbble().makeRequest(resource, callback, pagingOpts);
 	};
@@ -181,8 +190,7 @@
 	//                            from the request will be passed to the callback.
 	// @param OBJ OPTIONAL pagingOpts - { page: 1, per_page: 15 } 
 	//                                  @see http://dribbble.com/api#pagination
-	$.jribbble.getCommentsOfShot = function (shotId, callback, pagingOpts)
-	{
+	$.jribbble.getCommentsOfShot = function (shotId, callback, pagingOpts) {
 		var resource = $.jribbble.paths.shots + shotId + $.jribbble.paths.comments;
 		$.fn.jribbble().makeRequest(resource, callback, pagingOpts);
 	};
