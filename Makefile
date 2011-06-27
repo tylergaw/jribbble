@@ -1,7 +1,3 @@
-# This is working, but it does throw a syntax error. I'm not sure why, but it
-# doesn't seem to cause any issues with the build process so until I can find
-# a fix, i'll leave it.
-
 SRC_DIR = src
 TEST_DIR = test
 
@@ -42,14 +38,8 @@ ${JB}: ${BASE_FILES} | ${DIST_DIR}
 min: ${JB_MIN}
 
 ${JB_MIN}: ${JB}
-	@@if test ! -z ${JS_ENGINE}; then \
-		echo "Uglifying Jribbble" ${JB_MIN}
-		
-		${UGLIFIER};
-	else \
-		echo "You must have NodeJS installed in order to uglify Jribbble."; \
-	fi
-	
+	@@echo "Uglifying Jribbble" ${JB_MIN}
+	${UGLIFIER}
 
 clean:
 	@@echo "Removing Distribution directory:" ${DIST_DIR}
