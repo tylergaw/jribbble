@@ -39,11 +39,12 @@ ${JB}: ${BASE_FILES} | ${DIST_DIR}
 		sed 's/@DATE/'"${DATE}"'/' | \
 		${VER} > ${JB};
 
-min: jribbble ${JB_MIN}
+min: ${JB_MIN}
 
 ${JB_MIN}: ${JB}
 	@@if test ! -z ${JS_ENGINE}; then \
-		echo "Uglifying Jribbble" ${JB_MIN};
+		echo "Uglifying Jribbble" ${JB_MIN}
+		
 		${UGLIFIER};
 	else \
 		echo "You must have NodeJS installed in order to uglify Jribbble."; \
