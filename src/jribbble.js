@@ -79,7 +79,8 @@
 		players:   '/players/',
 		followers: '/followers/',
 		draftees:  '/draftees/',
-		comments:  '/comments/'
+		comments:  '/comments/',
+		likes:     '/shots/likes/'
 	};
 	
 	// Public Static Methods
@@ -192,6 +193,18 @@
 	//                                  @see http://dribbble.com/api#pagination
 	$.jribbble.getCommentsOfShot = function (shotId, callback, pagingOpts) {
 		var resource = $.jribbble.paths.shots + shotId + $.jribbble.paths.comments;
+		$.fn.jribbble().makeRequest(resource, callback, pagingOpts);
+	};
+	
+	// Retrieve the set of likes of the player specified by playerID
+	// @param INT shotId - The id of the shot you want comments for.
+	// @param FUNCTION callback - Function that will be called once the
+	//                            request has successfully completed. The data
+	//                            from the request will be passed to the callback.
+	// @param OBJ OPTIONAL pagingOpts - { page: 1, per_page: 15 } 
+	//                                  @see http://dribbble.com/api#pagination
+	$.jribbble.getLikesOfPlayer = function (playerId, callback, pagingOpts) {
+		var resource = $.jribbble.paths.players + playerId + $.jribbble.paths.likes;
 		$.fn.jribbble().makeRequest(resource, callback, pagingOpts);
 	};
 
