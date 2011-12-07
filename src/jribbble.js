@@ -80,7 +80,7 @@
 		followers: '/followers/',
 		draftees:  '/draftees/',
 		comments:  '/comments/',
-		likes:     '/shots/likes/'
+		likes:     '/likes/'
 	};
 	
 	// Public Static Methods
@@ -204,7 +204,7 @@
 	// @param OBJ OPTIONAL pagingOpts - { page: 1, per_page: 15 } 
 	//                                  @see http://dribbble.com/api#pagination
 	$.jribbble.getLikesOfPlayer = function (playerId, callback, pagingOpts) {
-		var resource = $.jribbble.paths.players + playerId + $.jribbble.paths.likes;
+		var resource = $.jribbble.paths.players + playerId + $.jribbble.paths.shots + $.jribbble.paths.likes;
 		$.fn.jribbble().makeRequest(resource, callback, pagingOpts);
 	};
 
