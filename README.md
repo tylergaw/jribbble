@@ -104,7 +104,7 @@ Jribbble makes available methods for retrieving shot and player information from
 	
 ### Get a list of a player's shots `$.jribbble.getShotsByPlayerId(playerId, callback, [pagingOpts])`
 #### Parameters
-* `playerId` STRING or INT Can be a player's interger id or username
+* `playerId` STRING or INT Can be a player's integer id or username
 * `callback` FUNC Function to call once the request has completed successfully. One parameter will be passed containing the JSON response of the request; callback(data).
 * `pagingOpts OBJ OPTIONAL` An object that may contain 1 or 2 members; `page`, `per_page`. Example: `{page: 1, per_page: 15}`
 
@@ -124,7 +124,7 @@ Jribbble makes available methods for retrieving shot and player information from
 	
 ### Get a list of shots a player is following `$.jribbble.getShotsThatPlayerFollows(playerId, callback, [pagingOpts])`
 #### Parameters
-* `playerId` STRING or INT Can be a player's interger id or username
+* `playerId` STRING or INT Can be a player's integer id or username
 * `callback` FUNC Function to call once the request has completed successfully. One parameter will be passed containing the JSON response of the request; callback(data).
 * `pagingOpts OBJ OPTIONAL` An object that may contain 1 or 2 members; `page`, `per_page`. Example: `{page: 1, per_page: 15}`
 
@@ -144,7 +144,7 @@ Jribbble makes available methods for retrieving shot and player information from
 	
 ### Get the profile details of a player `$.jribbble.getPlayerById(playerId, callback)`
 #### Parameters
-* `playerId` STRING or INT Can be a player's interger id or username
+* `playerId` STRING or INT Can be a player's integer id or username
 * `callback` FUNC Function to call once the request has completed successfully. One parameter will be passed containing the JSON response of the request; callback(data).
 
 #### Example
@@ -164,7 +164,7 @@ Jribbble makes available methods for retrieving shot and player information from
 	
 ### Get the followers of a player `$.jribbble.getPlayerFollowers(playerId, callback, [pagingOpts])`
 #### Parameters
-* `playerId` STRING or INT Can be a player's interger id or username
+* `playerId` STRING or INT Can be a player's integer id or username
 * `callback` FUNC Function to call once the request has completed successfully. One parameter will be passed containing the JSON response of the request; callback(data).
 * `pagingOpts OBJ OPTIONAL` An object that may contain 1 or 2 members; `page`, `per_page`. Example: `{page: 1, per_page: 15}`
 
@@ -184,7 +184,7 @@ Jribbble makes available methods for retrieving shot and player information from
 	
 ### Get the players a player is following `$.jribbble.getPlayerFollowing(playerId, callback, [pagingOpts])`
 #### Parameters
-* `playerId` STRING or INT Can be a player's interger id or username
+* `playerId` STRING or INT Can be a player's integer id or username
 * `callback` FUNC Function to call once the request has completed successfully. One parameter will be passed containing the JSON response of the request; callback(data).
 * `pagingOpts OBJ OPTIONAL` An object that may contain 1 or 2 members; `page`, `per_page`. Example: `{page: 1, per_page: 15}`
 
@@ -202,9 +202,9 @@ Jribbble makes available methods for retrieving shot and player information from
 		$('#playerFollowing').html(html.join(''));
 	}, {per_page: 12});
     
-### Get a list of shots a player has liked `$.jribbble.getShotsThatPlayerLikes(playerId, callback, [pagingOpts])`
+### Get a list of shots a player likes `$.jribbble.getShotsThatPlayerLikes(playerId, callback, [pagingOpts])`
 #### Parameters
-* `playerId` STRING or INT Can be a player's interger id or username
+* `playerId` STRING or INT Can be a player's integer id or username
 * `callback` FUNC Function to call once the request has completed successfully. One parameter will be passed containing the JSON response of the request; callback(data).
 * `pagingOpts OBJ OPTIONAL` An object that may contain 1 or 2 members; `page`, `per_page`. Example: `{page: 1, per_page: 15}`
 
