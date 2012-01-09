@@ -197,7 +197,7 @@
 	};
 	
 	// Retrieve the set of likes of the player specified by playerID
-	// @param INT shotId - The id of the shot you want comments for.
+	// @param INT playerId - The id of the player whose likes you want
 	// @param FUNCTION callback - Function that will be called once the
 	//                            request has successfully completed. The data
 	//                            from the request will be passed to the callback.
