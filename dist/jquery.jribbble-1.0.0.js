@@ -1,5 +1,5 @@
 /**
- * jQuery Plugin - Jribbble v0.11.0
+ * jQuery Plugin - Jribbble v1.0.0
  * A jQuery plugin to fetch shot and player data from the Dribbble API, 
  * http://dribbble.com/api
  * 
@@ -25,7 +25,7 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  * 
  *
- * Date: Mon Jun 27 09:48:19 2011 -0400
+ * Date: Sun Jan 8 20:45:02 2012 -0500
  *
  */
 
@@ -79,7 +79,8 @@
 		players:   '/players/',
 		followers: '/followers/',
 		draftees:  '/draftees/',
-		comments:  '/comments/'
+		comments:  '/comments/',
+		likes:     '/likes/'
 	};
 	
 	// Public Static Methods
@@ -192,6 +193,18 @@
 	//                                  @see http://dribbble.com/api#pagination
 	$.jribbble.getCommentsOfShot = function (shotId, callback, pagingOpts) {
 		var resource = $.jribbble.paths.shots + shotId + $.jribbble.paths.comments;
+		$.fn.jribbble().makeRequest(resource, callback, pagingOpts);
+	};
+	
+	// Retrieve the set of likes of the player specified by playerID
+	// @param INT playerId - The id of the player whose likes you want
+	// @param FUNCTION callback - Function that will be called once the
+	//                            request has successfully completed. The data
+	//                            from the request will be passed to the callback.
+	// @param OBJ OPTIONAL pagingOpts - { page: 1, per_page: 15 } 
+	//                                  @see http://dribbble.com/api#pagination
+	$.jribbble.getShotsThatPlayerLikes = function (playerId, callback, pagingOpts) {
+		var resource = $.jribbble.paths.players + playerId + $.jribbble.paths.shots + $.jribbble.paths.likes;
 		$.fn.jribbble().makeRequest(resource, callback, pagingOpts);
 	};
 
