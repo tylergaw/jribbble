@@ -3,17 +3,19 @@
 <head>
     <meta charset="utf-8">
     <title>getReboundsOfShot</title>
-    <script src="../src/jribbble.js"></script>
 </head>
 <body>
     <a href="index.html">Examples</a>
     <h1>getReboundsOfShot</h1>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="../src/jribbble.js"></script>
     <script>
         var callback = function (shot) {
             console.log(shot);
         };
 
-        jribbble.getReboundsOfShot('944850', callback, {per_page: 5, page: 4});
+        $.jribbble.getReboundsOfShot('944850', callback, {per_page: 5, page: 4});
     </script>
 </body>
 </html>

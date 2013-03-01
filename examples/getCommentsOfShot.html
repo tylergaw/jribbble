@@ -3,17 +3,19 @@
 <head>
     <meta charset="utf-8">
     <title>getCommentsOfShot</title>
-    <script src="../src/jribbble.js"></script>
 </head>
 <body>
     <a href="index.html">Examples</a>
     <h1>getCommentsOfShot</h1>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="../src/jribbble.js"></script>
     <script>
         var callback = function (shot) {
             console.log(shot);
         };
 
-        jribbble.getCommentsOfShot('944850', callback, {per_page: 50});
+        $.jribbble.getCommentsOfShot('944850', callback, {per_page: 50});
     </script>
 </body>
 </html>

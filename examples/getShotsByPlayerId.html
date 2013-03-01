@@ -3,17 +3,19 @@
 <head>
     <meta charset="utf-8">
     <title>getShotsByPlayerId</title>
-    <script src="../src/jribbble.js"></script>
 </head>
 <body>
     <a href="index.html">Examples</a>
     <h1>getShotsByPlayerId</h1>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="../src/jribbble.js"></script>
     <script>
         var callback = function (shot) {
             console.log(shot);
         };
 
-        jribbble.getShotsByPlayerId('tylergaw', callback, {per_page: 20});
+        $.jribbble.getShotsByPlayerId('tylergaw', callback, {per_page: 20});
     </script>
 </body>
 </html>

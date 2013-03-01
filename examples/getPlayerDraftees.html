@@ -3,17 +3,19 @@
 <head>
     <meta charset="utf-8">
     <title>getPlayerDraftees</title>
-    <script src="../src/jribbble.js"></script>
 </head>
 <body>
     <a href="index.html">Examples</a>
     <h1>getPlayerDraftees</h1>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="../src/jribbble.js"></script>
     <script>
         var callback = function (shot) {
             console.log(shot);
         };
 
-        jribbble.getPlayerDraftees('tylergaw', callback);
+        $.jribbble.getPlayerDraftees('tylergaw', callback);
     </script>
 </body>
 </html>
