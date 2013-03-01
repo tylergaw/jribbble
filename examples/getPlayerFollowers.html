@@ -1,0 +1,19 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>getPlayerFollowers</title>
+    <script src="../src/jribbble.js"></script>
+</head>
+<body>
+    <a href="index.html">Examples</a>
+    <h1>getPlayerFollowers</h1>
+    <script>
+        var callback = function (shot) {
+            console.log(shot);
+        };
+
+        jribbble.getPlayerFollowers('tylergaw', callback, {per_page: 8, page: 1});
+    </script>
+</body>
+</html>
