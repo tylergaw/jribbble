@@ -8,14 +8,25 @@
     <a href="index.html">Examples</a>
     <h1>getReboundsOfShot</h1>
 
+    <ul id="reboundsOfShot"></ul>
+
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="../dist/jquery.jribbble-1.0.1.js"></script>
     <script>
-        var callback = function (shot) {
-            console.log(shot);
+        var callback = function (rebounds) {
+            var html = '';
+
+            $.each(rebounds.shots, function (i, shot) {
+                html += '<li><h3>' + shot.title + '</h3>';
+                html += '<h4>by ' + shot.player.name + '</h4><a href="' + shot.url + '">';
+                html += '<img src="' + shot.image_teaser_url + '" ';
+                html += 'alt="' + shot.title + '"></a></li>';
+            });
+
+            $('#reboundsOfShot').html(html);
         };
 
-        $.jribbble.getReboundsOfShot('944850', callback, {per_page: 5, page: 4});
+        $.jribbble.getReboundsOfShot(955376, callback, {per_page: 8, page: 1});
     </script>
 </body>
 </html>
