@@ -8,14 +8,25 @@
     <a href="index.html">Examples</a>
     <h1>getShotsThatPlayerLikes</h1>
 
+    <ul id="shotsPlayerLikes"></ul>
+
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="../dist/jquery.jribbble-1.0.1.js"></script>
     <script>
-        var callback = function (shot) {
-            console.log(shot);
+        var callback = function (likedShots) {
+            var html = '';
+
+            $.each(likedShots.shots, function (i, shot) {
+                html += '<li><h3>' + shot.title + '</h3>';
+                html += '<h4>by ' + shot.player.name + '</h4><a href="' + shot.url + '">';
+                html += '<img src="' + shot.image_teaser_url + '" ';
+                html += 'alt="' + shot.title + '"></a></li>';
+            });
+
+            $('#shotsPlayerLikes').html(html);
         };
 
-        $.jribbble.getShotsThatPlayerLikes('tylergaw', callback);
+        $.jribbble.getShotsThatPlayerLikes('acreek', callback, {per_page: 10});
     </script>
 </body>
 </html>

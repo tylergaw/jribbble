@@ -8,14 +8,25 @@
     <a href="index.html">Examples</a>
     <h1>getPlayerDraftees</h1>
 
+    <ul id="playerDraftees"></ul>
+
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script src="../dist/jquery.jribbble-1.0.1.js"></script>
     <script>
-        var callback = function (shot) {
-            console.log(shot);
+        var callback = function (draftees) {
+            var html = '';
+
+            $.each(draftees.players, function (i, player) {
+                html += '<li><h3>' + player.name + '</h3>';
+                html += '<a href="' + player.url + '">';
+                html += '<img src="' + player.avatar_url + '" ';
+                html += 'alt=""></a></li>';
+            });
+
+            $('#playerDraftees').html(html);
         };
 
-        $.jribbble.getPlayerDraftees('tylergaw', callback);
+        $.jribbble.getPlayerDraftees('cameronmoll', callback, {per_page: 10});
     </script>
 </body>
 </html>
