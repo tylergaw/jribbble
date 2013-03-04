@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>getPlayerFollowers</title>
+</head>
+<body>
+    <a href="index.html">Examples</a>
+    <h1>getPlayerFollowers</h1>
+
+    <ul id="playerFollowers"></ul>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="../dist/jquery.jribbble-1.0.1.js"></script>
+    <script>
+        var callback = function (followers) {
+            var html = '';
+
+            $.each(followers.players, function (i, player) {
+                html += '<li><h3>' + player.name + '</h3>';
+                html += '<a href="' + player.url + '">';
+                html += '<img src="' + player.avatar_url + '" ';
+                html += 'alt=""></a></li>';
+            });
+
+            $('#playerFollowers').html(html);
+        };
+
+        $.jribbble.getPlayerFollowers('robertjpetro', callback, {per_page: 12});
+    </script>
+</body>
+</html>

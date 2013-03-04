@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>getShotsByPlayerId</title>
+</head>
+<body>
+    <a href="index.html">Examples</a>
+    <h1>getShotsByPlayerId</h1>
+
+    <h2>Player: <b></b></h2>
+    <ul id="shotsByPlayerId"></ul>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="../dist/jquery.jribbble-1.0.1.js"></script>
+    <script>
+        var callback = function (playerShots) {
+            var html = '';
+
+            $('h2 b').text(playerShots.shots[0].player.name);
+
+            $.each(playerShots.shots, function (i, shot) {
+                html += '<li><h3>' + shot.title + '</h3>';
+                html += '<a href="' + shot.url + '">';
+                html += '<img src="' + shot.image_url + '" ';
+                html += 'alt="' + shot.title + '"></a></li>';
+            });
+
+            $('#shotsByPlayerId').html(html);
+        };
+
+        $.jribbble.getShotsByPlayerId('tykoe', callback, {page: 1, per_page: 8});
+    </script>
+</body>
+</html>

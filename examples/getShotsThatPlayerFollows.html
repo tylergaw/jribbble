@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>getShotsThatPlayerFollows</title>
+</head>
+<body>
+    <a href="index.html">Examples</a>
+    <h1>getShotsThatPlayerFollows</h1>
+
+    <ul id="shotsPlayerFollows"></ul>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="../dist/jquery.jribbble-1.0.1.js"></script>
+    <script>
+        var callback = function (followedShots) {
+            var html = '';
+
+            $.each(followedShots.shots, function (i, shot) {
+                html += '<li><h3>' + shot.title + '</h3>';
+                html += '<h4>by ' + shot.player.name + '</h4><a href="' + shot.url + '">';
+                html += '<img src="' + shot.image_teaser_url + '" ';
+                html += 'alt="' + shot.title + '"></a></li>';
+            });
+
+            $('#shotsPlayerFollows').html(html);
+        };
+
+        $.jribbble.getShotsThatPlayerFollows('tylergaw', callback, {page: 3, per_page: 10});
+    </script>
+</body>
+</html>
