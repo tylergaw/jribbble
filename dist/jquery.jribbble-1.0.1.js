@@ -1,5 +1,5 @@
 /**
- * jQuery Plugin - Jribbble v@VERSION
+ * jQuery Plugin - Jribbble v1.0.1
  * A jQuery plugin to fetch shot and player data from the Dribbble API,
  * http://dribbble.com/api
  *
@@ -25,7 +25,7 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  *
  *
- * Build Date: @DATE
+ * Build Date: Thu Feb 28 23:38:40 2013 -0500
  *
  */
 

@@ -7,7 +7,7 @@ DIST_DIR = ${PREFIX}/dist
 JB_VER = $(shell cat version.txt)
 
 JS_ENGINE ?= `which node nodejs`
-UGLIFIER = $(shell uglifyjs -o ${JB_MIN} ${JB})
+UGLIFIER = $(shell uglifyjs -o ${JB_MIN} ${JB} -c -m)
 
 BASE_FILES = ${SRC_DIR}/jribbble.js
 
