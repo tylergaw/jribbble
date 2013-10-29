@@ -6,6 +6,7 @@ Live demos available at [http://lab.tylergaw.com/jribbble](http://lab.tylergaw.c
 ## Dependencies
 * For normal usage; jQuery 1.3 or higher
 * For building your own Uglified version; [UglifyJS](https://github.com/mishoo/UglifyJS)
+* If you're interested, there's also a dependency-free versions of Jribbble [https://github.com/tylergaw/jribbble-no-dependencies](https://github.com/tylergaw/jribbble-no-dependencies)
 
 ## Building
 Jribbble uses a Makefile that is pretty much jQuery's Makefile. The Makefile adds the version number and
