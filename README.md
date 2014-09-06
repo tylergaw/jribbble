@@ -19,6 +19,12 @@ To build navigate to the Jribbble directory and run the `make` command
 ## Usage
 Jribbble makes available methods for retrieving shot and player information from the Dribbble.com API. All the available methods are accessed from the `jribbble` object which is a member of the `jQuery` or `$` object.
 
+### Tutorials
+A number of nice folks have taken the time to write articles explaining how to get started using Jribbble. If you have one you've written, add it here and submit a pull request.
+- [How to use the Dribbble API by Sara Vieira](http://www.developerdrive.com/2014/09/how-to-use-the-dribbble-api/)
+- [Build a Dribbble Portfolio Grid with Flexboxgrid and Jribbble by Jonathan Cutrell](http://webdesign.tutsplus.com/tutorials/build-a-dribbble-portfolio-grid-with-flexboxgrid-and-jribbble--cms-20423)
+- [Create a Portfolio Powered by Dribbble by Chris Collins](http://theultralinx.com/2013/09/create-portfolio-powered-dribbble.html)
+
 ### Get a shot `$.jribbble.getShotById(shotId, callback)`
 #### Parameters
  - `shotId` INT The id of the shot
