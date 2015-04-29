@@ -11,8 +11,7 @@
   <script src="../src/jribbble.js"></script>
   <script>
     var onSuccess = function(res) {
-      console.log('success', res);
-      console.log('-----');
+      console.log('success', res.url);
     };
 
     var onError = function(res) {
@@ -21,23 +20,26 @@
 
     $.jribbble.setToken('f688ac519289f19ce5cebc1383c15ad5c02bd58205cd83c86cbb0ce09170c1b4');
     $.jribbble.shots().then(onSuccess);
-    
-    $.jribbble.shots({
-      'per_page': 3
-    }).then(onSuccess);
+    $.jribbble.shots({'per_page': 5}).then(onSuccess);
+    // $.jribbble.shots('1234');
+    // $.jribbble.shots('1234', {'per_page': 3});
+    // $.jribbble.shots('1234').attachments('456');
+    // $.jribbble.shots('2035500').comments('1234').likes();
+    // $.jribbble.shots('2035500').buckets();
 
-    $.jribbble.shots('animated', {'per_page': 2}).then(onSuccess);
-
-    $.jribbble.shots('123456', {'per_page': 2}).then(onSuccess);
-
-    $.jribbble.shots('2035500').attachments().then(onSuccess);
-    $.jribbble.shots('2035500').attachments('361321').then(onSuccess);
-
-    $.jribbble.shots('2035500').buckets().then(onSuccess);
-
-    $.jribbble.shots('2035500').comments().then(onSuccess);
-    $.jribbble.shots('2035500').comments('456').then(onSuccess);
-    $.jribbble.shots('2035500').comments('1234').likes().then(onSuccess);
+    //
+    // $.jribbble.shots('animated', {'per_page': 2}).then(onSuccess);
+    //
+    // $.jribbble.shots('123456', {'per_page': 2}).then(onSuccess);
+    //
+    // $.jribbble.shots('2035500').attachments().then(onSuccess);
+    // $.jribbble.shots('2035500').attachments('361321').then(onSuccess);
+    //
+    // $.jribbble.shots('2035500').buckets().then(onSuccess);
+    //
+    // $.jribbble.shots('2035500').comments().then(onSuccess);
+    // $.jribbble.shots('2035500').comments('456').then(onSuccess);
+    // $.jribbble.shots('2035500').comments('1234').likes().then(onSuccess);
 
     // // $.jribbble.shots('animated').then(onSuccess, onError);
     // $.jribbble.shots('1803001').then(onSuccess);

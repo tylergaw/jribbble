@@ -39,27 +39,32 @@
         return false;
       }
 
-      var method = 'GET';
-      var xhr = createCORSRequest(method, this.url);
+      setTimeout(function() {
+        this.resolve(this);
+      }.bind(this), 225);
 
-      xhr.onload = function() {
-        var res = JSON.parse(xhr.response);
-
-        if (xhr.statusText !== 'OK') {
-          this.reject(res);
-        } else {
-          this.resolve(res);
-        }
-
-      }.bind(this);
-
-      xhr.onerror = function() {
-        this.reject();
-      }.bind(this);
-
-      xhr.withCredentials = true;
-      xhr.setRequestHeader('Authorization', 'Bearer ' + ACCESS_TOKEN);
-      xhr.send();
+      // var method = 'GET';
+      // var xhr = createCORSRequest(method, this.url);
+      //
+      // xhr.onload = function() {
+      //   var res = JSON.parse(xhr.response);
+      //
+      //   if (xhr.statusText !== 'OK') {
+      //     this.reject(res);
+      //   } else {
+      //     this.resolve(res);
+      //   }
+      //
+      // }.bind(this);
+      //
+      // xhr.onerror = function() {
+      //   this.reject();
+      // }.bind(this);
+      //
+      // xhr.withCredentials = true;
+      // xhr.setRequestHeader('Authorization', 'Bearer ' + ACCESS_TOKEN);
+      // xhr.send();
+      return this;
     },
 
     // Provide an object of key: value params. Get back a URL encoded string if
@@ -101,16 +106,16 @@
   };
 
   var Shots = function(undefined, shotsOpts) {
-    var shotsArgsArray = [].slice.call(arguments);
-
     $.extend(this, $.Deferred(), jribbbleBase);
 
-    this.url = API_URL;
+    this.url = API_URL + '/shots';
+    this.initArgsArray = [].slice.call(arguments);
+    this.initOpts = shotsOpts || {};
 
     this.shots = function(args, opts) {
-      var params = opts || {};
-      var negotiated = negotiateArgs(args) || {};
-      var url = this.url + '/shots';
+      var params = opts || this.initOpts;
+      var negotiated = negotiateArgs(args || this.initArgsArray) || {};
+      var url = this.url;
 
       if (negotiated.resource) {
         url += '/' + negotiated.resource;
@@ -118,15 +123,12 @@
       }
 
       url += this.parseParams($.extend(negotiated, params));
-
       this.url = url;
 
       return this;
     };
 
     this.attachments = function(undefined, opts) {
-      this.shots(shotsArgsArray, shotsOpts);
-
       var params = opts || {};
       var negotiated = negotiateArgs([].slice.call(arguments)) || {};
       var url = this.url + '/attachments';
@@ -137,28 +139,25 @@
       }
 
       url += this.parseParams($.extend(negotiated, params));
-
       this.url = url;
 
       return this;
     };
 
     this.buckets = function() {
-      this.shots(shotsArgsArray, shotsOpts);
       this.url = this.url + '/buckets';
-
       return this;
     };
 
     this.comments = function(id) {
       var resource = id || null;
-      this.shots(shotsArgsArray, shotsOpts);
       this.url = this.url + '/comments';
 
       if (resource) {
         this.url += '/' + resource;
       }
 
+      // This is a subordinate resource of likes, it cannot be called directly
       this.likes = function() {
         if (!resource) {
           console.warn('Jribbble: You have to pass a comment id to get the likes for it. ex: comments("1234").likes()');
@@ -172,61 +171,19 @@
       return this;
     };
 
+    this.start = function() {
+      return this.shots(this.initArgsArray, this.initOpts);
+    };
+
     return this;
   };
 
   $.jribbble.shots = function(undefined, opts) {
-    var shots = new Shots(undefined, opts);
-
-    console.log(shots);
-    console.log('----------');
-
-    return shots;
+    return new Shots(undefined, opts).start().get();
   };
 
   $.jribbble.setToken = function(token) {
     ACCESS_TOKEN = token;
     return this;
   };
-
-  // DEPRACATED...probably
-  // var API_METHODS = {
-  //   'getShotsByList': '/shots/',
-  //
-  //   'getShotList': '/shots/',
-  //   'getAnimatedShots': '/shots/?list=animated',
-  //
-  //   'getShotById': '/shots/$/',
-  //
-  //   'getUser': '/users/$/',
-  //   'getReboundsOfShot': '/shots/$/rebounds/',
-  //
-  //   'getShotsByPlayerId': '/players/$/shots/',
-  //   'getShotsThatPlayerFollows': '/players/$/shots/following/',
-  //   'getPlayerById': '/players/$/',
-  //   'getPlayerFollowers': '/players/$/followers/',
-  //   'getPlayerFollowing': '/players/$/following/',
-  //   'getPlayerDraftees': '/players/$/draftees/',
-  //   'getCommentsOfShot': '/shots/$/comments/',
-  //   'getShotsThatPlayerLikes': '/players/$/shots/likes/'
-  // };
-
-  // var createAPIMethod = function(urlPattern) {
-  //   return function() {
-  //     // Convert arguments to a real Array
-  //     var args = [].slice.call(arguments);
-  //
-  //     // We run shift() on args here because we don't need to send
-  //     // the first argument to makeAPIRequest.
-  //     var url = urlPattern.replace('$', args.shift());
-  //     console.log(url);
-  //
-  //     makeAPIRequest(url, args);
-  //   };
-  // };
-  //
-  // for (var method in API_METHODS) {
-  //   $.jribbble[method] = createAPIMethod(API_METHODS[method]);
-  // }
-
 })(jQuery, window , document);
