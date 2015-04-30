@@ -1,4 +1,4 @@
-# Jribbble
+# Jribbble [![Build Status](https://travis-ci.org/tylergaw/jribbble.svg)](https://travis-ci.org/tylergaw/jribbble)
 A jQuery plugin to fetch shot and player info from the [Dribbble API](http://dribbble.com/api)
 
 Live demos available at [http://lab.tylergaw.com/jribbble](http://lab.tylergaw.com/jribbble)
