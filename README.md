@@ -8,6 +8,16 @@ Live demos available at [http://lab.tylergaw.com/jribbble](http://lab.tylergaw.c
 * For building your own Uglified version; [UglifyJS](https://github.com/mishoo/UglifyJS)
 * If you're interested, there's also a dependency-free version of Jribbble: [https://github.com/tylergaw/jribbble-no-dependencies](https://github.com/tylergaw/jribbble-no-dependencies)
 
+## Testing [WIP]
+
+```
+npm install && npm install -g node-qunit-phantomjs
+```
+
+```
+npm test
+```
+
 ## Building
 Jribbble uses a Makefile that is pretty much jQuery's Makefile. The Makefile adds the version number and
 date to the output files then creates the Ugly version of Jribbble using [UglifyJS](https://github.com/mishoo/UglifyJS)
@@ -56,7 +66,7 @@ A number of nice folks have taken the time to write articles explaining how to g
 #### Example
 	$.jribbble.getCommentsOfShot(51986, function (response) {
 		var html = [];
-		
+
 		$.each(response.comments, function (i, comment) {
 			html.push('<li>');
 			html.push('<a href="' + comment.player.url + '">');
@@ -65,7 +75,7 @@ A number of nice folks have taken the time to write articles explaining how to g
 			html.push('<p>' + comment.body + '</p>');
 			html.push('</li>');
 		});
-		
+
 		$('#shotCommentsList').html(html.join(''));
 	}, {page: 1, per_page: 5});
 
@@ -78,17 +88,17 @@ A number of nice folks have taken the time to write articles explaining how to g
 #### Example
 	$.jribbble.getReboundsOfShot(10745, function (rebounds) {
 		var html = [];
-		
+
 		$.each(rebounds.shots, function (i, shot) {
 			html.push('<li><h3>' + shot.title + '</h3>');
 			html.push('<h4>by ' + shot.player.name + '</h4><a href="' + shot.url + '">');
 			html.push('<img src="' + shot.image_teaser_url + '" ');
 			html.push('alt="' + shot.title + '"></a></li>');
 		});
-			
+
 		$('#reboundsOfShot').html(html.join(''));
 	}, {page: 1, per_page: 10});
-	
+
 ### Get a list of shots by the list name `$.jribbble.getShotsByList(listName, callback, [pagingOpts])`
 #### Parameters
 * `listName` STRING Can be one of: "popular", "everyone", "debuts"
@@ -98,17 +108,17 @@ A number of nice folks have taken the time to write articles explaining how to g
 #### Example
 	$.jribbble.getShotsByList('popular', function (listDetails) {
 		var html = [];
-		
+
 		$.each(listDetails.shots, function (i, shot) {
 			html.push('<li><h3>' + shot.title + '</h3>');
 			html.push('<h4>by ' + shot.player.name + '</h4><a href="' + shot.url + '">');
 			html.push('<img src="' + shot.image_teaser_url + '" ');
 			html.push('alt="' + shot.title + '"></a></li>');
 		});
-			
+
 		$('#shotsByList').html(html.join(''));
 	}, {page: 2, per_page: 10});
-	
+
 ### Get a list of a player's shots `$.jribbble.getShotsByPlayerId(playerId, callback, [pagingOpts])`
 #### Parameters
 * `playerId` STRING or INT Can be a player's integer id or username
@@ -118,17 +128,17 @@ A number of nice folks have taken the time to write articles explaining how to g
 #### Example
 	$.jribbble.getShotsByPlayerId('tylergaw', function (playerShots) {
 		var html = [];
-		
+
 		$.each(playerShots.shots, function (i, shot) {
 			html.push('<li><h3>' + shot.title + '</h3>');
 			html.push('<h4>by ' + shot.player.name + '</h4><a href="' + shot.url + '">');
 			html.push('<img src="' + shot.image_teaser_url + '" ');
 			html.push('alt="' + shot.title + '"></a></li>');
 		});
-			
+
 		$('#shotsByPlayerId').html(html.join(''));
 	}, {page: 1, per_page: 10});
-	
+
 ### Get a list of shots a player is following `$.jribbble.getShotsThatPlayerFollows(playerId, callback, [pagingOpts])`
 #### Parameters
 * `playerId` STRING or INT Can be a player's integer id or username
@@ -138,17 +148,17 @@ A number of nice folks have taken the time to write articles explaining how to g
 #### Example
 	$.jribbble.getShotsThatPlayerFollows('tylergaw', function (followedShots) {
 		var html = [];
-		
+
 		$.each(followedShots.shots, function (i, shot) {
 			html.push('<li><h3>' + shot.title + '</h3>');
 			html.push('<h4>by ' + shot.player.name + '</h4><a href="' + shot.url + '">');
 			html.push('<img src="' + shot.image_teaser_url + '" ');
 			html.push('alt="' + shot.title + '"></a></li>');
 		});
-			
+
 		$('#shotsPlayerFollows').html(html.join(''));
 	}, {page: 3, per_page: 10});
-	
+
 ### Get the profile details of a player `$.jribbble.getPlayerById(playerId, callback)`
 #### Parameters
 * `playerId` STRING or INT Can be a player's integer id or username
@@ -157,7 +167,7 @@ A number of nice folks have taken the time to write articles explaining how to g
 #### Example
 	$.jribbble.getPlayerById('tylergaw', function (player) {
 		var html = [];
-		
+
 		html.push('<a href="' + player.url + '"><img src="' + player.avatar_url + '" alt=""></a>');
 		html.push('<div><h3>' + player.name + ' / ' + player.location + '</h3>');
 		html.push('<h4><a href="' + player.url + '">' + player.url + '</a></h4>');
@@ -165,10 +175,10 @@ A number of nice folks have taken the time to write articles explaining how to g
 		html.push('<li><b>Following: </b>' + player.following_count + '</li>');
 		html.push('<li><b>Followers: </b>' + player.followers_count + '</li>');
 		html.push('<li><b>Draftees: </b>' + player.draftees_count + '</li></ul></div>');
-		
+
 		$('#playerProfile').html(html.join(''));
 	});
-	
+
 ### Get the followers of a player `$.jribbble.getPlayerFollowers(playerId, callback, [pagingOpts])`
 #### Parameters
 * `playerId` STRING or INT Can be a player's integer id or username
@@ -178,17 +188,17 @@ A number of nice folks have taken the time to write articles explaining how to g
 #### Example
 	$.jribbble.getPlayerFollowers('robertjpetro', function (followers) {
 		var html = [];
-		
+
 		$.each(followers.players, function (i, player) {
 			html.push('<li><h3>' + player.name + '</h3>');
 			html.push('<a href="' + player.url + '">');
 			html.push('<img src="' + player.avatar_url + '" ');
 			html.push('alt=""></a></li>');
 		});
-		
+
 		$('#playerFollowers').html(html.join(''));
 	}, {per_page: 12});
-	
+
 ### Get the players a player is following `$.jribbble.getPlayerFollowing(playerId, callback, [pagingOpts])`
 #### Parameters
 * `playerId` STRING or INT Can be a player's integer id or username
@@ -198,17 +208,17 @@ A number of nice folks have taken the time to write articles explaining how to g
 #### Example
 	$.jribbble.getPlayerFollowing('tylergaw', function (following) {
 		var html = [];
-		
+
 		$.each(following.players, function (i, player) {
 			html.push('<li><h3>' + player.name + '</h3>');
 			html.push('<a href="' + player.url + '">');
 			html.push('<img src="' + player.avatar_url + '" ');
 			html.push('alt=""></a></li>');
 		});
-		
+
 		$('#playerFollowing').html(html.join(''));
 	}, {per_page: 12});
-    
+
 ### Get a list of shots a player likes `$.jribbble.getShotsThatPlayerLikes(playerId, callback, [pagingOpts])`
 #### Parameters
 * `playerId` STRING or INT Can be a player's integer id or username
@@ -218,13 +228,13 @@ A number of nice folks have taken the time to write articles explaining how to g
 #### Example
     $.jribbble.getShotsThatPlayerLikes('acreek', function (playerLikes) {
         var html = [];
-        
+
         $.each(playerLikes.shots, function (i, shot) {
             html.push('<li><h3>' + shot.title + '</h3>');
             html.push('<h4>by ' + shot.player.name + '</h4><a href="' + shot.url + '">');
             html.push('<img src="' + shot.image_teaser_url + '" ');
             html.push('alt="' + shot.title + '"></a></li>');
         });
-            
+
         $('#shotsPlayerLikes').html(html.join(''));
     }, {page: 1, per_page: 10});
