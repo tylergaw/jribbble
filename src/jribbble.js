@@ -1,6 +1,7 @@
 ;(function($, window, document, undefined) {
   'use strict';
 
+  // This is our public access point.
   $.jribbble = {};
 
   var ACCESS_TOKEN = null;
@@ -17,20 +18,6 @@
     'teams'
   ];
 
-  var createCORSRequest = function(method, url) {
-    var xhr = new XMLHttpRequest();
-
-    if ('withCredentials' in xhr) {
-      xhr.open(method, url, true);
-    } else if (typeof XDomainRequest != 'undefined') {
-      xhr = new XDomainRequest();
-      xhr.open(method, url);
-    } else {
-      xhr = null;
-    }
-    return xhr;
-  };
-
   var jribbbleBase = {
     get: function() {
       if (!ACCESS_TOKEN) {
@@ -39,31 +26,20 @@
         return false;
       }
 
-      setTimeout(function() {
-        this.resolve(this);
-      }.bind(this), 225);
+      $.ajax({
+        type: 'GET',
+        url: this.url,
+        beforeSend: function(jqxhr) {
+          jqxhr.setRequestHeader('Authorization', 'Bearer ' + ACCESS_TOKEN);
+        },
+        success: function(res) {
+          this.resolve(res);
+        }.bind(this),
+        error: function(jqxhr) {
+          this.reject(jqxhr);
+        }.bind(this)
+      });
 
-      // var method = 'GET';
-      // var xhr = createCORSRequest(method, this.url);
-      //
-      // xhr.onload = function() {
-      //   var res = JSON.parse(xhr.response);
-      //
-      //   if (xhr.statusText !== 'OK') {
-      //     this.reject(res);
-      //   } else {
-      //     this.resolve(res);
-      //   }
-      //
-      // }.bind(this);
-      //
-      // xhr.onerror = function() {
-      //   this.reject();
-      // }.bind(this);
-      //
-      // xhr.withCredentials = true;
-      // xhr.setRequestHeader('Authorization', 'Bearer ' + ACCESS_TOKEN);
-      // xhr.send();
       return this;
     },
 
