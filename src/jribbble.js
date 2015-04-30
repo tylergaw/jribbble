@@ -25,7 +25,7 @@
 
         return false;
       }
-
+      console.log(this.url);
       $.ajax({
         type: 'GET',
         url: this.url,
@@ -155,7 +155,9 @@
   };
 
   $.jribbble.shots = function(undefined, opts) {
-    return new Shots(undefined, opts).start().get();
+    var shots = new Shots(undefined, opts).start();
+    console.log(shots);
+    return shots.get();
   };
 
   $.jribbble.setToken = function(token) {

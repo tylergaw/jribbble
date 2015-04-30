@@ -34,3 +34,13 @@ test('jribbble.shots urls', function(assert) {
     'shots() with a shot ID and per_page param.'
   );
 });
+
+test('jribbble.shots.attachments urls', function(assert) {
+  var url = API_URL + '/shots/1234';
+
+  assert.equal(
+    $.jribbble.shots('1234').attachments().url,
+    url + '/attachments',
+    'All attachments() for the shot 1234.'
+  );
+});
