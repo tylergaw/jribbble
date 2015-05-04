@@ -18,6 +18,34 @@
     'teams'
   ];
 
+  var Queue = function() {
+    this.methods = [];
+    this.response = null;
+    this.flushed = false;
+  };
+
+  Queue.prototype = {
+    add: function(fn) {
+      if (this.flushed) {
+        fn(this.response);
+      } else {
+        this.methods.push(fn);
+      }
+    },
+    flush: function(resp) {
+      if (this.flushed) {
+        return;
+      }
+
+      this.response = resp;
+      this.flushed = true;
+
+      while(this.methods[0]) {
+        this.methods.shift()(resp);
+      }
+    }
+  }
+
   var jribbbleBase = {
     get: function() {
       if (!ACCESS_TOKEN) {
@@ -25,7 +53,7 @@
 
         return false;
       }
-      console.log(this.url);
+
       $.ajax({
         type: 'GET',
         url: this.url,
@@ -39,7 +67,8 @@
           this.reject(jqxhr);
         }.bind(this)
       });
-
+      // console.log(this);
+      // console.log(this.url);
       return this;
     },
 
@@ -84,11 +113,79 @@
   var Shots = function(undefined, shotsOpts) {
     $.extend(this, $.Deferred(), jribbbleBase);
 
+    this.queue = new Queue();
     this.url = API_URL + '/shots';
     this.initArgsArray = [].slice.call(arguments);
     this.initOpts = shotsOpts || {};
+    this.queue.flush(this);
+    return this;
 
-    this.shots = function(args, opts) {
+    // this.shots = function(args, opts) {
+    //   var params = opts || this.initOpts;
+    //   var negotiated = negotiateArgs(args || this.initArgsArray) || {};
+    //   var url = this.url;
+    //
+    //   if (negotiated.resource) {
+    //     url += '/' + negotiated.resource;
+    //     delete negotiated.resource;
+    //   }
+    //
+    //   url += this.parseParams($.extend(negotiated, params));
+    //   this.url = url;
+    //
+    //   return this;
+    // };
+
+    // this.attachments = function(undefined, opts) {
+    //   var params = opts || {};
+    //   var negotiated = negotiateArgs([].slice.call(arguments)) || {};
+    //   var url = this.url + '/attachments';
+    //
+    //   if (negotiated.resource) {
+    //     url += '/' + negotiated.resource;
+    //     delete negotiated.resource;
+    //   }
+    //
+    //   url += this.parseParams($.extend(negotiated, params));
+    //   this.url = url;
+    //
+    //   // Maybe the GET is here?
+    //
+    //   return this;
+    // };
+
+    // this.buckets = function() {
+    //   this.url = this.url + '/buckets';
+    //   return this;
+    // };
+
+    // this.comments = function(id) {
+    //   var resource = id || null;
+    //   this.url = this.url + '/comments';
+    //
+    //   if (resource) {
+    //     this.url += '/' + resource;
+    //   }
+    //
+    //   // This is a subordinate resource of likes, it cannot be called directly
+    //   this.likes = function() {
+    //     if (!resource) {
+    //       console.warn('Jribbble: You have to pass a comment id to get the likes for it. ex: comments("1234").likes()');
+    //     } else {
+    //       this.url += '/likes';
+    //     }
+    //
+    //     return this;
+    //   }
+    //
+    //   return this;
+    // };
+
+    // return this;
+  };
+
+  Shots.prototype = {
+    shots: function(args, opts) {
       var params = opts || this.initOpts;
       var negotiated = negotiateArgs(args || this.initArgsArray) || {};
       var url = this.url;
@@ -99,65 +196,20 @@
       }
 
       url += this.parseParams($.extend(negotiated, params));
-      this.url = url;
+
+      this.queue.add(function(self) {
+        self.url = url;
+      });
 
       return this;
-    };
-
-    this.attachments = function(undefined, opts) {
-      var params = opts || {};
-      var negotiated = negotiateArgs([].slice.call(arguments)) || {};
-      var url = this.url + '/attachments';
-
-      if (negotiated.resource) {
-        url += '/' + negotiated.resource;
-        delete negotiated.resource;
-      }
-
-      url += this.parseParams($.extend(negotiated, params));
-      this.url = url;
-
-      return this;
-    };
-
-    this.buckets = function() {
-      this.url = this.url + '/buckets';
-      return this;
-    };
-
-    this.comments = function(id) {
-      var resource = id || null;
-      this.url = this.url + '/comments';
-
-      if (resource) {
-        this.url += '/' + resource;
-      }
-
-      // This is a subordinate resource of likes, it cannot be called directly
-      this.likes = function() {
-        if (!resource) {
-          console.warn('Jribbble: You have to pass a comment id to get the likes for it. ex: comments("1234").likes()');
-        } else {
-          this.url += '/likes';
-        }
-
-        return this;
-      }
-
-      return this;
-    };
-
-    this.start = function() {
-      return this.shots(this.initArgsArray, this.initOpts);
-    };
-
-    return this;
-  };
+    }
+  }
 
   $.jribbble.shots = function(undefined, opts) {
-    var shots = new Shots(undefined, opts).start();
-    console.log(shots);
-    return shots.get();
+    var shots = new Shots();
+    // console.log(Shots());
+
+    return shots.shots(undefined, opts);
   };
 
   $.jribbble.setToken = function(token) {
