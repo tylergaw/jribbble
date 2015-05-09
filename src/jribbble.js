@@ -226,6 +226,7 @@
 
       this.queue.add(function(self) {
         if (shotArgsNegotiated.resource) {
+          self.resource = shotArgsNegotiated.resource;
           self.url += '/' + shotArgsNegotiated.resource;
           delete shotArgsNegotiated.resource;
         }
@@ -239,13 +240,17 @@
       // the queue is stocked before we flush it.
       setTimeout(function() {
         this.queue.flush(this).get();
-      }.bind(this), 0);
+      }.bind(this));
 
       return this;
     };
 
     Shots.prototype.attachments = function() {
       this.queue.add(function(self) {
+        if (!self.resource) {
+          throw new Error('Jribbble: You have to provide a shot ID to get attachments. ex: $.jribbble.shots("1234").attachments()');
+        }
+
         self.url += '/attachments';
       });
 

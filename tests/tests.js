@@ -57,12 +57,19 @@ test('jribbble.shots urls', function(assert) {
   });
 });
 
-// test('jribbble.shots.attachments urls', function(assert) {
-//   var url = API_URL + '/shots/1234';
-//
-//   assert.equal(
-//     $.jribbble.shots('1234').attachments().url,
-//     url + '/attachments',
-//     'All attachments() for the shot 1234.'
-//   );
-// });
+test('jribbble.shots.attachments urls', function(assert) {
+  var url = API_URL + '/shots/1234/attachments';
+  var done = assert.async();
+
+  var attachments = $.jribbble.shots('1234').attachments();
+
+  setTimeout(function() {
+    assert.equal(
+      attachments.url,
+      url,
+      'attachments() with no arguments: ' + attachments.url
+    );
+
+    done();
+  });
+});
