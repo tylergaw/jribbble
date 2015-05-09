@@ -18,6 +18,16 @@
     'teams'
   ];
 
+  var ERROR_MSGS = {
+    token: 'Jribbble: Missing Dribbble access token. Set one with $.jribbble.accessToken = YOUR_ACCESS_TOKEN. If you do not have an access token, you must register a new application at https://dribbble.com/account/applications/new',
+
+    // A shot ID is required to get shot sub-resources.
+    shotId: function(resource) {
+      return 'Jribbble: You have to provide a shot ID to get %@. ex: $.jribbble.shots("1234").%@()'.replace(/%@/g, resource);
+    },
+    commentLikes: 'Jribbble: You have to provide a comment ID to get likes. ex: $.jribbble.shots("1234").comments("456").likes()'
+  };
+
   // Provide an object of key: value params. Get back a URL encoded string if
   // params has keys.
   var parseParams = function(params) {
@@ -95,7 +105,7 @@
 
     ext.get = function() {
       if (!ACCESS_TOKEN) {
-        console.error('Jribbble: Missing Dribbble access token. Set one with $.jribbble.accessToken = YOUR_ACCESS_TOKEN. If you do not have an access token, you must register a new application at https://dribbble.com/account/applications/new');
+        console.error(ERROR_MSGS.token);
 
         return false;
       }
@@ -121,54 +131,6 @@
   };
 
   // var Shots = function(undefined, shotsOpts) {
-  //   $.extend(this, $.Deferred(), jribbbleBase);
-  //
-  //   this.queue = new Queue();
-  //   this.url = API_URL + '/shots';
-  //   this.initArgsArray = [].slice.call(arguments);
-  //   this.initOpts = shotsOpts || {};
-  //   this.queue.flush(this);
-  //   return this;
-
-    // this.shots = function(args, opts) {
-    //   var params = opts || this.initOpts;
-    //   var negotiated = negotiateArgs(args || this.initArgsArray) || {};
-    //   var url = this.url;
-    //
-    //   if (negotiated.resource) {
-    //     url += '/' + negotiated.resource;
-    //     delete negotiated.resource;
-    //   }
-    //
-    //   url += this.parseParams($.extend(negotiated, params));
-    //   this.url = url;
-    //
-    //   return this;
-    // };
-
-    // this.attachments = function(undefined, opts) {
-    //   var params = opts || {};
-    //   var negotiated = negotiateArgs([].slice.call(arguments)) || {};
-    //   var url = this.url + '/attachments';
-    //
-    //   if (negotiated.resource) {
-    //     url += '/' + negotiated.resource;
-    //     delete negotiated.resource;
-    //   }
-    //
-    //   url += this.parseParams($.extend(negotiated, params));
-    //   this.url = url;
-    //
-    //   // Maybe the GET is here?
-    //
-    //   return this;
-    // };
-
-    // this.buckets = function() {
-    //   this.url = this.url + '/buckets';
-    //   return this;
-    // };
-
     // this.comments = function(id) {
     //   var resource = id || null;
     //   this.url = this.url + '/comments';
@@ -193,27 +155,6 @@
 
     // return this;
   // };
-
-  // Shots.prototype = {
-  //   shots: function(args, opts) {
-  //     var params = opts || this.initOpts;
-  //     var negotiated = negotiateArgs(args || this.initArgsArray) || {};
-  //     var url = this.url;
-  //
-  //     if (negotiated.resource) {
-  //       url += '/' + negotiated.resource;
-  //       delete negotiated.resource;
-  //     }
-  //
-  //     url += this.parseParams($.extend(negotiated, params));
-  //
-  //     this.queue.add(function(self) {
-  //       self.url = url;
-  //     });
-  //
-  //     return this;
-  //   }
-  // }
 
   $.jribbble.shots = function(undefined, opts) {
     var shotsParams = opts || {};
@@ -248,7 +189,7 @@
     Shots.prototype.attachments = function(id) {
       this.queue.add(function(self) {
         if (!self.shotId) {
-          throw new Error('Jribbble: You have to provide a shot ID to get attachments. ex: $.jribbble.shots("1234").attachments()');
+          throw new Error(ERROR_MSGS.shotId('attachments'));
         }
 
         self.url += '/attachments/' + (id || '');
@@ -260,11 +201,35 @@
     Shots.prototype.buckets = function() {
       this.queue.add(function(self) {
         if (!self.shotId) {
-          throw new Error('Jribbble: You have to provide a shot ID to get buckets. ex: $.jribbble.shots("1234").buckets()');
+          throw new Error(ERROR_MSGS.shotId('buckets'));
         }
 
         self.url += '/buckets/';
       });
+
+      return this;
+    };
+
+    Shots.prototype.comments = function(id) {
+      this.queue.add(function(self) {
+        if (!self.shotId) {
+          throw new Error(ERROR_MSGS.shotId('comments'));
+        }
+
+        self.url += '/comments/' + (id || '');
+      });
+
+      this.likes = function() {
+        if (!id) {
+          throw new Error(ERROR_MSGS.commentLikes);
+        }
+
+        this.queue.add(function(self) {
+          self.url += '/likes/';
+        });
+
+        return this;
+      }
 
       return this;
     };

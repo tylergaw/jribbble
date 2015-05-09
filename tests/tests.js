@@ -97,3 +97,34 @@ test('jribbble.shots.buckets urls', function(assert) {
     done();
   });
 });
+
+test('jribbble.shots.comments urls', function(assert) {
+  var url = API_URL + '/shots/1234/comments/';
+  var done = assert.async();
+
+  var comments = $.jribbble.shots('1234').comments();
+  var commentSingle = $.jribbble.shots('1234').comments('456');
+  var commentLikes = $.jribbble.shots('1234').comments('456').likes();
+
+  setTimeout(function() {
+    assert.equal(
+      comments.url,
+      url,
+      'comments() with no arguments: ' + comments.url
+    );
+
+    assert.equal(
+      commentSingle.url,
+      url + '456',
+      'comments() with a single comment id argument: ' + commentSingle.url
+    );
+
+    assert.equal(
+      commentLikes.url,
+      url + '456/likes',
+      'likes() for a comment with no arguments: ' + commentLikes.url
+    );
+
+    done();
+  });
+});
