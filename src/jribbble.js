@@ -222,6 +222,20 @@
       return this;
     };
 
+    Shots.prototype.projects = function(opts) {
+      var params = opts || {};
+
+      this.queue.add(function(self) {
+        if (!self.shotId) {
+          throw new Error(ERROR_MSGS.shotId('projects'));
+        }
+
+        self.url += '/projects/' + parseParams(params);
+      });
+
+      return this;
+    };
+
     return new Shots();
   };
 

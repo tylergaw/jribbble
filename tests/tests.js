@@ -155,3 +155,30 @@ test('jribbble.shots.likes urls', function(assert) {
     done();
   });
 });
+
+test('jribbble.shots.projects urls', function(assert) {
+  var url = API_URL + '/shots/1234/projects/';
+  var done = assert.async();
+
+  var projects = $.jribbble.shots('1234').projects();
+  var projectsWithParams = $.jribbble.shots('1234').projects({
+    'per_page': 5,
+    'page': 2
+  });
+
+  setTimeout(function() {
+    assert.equal(
+      projects.url,
+      url,
+      'projects() with no arguments: ' + projects.url
+    );
+
+    assert.equal(
+      projectsWithParams.url,
+      url + '?per_page=5&page=2',
+      'projects() with per_page and page params: ' + projectsWithParams.url
+    );
+
+    done();
+  });
+});
