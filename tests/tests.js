@@ -4,43 +4,57 @@ var API_URL = 'https://api.dribbble.com/v1';
 // We don't need a real token here because we won't be making requests to the API
 $.jribbble.setToken('1234');
 
-test('jribbble.shots', function(assert) {
+// Since we don't want to test Promises and we don't want to test the Dribbble API,
+// we want to focus on the URLS that Jribbble creates. Each of theses tests makes
+// a call to shots() passing it different valid inputs that should produce valid
+// API URLs.
+test('jribbble.shots urls', function(assert) {
   var url = API_URL + '/shots';
+  var done = assert.async();
 
   var shots = function(args) {
     var shots = $.jribbble.shots(args);
-    console.log(args.per_page);
-    console.log(shots.url);
     return shots;
   };
 
-  // assert.equal(
-  //   shots().url, url,
-  //   'shots() with no arguments.'
-  // );
+  var shotsWithoutArgs = shots();
+  var shotsWithParams = shots({
+    'per_page': 5,
+    'page': 2,
+    'sort': 'views',
+    'timeframe': 'month'
+  });
+  var shotsWithListName = shots('animated');
+  var shotsWithID = shots('1234');
 
-  assert.equal(
-    shots({'per_page': 5, 'page': 2}).url, url + '?per_page=5&page=2',
-    'shots() with per_page and page params.'
-  );
-  //
-  // assert.equal(
-  //   $.jribbble.shots('animated').url,
-  //   url + '?list=animated',
-  //   'shots() with a list name.'
-  // );
-  //
-  // assert.equal(
-  //   $.jribbble.shots('1234').url,
-  //   url + '/1234',
-  //   'shots() with a shot ID.'
-  // );
-  //
-  // assert.equal(
-  //   $.jribbble.shots('1234', {'per_page': 3}).url,
-  //   url + '/1234?per_page=3',
-  //   'shots() with a shot ID and per_page param.'
-  // );
+  // jribbble.shots is an async queue so we need to wait a moment.
+  setTimeout(function() {
+    assert.equal(
+      shotsWithoutArgs.url,
+      url,
+      'shots() with no arguments: ' + shotsWithoutArgs.url
+    );
+
+    assert.equal(
+      shotsWithParams.url,
+      url + '?per_page=5&page=2&sort=views&timeframe=month',
+      'shots() with per_page and page params: ' + shotsWithParams.url
+    );
+
+    assert.equal(
+      shotsWithListName.url,
+      url + '?list=animated',
+      'shots() with a list name: ' + shotsWithListName.url
+    );
+
+    assert.equal(
+      shotsWithID.url,
+      url + '/1234',
+      'shots() with a shot ID: ' + shotsWithID.url
+    );
+
+    done();
+  });
 });
 
 // test('jribbble.shots.attachments urls', function(assert) {
