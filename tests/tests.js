@@ -63,6 +63,10 @@ test('jribbble.shots.attachments urls', function(assert) {
 
   var attachments = $.jribbble.shots('1234').attachments();
   var attachmentSingle = $.jribbble.shots('1234').attachments('456');
+  var attachmentSingleWithParams = $.jribbble.shots('1234').attachments('456', {
+    'per_page': 5,
+    'page': 2
+  });
 
   setTimeout(function() {
     assert.equal(
@@ -74,7 +78,18 @@ test('jribbble.shots.attachments urls', function(assert) {
     assert.equal(
       attachmentSingle.url,
       url + '456',
-      'attachments() with a single attachment id argument: ' + attachmentSingle.url
+      'attachments() with a single attachment id argument: '
+        + attachmentSingle.url
+    );
+
+    // This is kind of a silly test, because this is not something would likely
+    // been needed with the API, but I'm keeping it in here to make sure the code
+    // can handle it.
+    assert.equal(
+      attachmentSingleWithParams.url,
+      url + '456' + '?per_page=5&page=2',
+      'attachments() with a single attachment id argument and params: '
+        + attachmentSingleWithParams.url
     );
 
     done();

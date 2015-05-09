@@ -131,8 +131,37 @@
   };
 
   $.jribbble.shots = function(undefined, opts) {
-    var shotsParams = opts || {};
     var shotArgsNegotiated = negotiateArgs([].slice.call(arguments)) || {};
+    var shotsParams = opts || {};
+
+    // Because most shot subresources; likes, projects, buckets, etc. all do
+    // pretty much the same thing, we can avoid repeating code by using
+    // currying. For each subresource we call this function and pass it the name
+    // of the resource, it returns jribbble API method for that resource.
+    // Yay programming!
+    var shotSubResource = function(resource) {
+      return function(undefined, opts) {
+        var negotiated = negotiateArgs([].slice.call(arguments)) || {};
+        var params = opts || {};
+
+        this.queue.add(function(self) {
+          if (!self.shotId) {
+            throw new Error(ERROR_MSGS.shotId(resource));
+          }
+
+          self.url += '/' + resource + '/';
+
+          if (negotiated.resource) {
+            self.url += negotiated.resource;
+            delete negotiated.resource;
+          }
+
+          self.url += parseParams($.extend(negotiated, params));
+        });
+
+        return this;
+      };
+    };
 
     var Shots = function() {
       $.extend(this, jribbbleBase());
@@ -160,29 +189,11 @@
       return this;
     };
 
-    Shots.prototype.attachments = function(id) {
-      this.queue.add(function(self) {
-        if (!self.shotId) {
-          throw new Error(ERROR_MSGS.shotId('attachments'));
-        }
-
-        self.url += '/attachments/' + (id || '');
-      });
-
-      return this;
-    };
-
-    Shots.prototype.buckets = function() {
-      this.queue.add(function(self) {
-        if (!self.shotId) {
-          throw new Error(ERROR_MSGS.shotId('buckets'));
-        }
-
-        self.url += '/buckets/';
-      });
-
-      return this;
-    };
+    Shots.prototype.attachments = shotSubResource('attachments');
+    Shots.prototype.buckets = shotSubResource('buckets');
+    Shots.prototype.likes = shotSubResource('likes');
+    Shots.prototype.projects = shotSubResource('projects');
+    Shots.prototype.rebounds = shotSubResource('rebounds');
 
     Shots.prototype.comments = function(id) {
       this.queue.add(function(self) {
@@ -204,48 +215,6 @@
 
         return this;
       }
-
-      return this;
-    };
-
-    Shots.prototype.likes = function(opts) {
-      var params = opts || {};
-
-      this.queue.add(function(self) {
-        if (!self.shotId) {
-          throw new Error(ERROR_MSGS.shotId('likes'));
-        }
-
-        self.url += '/likes/' + parseParams(params);
-      });
-
-      return this;
-    };
-
-    Shots.prototype.projects = function(opts) {
-      var params = opts || {};
-
-      this.queue.add(function(self) {
-        if (!self.shotId) {
-          throw new Error(ERROR_MSGS.shotId('projects'));
-        }
-
-        self.url += '/projects/' + parseParams(params);
-      });
-
-      return this;
-    };
-
-    Shots.prototype.rebounds = function(opts) {
-      var params = opts || {};
-
-      this.queue.add(function(self) {
-        if (!self.shotId) {
-          throw new Error(ERROR_MSGS.shotId('rebounds'));
-        }
-
-        self.url += '/rebounds/' + parseParams(params);
-      });
 
       return this;
     };
