@@ -80,3 +80,20 @@ test('jribbble.shots.attachments urls', function(assert) {
     done();
   });
 });
+
+test('jribbble.shots.buckets urls', function(assert) {
+  var url = API_URL + '/shots/1234/buckets/';
+  var done = assert.async();
+
+  var buckets = $.jribbble.shots('1234').buckets();
+
+  setTimeout(function() {
+    assert.equal(
+      buckets.url,
+      url,
+      'buckets() with no arguments: ' + buckets.url
+    );
+
+    done();
+  });
+});

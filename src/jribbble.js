@@ -259,59 +259,18 @@
 
     Shots.prototype.buckets = function() {
       this.queue.add(function(self) {
-        self.url += '/buckets';
+        if (!self.shotId) {
+          throw new Error('Jribbble: You have to provide a shot ID to get buckets. ex: $.jribbble.shots("1234").buckets()');
+        }
+
+        self.url += '/buckets/';
       });
 
       return this;
     };
 
     return new Shots();
-
-
-    // this.queue = new Queue();
-    // this.url = API_URL + '/shots';
-    //
-    // // TODO: no
-    // var self = this;
-    //
-    // var params = opts || {};
-    // var negotiated = negotiateArgs([].slice.call(arguments)) || {};
-    //
-    // if (negotiated.resource) {
-    //   this.url += '/' + negotiated.resource;
-    //   delete negotiated.resource;
-    // }
-    //
-    // this.url += parseParams($.extend(negotiated, params));
-    //
-    // // this.queue.add(function() {
-    //   // return this.url;
-    // // }.bind(this));
-    //
-    // this.queue.flush(this.url);
-    // return this;
   };
-
-  // $.jribbble.shots.prototype = {
-  //   attachments: function(undefined, opts) {
-  //     this.url += '/attachments';
-  //     var params = opts || {};
-  //     var negotiated = negotiateArgs([].slice.call(arguments)) || {};
-  //
-  //     if (negotiated.resource) {
-  //       this.url += '/' + negotiated.resource;
-  //       delete negotiated.resource;
-  //     }
-  //
-  //     this.url += parseParams($.extend(negotiated, params));
-  //
-  //     this.queue.add(function(self) {
-  //       self.url = url;
-  //     });
-  //
-  //     return this;
-  //   }
-  // };
 
   $.jribbble.setToken = function(token) {
     ACCESS_TOKEN = token;
