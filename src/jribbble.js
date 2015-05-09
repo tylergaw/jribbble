@@ -25,7 +25,12 @@
     shotId: function(resource) {
       return 'Jribbble: You have to provide a shot ID to get %@. ex: $.jribbble.shots("1234").%@()'.replace(/%@/g, resource);
     },
-    commentLikes: 'Jribbble: You have to provide a comment ID to get likes. ex: $.jribbble.shots("1234").comments("456").likes()'
+    commentLikes: 'Jribbble: You have to provide a comment ID to get likes. ex: $.jribbble.shots("1234").comments("456").likes()',
+
+    // A bucket ID is required to get bucket sub-resources.
+    bucketId: function(resource) {
+      return 'Jribbble: You have to provide a bucket ID to get %@. ex: $.jribbble.buckets("1234").%@()'.replace(/%@/g, resource);
+    },
   };
 
   // Provide an object of key: value params. Get back a URL encoded string if
@@ -204,6 +209,7 @@
     // like comments = new Comments(). Then likes could be added to the
     // prototype of the Comments instance?
     // TODO: Figure that out.
+    // TODO: Allow opts for comments, they support pagination.
     Shots.prototype.comments = function(id) {
       this.queue.add(function(self) {
         if (!self.shotId) {
@@ -231,6 +237,67 @@
     };
 
     return new Shots();
+  };
+
+  // TODO: DRY
+  $.jribbble.buckets = function(undefined, opts) {
+    var bucketArgsNegotiated = negotiateArgs([].slice.call(arguments)) || {};
+    var bucketsParams = opts || {};
+
+    var bucketSubResource = function(resource) {
+      return function(undefined, opts) {
+        var negotiated = negotiateArgs([].slice.call(arguments)) || {};
+        var params = opts || {};
+
+        this.queue.add(function(self) {
+          if (!self.bucketId) {
+            throw new Error(ERROR_MSGS.bucketId(resource));
+          }
+
+          self.url += '/' + resource + '/';
+
+          if (negotiated.resource) {
+            self.url += negotiated.resource;
+            delete negotiated.resource;
+          }
+
+          self.url += parseParams($.extend(negotiated, params));
+        });
+
+        return this;
+      };
+    }
+
+    var Buckets = function() {
+      $.extend(this, jribbbleBase());
+
+      this.url += '/buckets/';
+
+      this.queue.add(function(self) {
+        if (bucketArgsNegotiated.resource) {
+          self.bucketId = bucketArgsNegotiated.resource;
+          self.url += bucketArgsNegotiated.resource;
+          delete bucketArgsNegotiated.resource;
+        }
+
+        self.url += parseParams($.extend(bucketArgsNegotiated, bucketsParams));
+      });
+
+      // Jribbble seems to need an async queue, because we need to run the
+      // server request at the end of the chain, but we will never know how
+      // long the chain is. This is a super hack way of "waiting" to make sure
+      // the queue is stocked before we flush it.
+      // TODO: DRY
+      setTimeout(function() {
+        this.queue.flush(this).get();
+      }.bind(this));
+
+      return this;
+    };
+
+    Buckets.prototype.shots = bucketSubResource('shots');
+
+    return new Buckets();
   };
 
   $.jribbble.setToken = function(token) {

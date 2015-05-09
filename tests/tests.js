@@ -235,3 +235,31 @@ test('jribbble.shots.rebounds urls', function(assert) {
     done();
   });
 });
+
+test('jribbble.buckets urls', function(assert) {
+  var url = API_URL + '/buckets/';
+  var done = assert.async();
+
+  var bucketsWithID = $.jribbble.buckets('1234');
+  var bucketsWithIDAndParams = $.jribbble.buckets('1234', {
+    'per_page': 5,
+    'page': 2
+  });
+
+  setTimeout(function() {
+    assert.equal(
+      bucketsWithID.url,
+      url + '1234',
+      'buckets() with a bucket ID: ' + bucketsWithID.url
+    );
+
+    assert.equal(
+      bucketsWithIDAndParams.url,
+      url + '1234?per_page=5&page=2',
+      'buckets() with a bucket ID and per_page and page params: '
+        + bucketsWithIDAndParams.url
+    );
+
+    done();
+  });
+});
