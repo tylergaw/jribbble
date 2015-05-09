@@ -121,8 +121,35 @@ test('jribbble.shots.comments urls', function(assert) {
 
     assert.equal(
       commentLikes.url,
-      url + '456/likes',
+      url + '456/likes/',
       'likes() for a comment with no arguments: ' + commentLikes.url
+    );
+
+    done();
+  });
+});
+
+test('jribbble.shots.likes urls', function(assert) {
+  var url = API_URL + '/shots/1234/likes/';
+  var done = assert.async();
+
+  var likes = $.jribbble.shots('1234').likes();
+  var likesWithParams = $.jribbble.shots('1234').likes({
+    'per_page': 5,
+    'page': 2
+  });
+
+  setTimeout(function() {
+    assert.equal(
+      likes.url,
+      url,
+      'likes() with no arguments: ' + likes.url
+    );
+
+    assert.equal(
+      likesWithParams.url,
+      url + '?per_page=5&page=2',
+      'likes() with per_page and page params: ' + likesWithParams.url
     );
 
     done();

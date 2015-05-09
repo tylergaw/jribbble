@@ -130,32 +130,6 @@
     return ext;
   };
 
-  // var Shots = function(undefined, shotsOpts) {
-    // this.comments = function(id) {
-    //   var resource = id || null;
-    //   this.url = this.url + '/comments';
-    //
-    //   if (resource) {
-    //     this.url += '/' + resource;
-    //   }
-    //
-    //   // This is a subordinate resource of likes, it cannot be called directly
-    //   this.likes = function() {
-    //     if (!resource) {
-    //       console.warn('Jribbble: You have to pass a comment id to get the likes for it. ex: comments("1234").likes()');
-    //     } else {
-    //       this.url += '/likes';
-    //     }
-    //
-    //     return this;
-    //   }
-    //
-    //   return this;
-    // };
-
-    // return this;
-  // };
-
   $.jribbble.shots = function(undefined, opts) {
     var shotsParams = opts || {};
     var shotArgsNegotiated = negotiateArgs([].slice.call(arguments)) || {};
@@ -230,6 +204,20 @@
 
         return this;
       }
+
+      return this;
+    };
+
+    Shots.prototype.likes = function(opts) {
+      var params = opts || {};
+
+      this.queue.add(function(self) {
+        if (!self.shotId) {
+          throw new Error(ERROR_MSGS.shotId('likes'));
+        }
+
+        self.url += '/likes/' + parseParams(params);
+      });
 
       return this;
     };
