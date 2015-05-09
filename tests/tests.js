@@ -182,3 +182,30 @@ test('jribbble.shots.projects urls', function(assert) {
     done();
   });
 });
+
+test('jribbble.shots.rebounds urls', function(assert) {
+  var url = API_URL + '/shots/1234/rebounds/';
+  var done = assert.async();
+
+  var rebounds = $.jribbble.shots('1234').rebounds();
+  var reboundsWithParams = $.jribbble.shots('1234').rebounds({
+    'per_page': 5,
+    'page': 2
+  });
+
+  setTimeout(function() {
+    assert.equal(
+      rebounds.url,
+      url,
+      'rebounds() with no arguments: ' + rebounds.url
+    );
+
+    assert.equal(
+      reboundsWithParams.url,
+      url + '?per_page=5&page=2',
+      'rebounds() with per_page and page params: ' + reboundsWithParams.url
+    );
+
+    done();
+  });
+});

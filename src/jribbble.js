@@ -236,6 +236,20 @@
       return this;
     };
 
+    Shots.prototype.rebounds = function(opts) {
+      var params = opts || {};
+
+      this.queue.add(function(self) {
+        if (!self.shotId) {
+          throw new Error(ERROR_MSGS.shotId('rebounds'));
+        }
+
+        self.url += '/rebounds/' + parseParams(params);
+      });
+
+      return this;
+    };
+
     return new Shots();
   };
 
