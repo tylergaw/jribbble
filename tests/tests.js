@@ -9,7 +9,7 @@ $.jribbble.setToken('1234');
 // a call to shots() passing it different valid inputs that should produce valid
 // API URLs.
 test('jribbble.shots urls', function(assert) {
-  var url = API_URL + '/shots';
+  var url = API_URL + '/shots/';
   var done = assert.async();
 
   var shots = function(args) {
@@ -49,7 +49,7 @@ test('jribbble.shots urls', function(assert) {
 
     assert.equal(
       shotsWithID.url,
-      url + '/1234',
+      url + '1234',
       'shots() with a shot ID: ' + shotsWithID.url
     );
 
@@ -58,16 +58,23 @@ test('jribbble.shots urls', function(assert) {
 });
 
 test('jribbble.shots.attachments urls', function(assert) {
-  var url = API_URL + '/shots/1234/attachments';
+  var url = API_URL + '/shots/1234/attachments/';
   var done = assert.async();
 
   var attachments = $.jribbble.shots('1234').attachments();
+  var attachmentSingle = $.jribbble.shots('1234').attachments('456');
 
   setTimeout(function() {
     assert.equal(
       attachments.url,
       url,
       'attachments() with no arguments: ' + attachments.url
+    );
+
+    assert.equal(
+      attachmentSingle.url,
+      url + '456',
+      'attachments() with a single attachment id argument: ' + attachmentSingle.url
     );
 
     done();

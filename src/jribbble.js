@@ -222,12 +222,12 @@
     var Shots = function() {
       $.extend(this, jribbbleBase());
 
-      this.url += '/shots';
+      this.url += '/shots/';
 
       this.queue.add(function(self) {
         if (shotArgsNegotiated.resource) {
-          self.resource = shotArgsNegotiated.resource;
-          self.url += '/' + shotArgsNegotiated.resource;
+          self.shotId = shotArgsNegotiated.resource;
+          self.url += shotArgsNegotiated.resource;
           delete shotArgsNegotiated.resource;
         }
 
@@ -245,13 +245,13 @@
       return this;
     };
 
-    Shots.prototype.attachments = function() {
+    Shots.prototype.attachments = function(id) {
       this.queue.add(function(self) {
-        if (!self.resource) {
+        if (!self.shotId) {
           throw new Error('Jribbble: You have to provide a shot ID to get attachments. ex: $.jribbble.shots("1234").attachments()');
         }
 
-        self.url += '/attachments';
+        self.url += '/attachments/' + (id || '');
       });
 
       return this;
