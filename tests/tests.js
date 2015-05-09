@@ -120,6 +120,10 @@ test('jribbble.shots.comments urls', function(assert) {
   var comments = $.jribbble.shots('1234').comments();
   var commentSingle = $.jribbble.shots('1234').comments('456');
   var commentLikes = $.jribbble.shots('1234').comments('456').likes();
+  var commentLikesWithParams = $.jribbble.shots('1234').comments('456').likes({
+    'per_page': 5,
+    'page': 2
+  });
 
   setTimeout(function() {
     assert.equal(
@@ -138,6 +142,13 @@ test('jribbble.shots.comments urls', function(assert) {
       commentLikes.url,
       url + '456/likes/',
       'likes() for a comment with no arguments: ' + commentLikes.url
+    );
+
+    assert.equal(
+      commentLikesWithParams.url,
+      url + '456/likes/?per_page=5&page=2',
+      'likes() for a comment with per_page and page params: '
+        + commentLikesWithParams.url
     );
 
     done();

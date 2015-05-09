@@ -195,6 +195,15 @@
     Shots.prototype.projects = shotSubResource('projects');
     Shots.prototype.rebounds = shotSubResource('rebounds');
 
+    // Comments is a slightly different subresource because it has it's own
+    // likes subresource. Comments shares a number of things with the other
+    // shot subresources, but I haven't been able to figure out how to use
+    // the shotSubResource currying function here to reduce repitition because
+    // of the likes subresource.
+    // I think I could get that to work if I created comments as a new Object
+    // like comments = new Comments(). Then likes could be added to the
+    // prototype of the Comments instance?
+    // TODO: Figure that out.
     Shots.prototype.comments = function(id) {
       this.queue.add(function(self) {
         if (!self.shotId) {
@@ -204,17 +213,19 @@
         self.url += '/comments/' + (id || '');
       });
 
-      this.likes = function() {
+      this.likes = function(opts) {
+        var params = opts || {};
+
         if (!id) {
           throw new Error(ERROR_MSGS.commentLikes);
         }
 
         this.queue.add(function(self) {
-          self.url += '/likes/';
+          self.url += '/likes/' + parseParams(params);
         });
 
         return this;
-      }
+      };
 
       return this;
     };
