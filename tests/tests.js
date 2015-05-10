@@ -241,10 +241,6 @@ test('jribbble.buckets urls', function(assert) {
   var done = assert.async();
 
   var bucketsWithID = $.jribbble.buckets('1234');
-  var bucketsWithIDAndParams = $.jribbble.buckets('1234', {
-    'per_page': 5,
-    'page': 2
-  });
 
   setTimeout(function() {
     assert.equal(
@@ -252,12 +248,31 @@ test('jribbble.buckets urls', function(assert) {
       url + '1234',
       'buckets() with a bucket ID: ' + bucketsWithID.url
     );
+    done();
+  });
+});
+
+test('jribbble.buckets.shots urls', function(assert) {
+  var url = API_URL + '/buckets/1234/shots/';
+  var done = assert.async();
+
+  var shots = $.jribbble.buckets('1234').shots();
+  var shotsWithParams = $.jribbble.buckets('1234').shots({
+    'per_page': 5,
+    'page': 2
+  });
+
+  setTimeout(function() {
+    assert.equal(
+      shots.url,
+      url,
+      'shots() with no arguments: ' + shots.url
+    );
 
     assert.equal(
-      bucketsWithIDAndParams.url,
-      url + '1234?per_page=5&page=2',
-      'buckets() with a bucket ID and per_page and page params: '
-        + bucketsWithIDAndParams.url
+      shotsWithParams.url,
+      url + '?per_page=5&page=2',
+      'shots() with per_page and page params: ' + shotsWithParams.url
     );
 
     done();

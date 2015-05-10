@@ -27,8 +27,10 @@
     },
     commentLikes: 'Jribbble: You have to provide a comment ID to get likes. ex: $.jribbble.shots("1234").comments("456").likes()',
 
+    bucketId: 'Jribbble: You have to provide a bucket ID. ex: $.jribbble.buckets("1234").',
+
     // A bucket ID is required to get bucket sub-resources.
-    bucketId: function(resource) {
+    bucketSubResource: function(resource) {
       return 'Jribbble: You have to provide a bucket ID to get %@. ex: $.jribbble.buckets("1234").%@()'.replace(/%@/g, resource);
     },
   };
@@ -240,28 +242,21 @@
   };
 
   // TODO: DRY
-  $.jribbble.buckets = function(undefined, opts) {
-    var bucketArgsNegotiated = negotiateArgs([].slice.call(arguments)) || {};
-    var bucketsParams = opts || {};
+  $.jribbble.buckets = function(id) {
+    if (!id || typeof id === 'object') {
+      throw new Error(ERROR_MSGS.bucketId);
+    }
 
     var bucketSubResource = function(resource) {
-      return function(undefined, opts) {
-        var negotiated = negotiateArgs([].slice.call(arguments)) || {};
+      return function(opts) {
         var params = opts || {};
 
         this.queue.add(function(self) {
           if (!self.bucketId) {
-            throw new Error(ERROR_MSGS.bucketId(resource));
+            throw new Error(ERROR_MSGS.bucketSubResource(resource));
           }
 
-          self.url += '/' + resource + '/';
-
-          if (negotiated.resource) {
-            self.url += negotiated.resource;
-            delete negotiated.resource;
-          }
-
-          self.url += parseParams($.extend(negotiated, params));
+          self.url += '/' + resource + '/' + parseParams(params);
         });
 
         return this;
@@ -270,23 +265,12 @@
 
     var Buckets = function() {
       $.extend(this, jribbbleBase());
-
-      this.url += '/buckets/';
+      this.bucketId = id;
 
       this.queue.add(function(self) {
-        if (bucketArgsNegotiated.resource) {
-          self.bucketId = bucketArgsNegotiated.resource;
-          self.url += bucketArgsNegotiated.resource;
-          delete bucketArgsNegotiated.resource;
-        }
-
-        self.url += parseParams($.extend(bucketArgsNegotiated, bucketsParams));
+        self.url += '/buckets/' + id;
       });
 
-      // Jribbble seems to need an async queue, because we need to run the
-      // server request at the end of the chain, but we will never know how
-      // long the chain is. This is a super hack way of "waiting" to make sure
-      // the queue is stocked before we flush it.
       // TODO: DRY
       setTimeout(function() {
         this.queue.flush(this).get();
