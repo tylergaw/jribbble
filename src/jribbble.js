@@ -21,18 +21,19 @@
   var ERROR_MSGS = {
     token: 'Jribbble: Missing Dribbble access token. Set one with $.jribbble.accessToken = YOUR_ACCESS_TOKEN. If you do not have an access token, you must register a new application at https://dribbble.com/account/applications/new',
 
+    idRequired: function(resource) {
+      return 'Jribbble: You have to provide a ' + resource + ' ID. ex: $.jribbble.%@("1234").'.replace(/%@/g, resource);
+    },
+
+    subResource: function(resource) {
+      return 'Jribbble: You have to provide a ' + resource + ' ID to get %@. ex: $.jribbble.%@("1234").%@()'.replace(/%@/g, resource);
+    },
+
     // A shot ID is required to get shot sub-resources.
     shotId: function(resource) {
       return 'Jribbble: You have to provide a shot ID to get %@. ex: $.jribbble.shots("1234").%@()'.replace(/%@/g, resource);
     },
-    commentLikes: 'Jribbble: You have to provide a comment ID to get likes. ex: $.jribbble.shots("1234").comments("456").likes()',
-
-    bucketId: 'Jribbble: You have to provide a bucket ID. ex: $.jribbble.buckets("1234").',
-
-    // A bucket ID is required to get bucket sub-resources.
-    bucketSubResource: function(resource) {
-      return 'Jribbble: You have to provide a bucket ID to get %@. ex: $.jribbble.buckets("1234").%@()'.replace(/%@/g, resource);
-    },
+    commentLikes: 'Jribbble: You have to provide a comment ID to get likes. ex: $.jribbble.shots("1234").comments("456").likes()'
   };
 
   // Provide an object of key: value params. Get back a URL encoded string if
@@ -244,16 +245,16 @@
   // TODO: DRY
   $.jribbble.buckets = function(id) {
     if (!id || typeof id === 'object') {
-      throw new Error(ERROR_MSGS.bucketId);
+      throw new Error(ERROR_MSGS.idRequired('buckets'));
     }
 
-    var bucketSubResource = function(resource) {
+    var subResource = function(resource) {
       return function(opts) {
         var params = opts || {};
 
         this.queue.add(function(self) {
           if (!self.bucketId) {
-            throw new Error(ERROR_MSGS.bucketSubResource(resource));
+            throw new Error(ERROR_MSGS.subResource(resource));
           }
 
           self.url += '/' + resource + '/' + parseParams(params);
@@ -279,9 +280,52 @@
       return this;
     };
 
-    Buckets.prototype.shots = bucketSubResource('shots');
+    Buckets.prototype.shots = subResource('shots');
 
     return new Buckets();
+  };
+
+  // TODO: DRY
+  $.jribbble.projects = function(id) {
+    if (!id || typeof id === 'object') {
+      throw new Error(ERROR_MSGS.idRequired('projects'));
+    }
+
+    var subResource = function(resource) {
+      return function(opts) {
+        var params = opts || {};
+
+        this.queue.add(function(self) {
+          if (!self.projectId) {
+            throw new Error(ERROR_MSGS.subResource(resource));
+          }
+
+          self.url += '/' + resource + '/' + parseParams(params);
+        });
+
+        return this;
+      };
+    }
+
+    var Projects = function() {
+      $.extend(this, jribbbleBase());
+      this.projectId = id;
+
+      this.queue.add(function(self) {
+        self.url += '/projects/' + id;
+      });
+
+      // TODO: DRY
+      setTimeout(function() {
+        this.queue.flush(this).get();
+      }.bind(this));
+
+      return this;
+    };
+
+    Projects.prototype.shots = subResource('shots');
+
+    return new Projects();
   };
 
   $.jribbble.setToken = function(token) {

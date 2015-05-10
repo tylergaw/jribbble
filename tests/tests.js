@@ -278,3 +278,46 @@ test('jribbble.buckets.shots urls', function(assert) {
     done();
   });
 });
+
+test('jribbble.projects urls', function(assert) {
+  var url = API_URL + '/projects/';
+  var done = assert.async();
+
+  var projectsWithID = $.jribbble.projects('1234');
+
+  setTimeout(function() {
+    assert.equal(
+      projectsWithID.url,
+      url + '1234',
+      'projects() with a project ID: ' + projectsWithID.url
+    );
+    done();
+  });
+});
+
+test('jribbble.projects.shots urls', function(assert) {
+  var url = API_URL + '/projects/1234/shots/';
+  var done = assert.async();
+
+  var shots = $.jribbble.projects('1234').shots();
+  var shotsWithParams = $.jribbble.projects('1234').shots({
+    'per_page': 5,
+    'page': 2
+  });
+
+  setTimeout(function() {
+    assert.equal(
+      shots.url,
+      url,
+      'shots() with no arguments: ' + shots.url
+    );
+
+    assert.equal(
+      shotsWithParams.url,
+      url + '?per_page=5&page=2',
+      'shots() with per_page and page params: ' + shotsWithParams.url
+    );
+
+    done();
+  });
+});
