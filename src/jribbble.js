@@ -43,6 +43,16 @@
     commentLikes: 'Jribbble: You have to provide a comment ID to get likes. ex: $.jribbble.shots("1234").comments("456").likes()'
   };
 
+  // A number of resources do not allow for bare calls to them, they require a
+  // resource ID. If the ID is not provided, things will not function so we err.
+  var checkId = function(id, resource) {
+    if (!id || typeof id === 'object') {
+      throw new Error(ERROR_MSGS.idRequired(resource));
+    } else {
+      return id;
+    }
+  };
+
   // Provide an object of key: value params. Get back a URL encoded string if
   // params has keys.
   var parseParams = function(params) {
@@ -143,6 +153,22 @@
     }
 
     return ext;
+  };
+
+  var resourceWithoutOpts = function(resource) {
+    return function(resourceId) {
+      $.extend(this, jribbbleBase());
+
+      this.queue.add(function(self) {
+        self.url += '/' + resource + '/' + resourceId;
+      });
+
+      setTimeout(function() {
+        this.queue.flush(this).get();
+      }.bind(this));
+
+      return this;
+    };
   };
 
   // Because a number of API resources are set up the same way, we can create
@@ -263,54 +289,18 @@
     return new Shots();
   };
 
-  // TODO: DRY
   $.jribbble.buckets = function(id) {
-    if (!id || typeof id === 'object') {
-      throw new Error(ERROR_MSGS.idRequired('buckets'));
-    }
-
-    var Buckets = function() {
-      $.extend(this, jribbbleBase());
-
-      this.queue.add(function(self) {
-        self.url += '/buckets/' + id;
-      });
-
-      setTimeout(function() {
-        this.queue.flush(this).get();
-      }.bind(this));
-
-      return this;
-    };
-
+    var resourceId = checkId(id, 'buckets');
+    var Buckets = resourceWithoutOpts.call(this, 'buckets');
     Buckets.prototype.shots = subResourceWithOpts.call(this, 'shots');
-
-    return new Buckets();
+    return new Buckets(resourceId);
   };
 
-  // TODO: DRY
   $.jribbble.projects = function(id) {
-    if (!id || typeof id === 'object') {
-      throw new Error(ERROR_MSGS.idRequired('projects'));
-    }
-
-    var Projects = function() {
-      $.extend(this, jribbbleBase());
-
-      this.queue.add(function(self) {
-        self.url += '/projects/' + id;
-      });
-
-      setTimeout(function() {
-        this.queue.flush(this).get();
-      }.bind(this));
-
-      return this;
-    };
-
+    var resourceId = checkId(id, 'projects');
+    var Projects = resourceWithoutOpts.call(this, 'projects');
     Projects.prototype.shots = subResourceWithOpts.call(this, 'shots');
-
-    return new Projects();
+    return new Projects(resourceId);
   };
 
   $.jribbble.setToken = function(token) {
