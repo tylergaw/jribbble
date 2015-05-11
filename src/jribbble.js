@@ -61,10 +61,17 @@
     }
   };
 
-  var createSubResources = function(obj, subResources) {
+  // Many top-level resources–users,buckets, etc–have subresources that all behave
+  // in a similar way. We use this function to create new methods on the top-level
+  // object's prototype.
+  var createSubResources = function(subResources) {
+    var obj = {};
+
     subResources.forEach(function(resource) {
-      obj.prototype[resource] = subResourceWithOpts.call(this, resource);
+      obj[resource] = subResourceWithOpts.call(this, resource);
     }.bind(this));
+
+    return obj;
   };
 
   // Provide an object of key: value params. Get back a URL encoded string if
@@ -324,8 +331,15 @@
     var resourceId = checkId(id, resource);
     var Teams = resourceWithoutOpts.call(this, resource);
 
-    Teams.prototype.members = subResourceWithOpts.call(this, 'members');
-    Teams.prototype.shots = subResourceWithOpts.call(this, 'shots');
+    Teams.prototype = createSubResources.call(this, [
+      'members',
+      'shots'
+    ]);
+
+    // createSubResources.call(this, Teams, [
+    //   'members',
+    //   'shots'
+    // ]);
 
     return new Teams(resourceId);
   };
@@ -335,7 +349,7 @@
     var resourceId = checkId(id, resource);
     var Users = resourceWithoutOpts.call(this, resource);
 
-    createSubResources.call(this, Users, [
+    Users.prototype = createSubResources.call(this, [
       'buckets',
       'followers',
       'following',
@@ -358,8 +372,7 @@
     var resource = 'buckets';
     var resourceId = checkId(id, resource);
     var Buckets = resourceWithoutOpts.call(this, resource);
-
-    Buckets.prototype.shots = subResourceWithOpts.call(this, 'shots');
+    Buckets.prototype = createSubResources.call(this, ['shots']);
 
     return new Buckets(resourceId);
   };
@@ -368,8 +381,7 @@
     var resource = 'projects';
     var resourceId = checkId(id, resource);
     var Projects = resourceWithoutOpts.call(this, resource);
-
-    Projects.prototype.shots = subResourceWithOpts.call(this, 'shots');
+    Projects.prototype = createSubResources.call(this, ['shots']);
 
     return new Projects(resourceId);
   };
