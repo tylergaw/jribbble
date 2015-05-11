@@ -313,17 +313,31 @@
     return new Shots();
   };
 
+  $.jribbble.teams = function(id) {
+    var resource = 'teams';
+    var resourceId = checkId(id, resource);
+    var Teams = resourceWithoutOpts.call(this, resource);
+    Teams.prototype.members = subResourceWithOpts.call(this, 'members');
+    Teams.prototype.shots = subResourceWithOpts.call(this, 'shots');
+
+    return new Teams(resourceId);
+  };
+
   $.jribbble.buckets = function(id) {
-    var resourceId = checkId(id, 'buckets');
-    var Buckets = resourceWithoutOpts.call(this, 'buckets');
+    var resource = 'buckets';
+    var resourceId = checkId(id, resource);
+    var Buckets = resourceWithoutOpts.call(this, resource);
     Buckets.prototype.shots = subResourceWithOpts.call(this, 'shots');
+
     return new Buckets(resourceId);
   };
 
   $.jribbble.projects = function(id) {
-    var resourceId = checkId(id, 'projects');
-    var Projects = resourceWithoutOpts.call(this, 'projects');
+    var resource = 'projects';
+    var resourceId = checkId(id, resource);
+    var Projects = resourceWithoutOpts.call(this, resource);
     Projects.prototype.shots = subResourceWithOpts.call(this, 'shots');
+
     return new Projects(resourceId);
   };
 

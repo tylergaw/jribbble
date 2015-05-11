@@ -321,3 +321,57 @@ test('jribbble.projects.shots urls', function(assert) {
     done();
   });
 });
+
+test('jribbble.teams.members urls', function(assert) {
+  var url = API_URL + '/teams/789/members/';
+  var done = assert.async();
+
+  var noParams = $.jribbble.teams('789').members();
+  var withParams = $.jribbble.teams('789').members({
+    'per_page': 5,
+    'page': 2
+  });
+
+  setTimeout(function() {
+    assert.equal(
+      noParams.url,
+      url,
+      'teams().members() with no arguments: ' + noParams.url
+    );
+
+    assert.equal(
+      withParams.url,
+      url + '?per_page=5&page=2',
+      'teams().members() with per_page and page params: ' + withParams.url
+    );
+
+    done();
+  });
+});
+
+test('jribbble.teams.shots urls', function(assert) {
+  var url = API_URL + '/teams/789/shots/';
+  var done = assert.async();
+
+  var noParams = $.jribbble.teams('789').shots();
+  var withParams = $.jribbble.teams('789').shots({
+    'per_page': 5,
+    'page': 2
+  });
+
+  setTimeout(function() {
+    assert.equal(
+      noParams.url,
+      url,
+      'teams().shots() with no arguments: ' + noParams.url
+    );
+
+    assert.equal(
+      withParams.url,
+      url + '?per_page=5&page=2',
+      'teams().shots() with per_page and page params: ' + withParams.url
+    );
+
+    done();
+  });
+});
