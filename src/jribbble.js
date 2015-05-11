@@ -61,6 +61,12 @@
     }
   };
 
+  var createSubResources = function(obj, subResources) {
+    subResources.forEach(function(resource) {
+      obj.prototype[resource] = subResourceWithOpts.call(this, resource);
+    }.bind(this));
+  };
+
   // Provide an object of key: value params. Get back a URL encoded string if
   // params has keys.
   var parseParams = function(params) {
@@ -169,7 +175,7 @@
       });
 
       return this;
-    }
+    };
 
     return ext;
   };
@@ -317,16 +323,42 @@
     var resource = 'teams';
     var resourceId = checkId(id, resource);
     var Teams = resourceWithoutOpts.call(this, resource);
+
     Teams.prototype.members = subResourceWithOpts.call(this, 'members');
     Teams.prototype.shots = subResourceWithOpts.call(this, 'shots');
 
     return new Teams(resourceId);
   };
 
+  $.jribbble.users = function(id) {
+    var resource = 'users';
+    var resourceId = checkId(id, resource);
+    var Users = resourceWithoutOpts.call(this, resource);
+
+    createSubResources.call(this, Users, [
+      'buckets',
+      'followers',
+      'following',
+      'likes',
+      'projects',
+      'shots',
+      'teams'
+    ]);
+
+    /* TODO: /users/:user/following/:target_user
+    Users.prototype.isFollowing = function(userId) {
+
+    };
+    */
+
+    return new Users(resourceId);
+  };
+
   $.jribbble.buckets = function(id) {
     var resource = 'buckets';
     var resourceId = checkId(id, resource);
     var Buckets = resourceWithoutOpts.call(this, resource);
+
     Buckets.prototype.shots = subResourceWithOpts.call(this, 'shots');
 
     return new Buckets(resourceId);
@@ -336,6 +368,7 @@
     var resource = 'projects';
     var resourceId = checkId(id, resource);
     var Projects = resourceWithoutOpts.call(this, resource);
+
     Projects.prototype.shots = subResourceWithOpts.call(this, 'shots');
 
     return new Projects(resourceId);

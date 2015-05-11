@@ -375,3 +375,209 @@ test('jribbble.teams.shots urls', function(assert) {
     done();
   });
 });
+
+test('jribbble.users urls', function(assert) {
+  var url = API_URL + '/users/melissa';
+  var done = assert.async();
+
+  var withID = $.jribbble.users('melissa');
+
+  setTimeout(function() {
+    assert.equal(
+      withID.url,
+      url,
+      'users() with a user ID: ' + withID.url
+    );
+
+    done();
+  });
+});
+
+test('jribbble.users.buckets urls', function(assert) {
+  var url = API_URL + '/users/melissa/buckets/';
+  var done = assert.async();
+
+  var noParams = $.jribbble.users('melissa').buckets();
+  var withParams = $.jribbble.users('melissa').buckets({
+    'per_page': 5,
+    'page': 2
+  });
+
+  setTimeout(function() {
+    assert.equal(
+      noParams.url,
+      url,
+      'users().buckets() with no arguments: ' + noParams.url
+    );
+
+    assert.equal(
+      withParams.url,
+      url + '?per_page=5&page=2',
+      'users().buckets() with per_page and page params: ' + withParams.url
+    );
+
+    done();
+  });
+});
+
+test('jribbble.users.followers urls', function(assert) {
+  var url = API_URL + '/users/melissa/followers/';
+  var done = assert.async();
+
+  var noParams = $.jribbble.users('melissa').followers();
+  var withParams = $.jribbble.users('melissa').followers({
+    'per_page': 5,
+    'page': 2
+  });
+
+  setTimeout(function() {
+    assert.equal(
+      noParams.url,
+      url,
+      'users().followers() with no arguments: ' + noParams.url
+    );
+
+    assert.equal(
+      withParams.url,
+      url + '?per_page=5&page=2',
+      'users().followers() with per_page and page params: ' + withParams.url
+    );
+
+    done();
+  });
+});
+
+test('jribbble.users.following urls', function(assert) {
+  var url = API_URL + '/users/melissa/following/';
+  var done = assert.async();
+
+  var noParams = $.jribbble.users('melissa').following();
+  var withParams = $.jribbble.users('melissa').following({
+    'per_page': 5,
+    'page': 2
+  });
+
+  setTimeout(function() {
+    assert.equal(
+      noParams.url,
+      url,
+      'users().following() with no arguments: ' + noParams.url
+    );
+
+    assert.equal(
+      withParams.url,
+      url + '?per_page=5&page=2',
+      'users().following() with per_page and page params: ' + withParams.url
+    );
+
+    done();
+  });
+});
+
+test('jribbble.users.likes urls', function(assert) {
+  var url = API_URL + '/users/melissa/likes/';
+  var done = assert.async();
+
+  var noParams = $.jribbble.users('melissa').likes();
+  var withParams = $.jribbble.users('melissa').likes({
+    'per_page': 5,
+    'page': 2
+  });
+
+  setTimeout(function() {
+    assert.equal(
+      noParams.url,
+      url,
+      'users().likes() with no arguments: ' + noParams.url
+    );
+
+    assert.equal(
+      withParams.url,
+      url + '?per_page=5&page=2',
+      'users().likes() with per_page and page params: ' + withParams.url
+    );
+
+    done();
+  });
+});
+
+test('jribbble.users.projects urls', function(assert) {
+  var url = API_URL + '/users/melissa/projects/';
+  var done = assert.async();
+
+  var noParams = $.jribbble.users('melissa').projects();
+  var withParams = $.jribbble.users('melissa').projects({
+    'per_page': 5,
+    'page': 2
+  });
+
+  setTimeout(function() {
+    assert.equal(
+      noParams.url,
+      url,
+      'users().projects() with no arguments: ' + noParams.url
+    );
+
+    assert.equal(
+      withParams.url,
+      url + '?per_page=5&page=2',
+      'users().projects() with per_page and page params: ' + withParams.url
+    );
+
+    done();
+  });
+});
+
+test('jribbble.users.shots urls', function(assert) {
+  var url = API_URL + '/users/melissa/shots/';
+  var done = assert.async();
+
+  var noParams = $.jribbble.users('melissa').shots();
+  var withParams = $.jribbble.users('melissa').shots({
+    'per_page': 5,
+    'page': 2
+  });
+
+  setTimeout(function() {
+    assert.equal(
+      noParams.url,
+      url,
+      'users().shots() with no arguments: ' + noParams.url
+    );
+
+    assert.equal(
+      withParams.url,
+      url + '?per_page=5&page=2',
+      'users().shots() with per_page and page params: ' + withParams.url
+    );
+
+    done();
+  });
+});
+
+test('jribbble.users.teams urls', function(assert) {
+  var url = API_URL + '/users/melissa/teams/';
+  var done = assert.async();
+
+  var noParams = $.jribbble.users('melissa').teams();
+  var withParams = $.jribbble.users('melissa').teams({
+    'per_page': 5,
+    'page': 2
+  });
+
+  setTimeout(function() {
+    assert.equal(
+      noParams.url,
+      url,
+      'users().teams() with no arguments: ' + noParams.url
+    );
+
+    assert.equal(
+      withParams.url,
+      url + '?per_page=5&page=2',
+      'users().teams() with per_page and page params: ' + withParams.url
+    );
+
+    done();
+  });
+});
