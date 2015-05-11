@@ -145,6 +145,20 @@
     return ext;
   };
 
+  // Because a number of API resources are set up the same way, we can create
+  // new Jribble API methods for them using currying. This function returns a
+  // function that allows for creating URLS like:
+  // /resource/subresource/?foo=1&bar=2
+  var subResourceWithOpts = function(resource) {
+    return function(opts) {
+      this.queue.add(function(self) {
+        self.url += '/' + resource + '/' + parseParams(opts || {});
+      });
+
+      return this;
+    };
+  };
+
   $.jribbble.shots = function(undefined, opts) {
     var shotArgsNegotiated = negotiateArgs([].slice.call(arguments)) || {};
     var shotsParams = opts || {};
@@ -255,16 +269,6 @@
       throw new Error(ERROR_MSGS.idRequired('buckets'));
     }
 
-    var subResource = function(resource) {
-      return function(opts) {
-        this.queue.add(function(self) {
-          self.url += '/' + resource + '/' + parseParams(opts || {});
-        });
-
-        return this;
-      };
-    }
-
     var Buckets = function() {
       $.extend(this, jribbbleBase());
 
@@ -272,7 +276,6 @@
         self.url += '/buckets/' + id;
       });
 
-      // TODO: DRY
       setTimeout(function() {
         this.queue.flush(this).get();
       }.bind(this));
@@ -280,7 +283,7 @@
       return this;
     };
 
-    Buckets.prototype.shots = subResource('shots');
+    Buckets.prototype.shots = subResourceWithOpts.call(this, 'shots');
 
     return new Buckets();
   };
@@ -291,16 +294,6 @@
       throw new Error(ERROR_MSGS.idRequired('projects'));
     }
 
-    var subResource = function(resource) {
-      return function(opts) {
-        this.queue.add(function(self) {
-          self.url += '/' + resource + '/' + parseParams(opts || {});
-        });
-
-        return this;
-      };
-    }
-
     var Projects = function() {
       $.extend(this, jribbbleBase());
 
@@ -308,7 +301,6 @@
         self.url += '/projects/' + id;
       });
 
-      // TODO: DRY
       setTimeout(function() {
         this.queue.flush(this).get();
       }.bind(this));
@@ -316,7 +308,7 @@
       return this;
     };
 
-    Projects.prototype.shots = subResource('shots');
+    Projects.prototype.shots = subResourceWithOpts.call(this, 'shots');
 
     return new Projects();
   };
