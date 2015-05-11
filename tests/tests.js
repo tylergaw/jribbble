@@ -72,13 +72,13 @@ test('jribbble.shots.attachments urls', function(assert) {
     assert.equal(
       attachments.url,
       url,
-      'attachments() with no arguments: ' + attachments.url
+      'shots().attachments() with no arguments: ' + attachments.url
     );
 
     assert.equal(
       attachmentSingle.url,
       url + '456',
-      'attachments() with a single attachment id argument: '
+      'shots().attachments() with a single attachment id argument: '
         + attachmentSingle.url
     );
 
@@ -88,7 +88,7 @@ test('jribbble.shots.attachments urls', function(assert) {
     assert.equal(
       attachmentSingleWithParams.url,
       url + '456' + '?per_page=5&page=2',
-      'attachments() with a single attachment id argument and params: '
+      'shots().attachments() with a single attachment id argument and params: '
         + attachmentSingleWithParams.url
     );
 
@@ -106,7 +106,7 @@ test('jribbble.shots.buckets urls', function(assert) {
     assert.equal(
       buckets.url,
       url,
-      'buckets() with no arguments: ' + buckets.url
+      'shots().buckets() with no arguments: ' + buckets.url
     );
 
     done();
@@ -129,25 +129,25 @@ test('jribbble.shots.comments urls', function(assert) {
     assert.equal(
       comments.url,
       url,
-      'comments() with no arguments: ' + comments.url
+      'shots().comments() with no arguments: ' + comments.url
     );
 
     assert.equal(
       commentSingle.url,
       url + '456',
-      'comments() with a single comment id argument: ' + commentSingle.url
+      'shots().comments() with a single comment id argument: ' + commentSingle.url
     );
 
     assert.equal(
       commentLikes.url,
       url + '456/likes/',
-      'likes() for a comment with no arguments: ' + commentLikes.url
+      'shots().comments().likes() for a comment with no arguments: ' + commentLikes.url
     );
 
     assert.equal(
       commentLikesWithParams.url,
       url + '456/likes/?per_page=5&page=2',
-      'likes() for a comment with per_page and page params: '
+      'shots().comments().likes() for a comment with per_page and page params: '
         + commentLikesWithParams.url
     );
 
@@ -169,13 +169,13 @@ test('jribbble.shots.likes urls', function(assert) {
     assert.equal(
       likes.url,
       url,
-      'likes() with no arguments: ' + likes.url
+      'shots().likes() with no arguments: ' + likes.url
     );
 
     assert.equal(
       likesWithParams.url,
       url + '?per_page=5&page=2',
-      'likes() with per_page and page params: ' + likesWithParams.url
+      'shots().likes() with per_page and page params: ' + likesWithParams.url
     );
 
     done();
@@ -196,13 +196,13 @@ test('jribbble.shots.projects urls', function(assert) {
     assert.equal(
       projects.url,
       url,
-      'projects() with no arguments: ' + projects.url
+      'shots().projects() with no arguments: ' + projects.url
     );
 
     assert.equal(
       projectsWithParams.url,
       url + '?per_page=5&page=2',
-      'projects() with per_page and page params: ' + projectsWithParams.url
+      'shots().projects() with per_page and page params: ' + projectsWithParams.url
     );
 
     done();
@@ -223,13 +223,13 @@ test('jribbble.shots.rebounds urls', function(assert) {
     assert.equal(
       rebounds.url,
       url,
-      'rebounds() with no arguments: ' + rebounds.url
+      'shots().rebounds() with no arguments: ' + rebounds.url
     );
 
     assert.equal(
       reboundsWithParams.url,
       url + '?per_page=5&page=2',
-      'rebounds() with per_page and page params: ' + reboundsWithParams.url
+      'shots().rebounds() with per_page and page params: ' + reboundsWithParams.url
     );
 
     done();
@@ -266,13 +266,13 @@ test('jribbble.buckets.shots urls', function(assert) {
     assert.equal(
       shots.url,
       url,
-      'shots() with no arguments: ' + shots.url
+      'buckets().shots() with no arguments: ' + shots.url
     );
 
     assert.equal(
       shotsWithParams.url,
       url + '?per_page=5&page=2',
-      'shots() with per_page and page params: ' + shotsWithParams.url
+      'buckets().shots() with per_page and page params: ' + shotsWithParams.url
     );
 
     done();
@@ -309,13 +309,13 @@ test('jribbble.projects.shots urls', function(assert) {
     assert.equal(
       shots.url,
       url,
-      'shots() with no arguments: ' + shots.url
+      'projects().shots() with no arguments: ' + shots.url
     );
 
     assert.equal(
       shotsWithParams.url,
       url + '?per_page=5&page=2',
-      'shots() with per_page and page params: ' + shotsWithParams.url
+      'projects().shots() with per_page and page params: ' + shotsWithParams.url
     );
 
     done();
