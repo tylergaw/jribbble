@@ -336,11 +336,6 @@
       'shots'
     ]);
 
-    // createSubResources.call(this, Teams, [
-    //   'members',
-    //   'shots'
-    // ]);
-
     return new Teams(resourceId);
   };
 
@@ -359,11 +354,13 @@
       'teams'
     ]);
 
-    /* TODO: /users/:user/following/:target_user
-    Users.prototype.isFollowing = function(userId) {
+    Users.prototype.isFollowing = function(targetUser) {
+      this.queue.add(function(self) {
+        self.url += '/following/' + targetUser;
+      });
 
+      return this;
     };
-    */
 
     return new Users(resourceId);
   };

@@ -474,6 +474,23 @@ test('jribbble.users.following urls', function(assert) {
   });
 });
 
+test('jribbble.users.isFollowing urls', function(assert) {
+  var url = API_URL + '/users/melissa/following/laura';
+  var done = assert.async();
+
+  var isFollowing = $.jribbble.users('melissa').isFollowing('laura');
+
+  setTimeout(function() {
+    assert.equal(
+      isFollowing.url,
+      url,
+      'users().isFollowing() with valid usernames: ' + isFollowing.url
+    );
+
+    done();
+  });
+});
+
 test('jribbble.users.likes urls', function(assert) {
   var url = API_URL + '/users/melissa/likes/';
   var done = assert.async();
