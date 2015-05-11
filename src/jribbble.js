@@ -18,29 +18,37 @@
     'teams'
   ];
 
+  // Rather than pepper the code with error messages, we use this object to store
+  // them. There are also a number of convenience methods here for creating
+  // common error messages for different resources.
   var ERROR_MSGS = {
-    token: 'Jribbble: Missing Dribbble access token. Set one with $.jribbble.accessToken = YOUR_ACCESS_TOKEN. If you do not have an access token, you must register a new application at https://dribbble.com/account/applications/new',
+    token: 'Jribbble: Missing Dribbble access token. Set one with ' +
+      '$.jribbble.accessToken = YOUR_ACCESS_TOKEN. If you do not have an ' +
+      'access token, you must register a new application at ' +
+      'https://dribbble.com/account/applications/new',
 
     singular: function(str) {
       return str.substr(0, str.length - 1);
     },
 
     idRequired: function(resource) {
-      return 'Jribbble: You have to provide a ' + this.singular(resource)
-        + ' ID. ex: $.jribbble.%@("1234").'.replace(/%@/g, resource);
+      return 'Jribbble: You have to provide a ' + this.singular(resource) +
+        ' ID. ex: $.jribbble.%@("1234").'.replace(/%@/g, resource);
     },
 
     subResource: function(resource) {
-      return 'Jribbble: You have to provide a ' + this.singular(resource)
-        + ' ID to get %@. ex: $.jribbble.%@("1234").%@()'.replace(/%@/g, resource);
+      return 'Jribbble: You have to provide a ' + this.singular(resource) +
+        ' ID to get %@. ex: $.jribbble.%@("1234").%@()'.replace(/%@/g, resource);
     },
 
     // A shot ID is required to get shot sub-resources.
     shotId: function(resource) {
-      return 'Jribbble: You have to provide a shot ID to get %@. ex: $.jribbble.shots("1234").%@()'.replace(/%@/g, resource);
+      return 'Jribbble: You have to provide a shot ID to get %@. ex: ' +
+        ' $.jribbble.shots("1234").%@()'.replace(/%@/g, resource);
     },
 
-    commentLikes: 'Jribbble: You have to provide a comment ID to get likes. ex: $.jribbble.shots("1234").comments("456").likes()'
+    commentLikes: 'Jribbble: You have to provide a comment ID to get likes. ex: ' +
+      ' $.jribbble.shots("1234").comments("456").likes()'
   };
 
   // A number of resources do not allow for bare calls to them, they require a
@@ -65,24 +73,33 @@
     }
   };
 
-  // TODO: Document this function ya dingus
+  // Because we want our API to be as flexible as possible, there are a number
+  // of methods where we'll allow different types of arguments to be passed as
+  // the first argument and then we'll figure out here what the user meant.
   var negotiateArgs = function(args) {
+    // If there's nothing here, just bail, that's OK. Calls like `shots()` are
+    // fine on their own.
     if (args.length !== 0) {
       var firstArg = args[0];
       var type = typeof firstArg;
       var params = {};
 
-      // These are valid shot(s) ID types
+      // If the first argument is a number or string, we're going to assume that
+      // the user wants a resource by id or name.
       if (type === 'number' || type === 'string') {
         var list = SHOT_LIST_TYPES.indexOf(firstArg);
 
-        // As a conveinence, you can pass the name of a shot list to shots()
-        // Checking to see if the given firstArg is in that list.
+        // Shots can be retrieved by the shot name. The Dribbble API wants this
+        // passed as a query paramter, but as a conveinence, you can pass the
+        // name of a shot list to shots() and we'll check here if that name
+        // is a valid shot list name.
         if (list > -1) {
           params.list = firstArg;
         } else {
           params.resource = firstArg;
         }
+      // If we see an object as the first parameter, we assume the user is
+      // providing options to be passed as query parameters.
       } else if (type === 'object') {
         params = firstArg;
       }
@@ -91,6 +108,8 @@
     }
   };
 
+  // All initial Jribbble API methods–shots, buckets, project, etc–share common
+  // functionality. We mix this base functionality into each one.
   var jribbbleBase = function() {
     var ext = $.extend({}, $.Deferred());
 
@@ -155,6 +174,11 @@
     return ext;
   };
 
+  // Because a number of API resources are set up the same way, we can create
+  // new Jribble API methods for them using currying. This extends the method
+  // with the JribbbleBase, adds a method to the queue, and sets the needed
+  // timeout for flushing the queue.
+  // See jribbble.buckets for example usage.
   var resourceWithoutOpts = function(resource) {
     return function(resourceId) {
       $.extend(this, jribbbleBase());
