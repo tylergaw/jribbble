@@ -21,18 +21,25 @@
   var ERROR_MSGS = {
     token: 'Jribbble: Missing Dribbble access token. Set one with $.jribbble.accessToken = YOUR_ACCESS_TOKEN. If you do not have an access token, you must register a new application at https://dribbble.com/account/applications/new',
 
+    singular: function(str) {
+      return str.substr(0, str.length - 1);
+    },
+
     idRequired: function(resource) {
-      return 'Jribbble: You have to provide a ' + resource + ' ID. ex: $.jribbble.%@("1234").'.replace(/%@/g, resource);
+      return 'Jribbble: You have to provide a ' + this.singular(resource)
+        + ' ID. ex: $.jribbble.%@("1234").'.replace(/%@/g, resource);
     },
 
     subResource: function(resource) {
-      return 'Jribbble: You have to provide a ' + resource + ' ID to get %@. ex: $.jribbble.%@("1234").%@()'.replace(/%@/g, resource);
+      return 'Jribbble: You have to provide a ' + this.singular(resource)
+        + ' ID to get %@. ex: $.jribbble.%@("1234").%@()'.replace(/%@/g, resource);
     },
 
     // A shot ID is required to get shot sub-resources.
     shotId: function(resource) {
       return 'Jribbble: You have to provide a shot ID to get %@. ex: $.jribbble.shots("1234").%@()'.replace(/%@/g, resource);
     },
+
     commentLikes: 'Jribbble: You have to provide a comment ID to get likes. ex: $.jribbble.shots("1234").comments("456").likes()'
   };
 
@@ -250,14 +257,8 @@
 
     var subResource = function(resource) {
       return function(opts) {
-        var params = opts || {};
-
         this.queue.add(function(self) {
-          if (!self.bucketId) {
-            throw new Error(ERROR_MSGS.subResource(resource));
-          }
-
-          self.url += '/' + resource + '/' + parseParams(params);
+          self.url += '/' + resource + '/' + parseParams(opts || {});
         });
 
         return this;
@@ -266,7 +267,6 @@
 
     var Buckets = function() {
       $.extend(this, jribbbleBase());
-      this.bucketId = id;
 
       this.queue.add(function(self) {
         self.url += '/buckets/' + id;
@@ -293,14 +293,8 @@
 
     var subResource = function(resource) {
       return function(opts) {
-        var params = opts || {};
-
         this.queue.add(function(self) {
-          if (!self.projectId) {
-            throw new Error(ERROR_MSGS.subResource(resource));
-          }
-
-          self.url += '/' + resource + '/' + parseParams(params);
+          self.url += '/' + resource + '/' + parseParams(opts || {});
         });
 
         return this;
@@ -309,7 +303,6 @@
 
     var Projects = function() {
       $.extend(this, jribbbleBase());
-      this.projectId = id;
 
       this.queue.add(function(self) {
         self.url += '/projects/' + id;
