@@ -20,16 +20,10 @@
 
     $.jribbble.setToken('f688ac519289f19ce5cebc1383c15ad5c02bd58205cd83c86cbb0ce09170c1b4');
     // $.jribbble.shots().then(onSuccess, onError);
-    // var shots = $.jribbble.shots({'per_page': 5}).then(onSuccess);
-    // var j = $.jribbble.shots('animated');
-    // var j = $.jribbble.shots('1234').attachments();
-    // console.log(j);
     // $.jribbble.shots('1234', {'per_page': 3});
-    // var shots = $.jribbble.shots('1234');
     // $.jribbble.shots('2035500').comments('1234').likes();
-    // $.jribbble.shots('2035500').buckets();
+    // $.jribbble.shots('2035500').buckets().then(onSuccess, onError);
 
-    //
     // $.jribbble.shots('animated', {'per_page': 2}).then(onSuccess);
     //
     // $.jribbble.shots('123456', {'per_page': 2}).then(onSuccess);
@@ -54,10 +48,10 @@
     //   'per_page': 3
     // }).then(onSuccess);
     //
-    // $.jribbble.shots('teams', {
-    //   'timeframe': 'month',
-    //   'sort': 'views'
-    // }).then(onSuccess, onError);
+    $.jribbble.shots('teams', {
+      'timeframe': 'month',
+      'sort': 'views'
+    }).then(onSuccess, onError);
 
     // $.jribbble
     //   .setToken('f688ac519289f19ce5cebc1383c15ad5c02bd58205cd83c86cbb0ce09170c1b4')
@@ -185,7 +179,7 @@
     </ul>
     */
 
-    // $('.profile').jribbble.user('1234');
+    // $('.profile').jribbble.users('1234');
   </script>
 </body>
 </html>
