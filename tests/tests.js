@@ -118,6 +118,10 @@ test('jribbble.shots.comments urls', function(assert) {
   var done = assert.async();
 
   var comments = $.jribbble.shots('1234').comments();
+  var commentsWithParams = $.jribbble.shots('1234').comments({
+    'per_page': 5,
+    'page': 2
+  });
   var commentSingle = $.jribbble.shots('1234').comments('456');
   var commentLikes = $.jribbble.shots('1234').comments('456').likes();
   var commentLikesWithParams = $.jribbble.shots('1234').comments('456').likes({
@@ -133,8 +137,14 @@ test('jribbble.shots.comments urls', function(assert) {
     );
 
     assert.equal(
+      commentsWithParams.url,
+      url + '?per_page=5&page=2',
+      'shots().comments() with per_page and page params: ' + commentsWithParams.url
+    );
+
+    assert.equal(
       commentSingle.url,
-      url + '456',
+      url + '456/',
       'shots().comments() with a single comment id argument: ' + commentSingle.url
     );
 

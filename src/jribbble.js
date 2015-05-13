@@ -296,25 +296,36 @@
     // like comments = new Comments(). Then likes could be added to the
     // prototype of the Comments instance?
     // TODO: Figure that out.
-    // TODO: Allow opts for comments, they support pagination.
-    Shots.prototype.comments = function(id) {
+    Shots.prototype.comments = function(undefined, opts) {
+      var commentsArgsNegotiated = negotiateArgs([].slice.call(arguments)) || {};
+      var commentsParams = opts || {};
+
       this.queue.add(function(self) {
         if (!self.shotId) {
           throw new Error(ERROR_MSGS.shotId('comments'));
         }
 
-        self.url += '/comments/' + (id || '');
+        self.url += '/comments/';
+
+        // If we're looking for a specific comment by its ID.
+        if (commentsArgsNegotiated.resource) {
+          self.commentId = commentsArgsNegotiated.resource;
+          self.url += commentsArgsNegotiated.resource + '/';
+          delete commentsArgsNegotiated.resource;
+        }
+
+        self.url += parseParams($.extend(commentsArgsNegotiated, commentsParams));
       });
 
       this.likes = function(opts) {
         var params = opts || {};
 
-        if (!id) {
-          throw new Error(ERROR_MSGS.commentLikes);
-        }
-
         this.queue.add(function(self) {
-          self.url += '/likes/' + parseParams(params);
+          if (!self.commentId) {
+            throw new Error(ERROR_MSGS.commentLikes);
+          }
+
+          self.url += 'likes/' + parseParams(params);
         });
 
         return this;
