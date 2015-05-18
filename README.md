@@ -89,8 +89,7 @@ $.jribbble.shots('debuts', {
 });
 ```
 
-<iframe height='612' scrolling='no' src='//codepen.io/tylergaw/embed/RPRVew/?height=612&theme-id=0&default-tab=result' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a href='http://codepen.io/tylergaw/pen/RPRVew/'>Jribbble Shots Example 001</a> by Tyler Gaw (<a href='http://codepen.io/tylergaw'>@tylergaw</a>) on <a href='http://codepen.io'>CodePen</a>.
-</iframe>
+View a [live demo on Codepen.io](http://codepen.io/tylergaw/pen/RPRVew/).
 
 ## Contributing
 Jribbble is open source. [Issues](https://github.com/tylergaw/jribbble/issues) and [pull requests](https://github.com/tylergaw/jribbble/pulls) gladly accepted.
