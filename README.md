@@ -28,7 +28,7 @@ Jribbble covers all non-authenticated methods of the [Dribbble API](http://devel
 *Note:* If you need access to Dribbble methods using `POST` or `PUT` you will need
 to access the API using OAuth. Jribbble only supports unauthenticated `GET` methods.
 
-```html
+```
 <!doctype html>
 <html>
 <head>
@@ -61,7 +61,7 @@ to access the API using OAuth. Jribbble only supports unauthenticated `GET` meth
 Before you can use any of Jribbble's methods, you must set your Dribbble app's client access token.
 If you do not have a token, create a new app at [https://dribbble.com/account/applications/new](https://dribbble.com/account/applications/new)
 
-### `$.jribbble.setToken(token)`
+#### `$.jribbble.setToken(token)`
 
 **Description:** Sets the required Dribbble application client access token.
 
@@ -75,7 +75,7 @@ $.jribbble.setToken('123456789');
 
 ## Available methods
 
-### `$.jribbble.shots(id, options)`
+#### `$.jribbble.shots(id, options)`
 
 **Description:** Gets a list of shots.
 
@@ -106,7 +106,7 @@ $.jribbble.shots('debuts', {
 
 See this [live on Codepen.io](http://codepen.io/tylergaw/pen/RPRVew/?editors=101).
 
-### `$.jribbble.shots(shotId).attachments(attachmentId, options)`
+#### `$.jribbble.shots(shotId).attachments(attachmentId, options)`
 
 **Description:** Gets the attachments or single attachment for a shot.
 
@@ -132,6 +132,24 @@ $.jribbble.shots(2066347).attachments(370029).then(function(res) {
 ```
 
 See this [live on Codepen.io](http://codepen.io/tylergaw/pen/ZGOyGM/?editors=101).
+
+#### `$.jribbble.shots(shotId).buckets(options)`
+
+**Description:** Gets the buckets for a shot.
+
+**Parameters:**
+- shotId - *required* `String or Int` The id of the shot.
+- options - *optional* `Object` Key:value pairs of options that will be included in the request as query parameters. Buckets only support paging options. `per_page` and `page`.
+
+**Example usage:**
+```javascript
+// Get all buckets for a shot at 36 per page
+$.jribbble.shots(2067006).buckets({'per_page': 36}).then(function(res) {
+  // Do cool stuff with response
+});
+```
+
+See this [live on Codepen.io](http://codepen.io/tylergaw/pen/ZGOayV/?editors=101).
 
 ## Contributing
 Jribbble is open source. [Issues](https://github.com/tylergaw/jribbble/issues) and [pull requests](https://github.com/tylergaw/jribbble/pulls) gladly accepted.
