@@ -1,6 +1,8 @@
 # Jribbble [![Build Status](https://travis-ci.org/tylergaw/jribbble.svg)](https://travis-ci.org/tylergaw/jribbble)
 A jQuery plugin to retrieve shot and player info from the [Dribbble API](http://developer.dribbble.com/v1/)
 
+Live demos available on [Codepen.io](http://codepen.io/collection/nWvjrg/)
+
 ## Dependencies
 * jQuery 1.8+
 
@@ -38,15 +40,19 @@ to access the API using OAuth. Jribbble only supports unauthenticated `GET` meth
   <script src="jribbble.min.js"></script>
 
   <script>
+    function success(apiResponse) {
+      // do cool stuff with apiResponse
+    };
+
+    function error(jqxhr) {
+      // Handle errors
+    };
     // To use Jribbble you will need to register an application at:
     // https://dribbble.com/account/applications/new
     // Before calling any methods of jribbble you must set your
     // dribbble client access token
     $.jribbble.setToken('<your_dribbble_client_access_token>');
-
-    $.jribbble.shots().then(function(apiResponse) {
-      console.log(apiResponse);
-    });
+    $.jribbble.shots().then(success, error);
   </script>
 </body>
 ```
@@ -78,6 +84,7 @@ $.jribbble.setToken('123456789');
 // Get a single shot
 $.jribbble.shots(2055068);
 ```
+See this [live on Codepen.io](http://codepen.io/tylergaw/pen/KpMmjZ?editors=101).
 
 ```javascript
 // Get the second page of debut shots from the past month sorted by number of
@@ -89,7 +96,7 @@ $.jribbble.shots('debuts', {
 });
 ```
 
-View a [live demo on Codepen.io](http://codepen.io/tylergaw/pen/RPRVew/).
+See this [live on Codepen.io](http://codepen.io/tylergaw/pen/RPRVew/?editors=101).
 
 ## Contributing
 Jribbble is open source. [Issues](https://github.com/tylergaw/jribbble/issues) and [pull requests](https://github.com/tylergaw/jribbble/pulls) gladly accepted.
