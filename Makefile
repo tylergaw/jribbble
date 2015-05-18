@@ -1,22 +1,13 @@
 SRC_DIR = src
-TEST_DIR = test
+DIST_DIR = ./dist
 
-PREFIX = .
-DIST_DIR = ${PREFIX}/dist
-
-JB_VER = $(shell cat version.txt)
-
-JS_ENGINE ?= `which node nodejs`
-UGLIFIER = $(shell uglifyjs -o ${JB_MIN} ${JB} -c -m)
+DATE = $(shell git log -1 --pretty=format:%ad)
+VERSION = $(shell echo "v$$(cat package.json | grep '"version"' | sed 's/[^0-9\.\-]//g')")
 
 BASE_FILES = ${SRC_DIR}/jribbble.js
-
-JB = ${DIST_DIR}/jquery.jribbble-${JB_VER}.js
-JB_MIN = ${DIST_DIR}/jquery.jribbble-${JB_VER}.ugly.js
-
-VER = sed "s/@VERSION/${JB_VER}/"
-
-DATE=$(shell git log -1 --pretty=format:%ad)
+JB = ${DIST_DIR}/jribbble.js
+JB_MIN = ${DIST_DIR}/jribbble.min.js
+UGLIFIER = $(shell uglifyjs -o ${JB_MIN} ${JB} -c -m --comments)
 
 all: core
 
@@ -33,13 +24,20 @@ ${JB}: ${BASE_FILES} | ${DIST_DIR}
 
 	@@cat ${BASE_FILES} | \
 		sed 's/@DATE/'"${DATE}"'/' | \
-		${VER} > ${JB};
+		sed "s/@VERSION/${VERSION}/" > ${JB};
 
 min: ${JB_MIN}
 
 ${JB_MIN}: ${JB}
-	@@echo "Uglifying Jribbble" ${JB_MIN}
+	@@echo "Minifying Jribbble" ${JB_MIN}
 	${UGLIFIER}
+
+test:
+	node-qunit-phantomjs tests/index.html --verbose
+
+release:
+	git tag -a $(VERSION) -m "Releasing version: $(VERSION)"
+	git push origin $(VERSION)
 
 clean:
 	@@echo "Removing Distribution directory:" ${DIST_DIR}
