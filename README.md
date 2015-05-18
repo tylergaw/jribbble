@@ -8,12 +8,12 @@ A jQuery plugin to retrieve shot and player info from the [Dribbble API](http://
 
 with Bower
 ```
-bower install jribbble
+bower install --save jribbble
 ```
 
 with npm
 ```
-npm install jribbble
+npm install --save jribbble
 ```
 
 or direct download:
@@ -21,7 +21,10 @@ or direct download:
 - [jribbble.min.js]()
 
 ## Using Jribbble
-All available methods are accessed from the `jribbble` object which is a member of the `jQuery` or `$` object.
+Jribbble covers all non-authenticated methods of the [Dribbble API](http://developer.dribbble.com/v1/). All available methods are accessed from the `jribbble` object which is a member of the `jQuery` or `$` object.
+
+*Note:* If you need access to Dribbble methods using `POST` or `PUT` you will need
+to access the API using OAuth. Jribbble only supports unauthenticated `GET` methods.
 
 ```html
 <!doctype html>
@@ -46,6 +49,45 @@ All available methods are accessed from the `jribbble` object which is a member 
     });
   </script>
 </body>
+```
+
+## Available methods
+
+### `$.jribbble.setToken(token)`
+
+**Description:** Sets the required Dribbble application client access token. If you do not have a token, create a new app at [https://dribbble.com/account/applications/new](https://dribbble.com/account/applications/new)
+
+**Parameters:**
+- token - *required* `String or Int` Your Dribbble App client access token
+
+**Example usage:**
+```javascript
+$.jribbble.setToken('123456789');
+```
+
+### `$.jribbble.shots(id, options)`
+
+**Description:** Gets a list of shots.
+
+**Parameters:**
+- id - *optional* `String or Int` A shot id or a shot list name. See [API Docs](http://developer.dribbble.com/v1/shots/#list-shots) for list names.
+- options - *optional* `Object` Key:value pairs of options that will be included in the request as query parameters. See [API Docs](http://developer.dribbble.com/v1/shots/#list-shots) for a full list.
+
+**Example usage:**
+```javascript
+// Get a single shot
+$.jribbble.shots(2055068);
+```
+
+```javascript
+// Get the second page of debut shots from the past month sorted by number of
+// views at 35 per page.
+$.jribbble.shots('debuts', {
+  'sort': 'views',
+  'timeframe': 'month',
+  'per_page': 35,
+  'page': 2
+});
 ```
 
 ## Contributing
