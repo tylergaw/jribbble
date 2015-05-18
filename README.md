@@ -57,11 +57,13 @@ to access the API using OAuth. Jribbble only supports unauthenticated `GET` meth
 </body>
 ```
 
-## Available methods
+## Setting your app's client access token
+Before you can use any of Jribbble's methods, you must set your Dribbble app's client access token.
+If you do not have a token, create a new app at [https://dribbble.com/account/applications/new](https://dribbble.com/account/applications/new)
 
 ### `$.jribbble.setToken(token)`
 
-**Description:** Sets the required Dribbble application client access token. If you do not have a token, create a new app at [https://dribbble.com/account/applications/new](https://dribbble.com/account/applications/new)
+**Description:** Sets the required Dribbble application client access token.
 
 **Parameters:**
 - token - *required* `String or Int` Your Dribbble App client access token
@@ -70,6 +72,8 @@ to access the API using OAuth. Jribbble only supports unauthenticated `GET` meth
 ```javascript
 $.jribbble.setToken('123456789');
 ```
+
+## Available methods
 
 ### `$.jribbble.shots(id, options)`
 
@@ -82,7 +86,9 @@ $.jribbble.setToken('123456789');
 **Example usage:**
 ```javascript
 // Get a single shot
-$.jribbble.shots(2055068);
+$.jribbble.shots(2055068).then(function(res) {
+  // Do cool stuff with response
+});
 ```
 See this [live on Codepen.io](http://codepen.io/tylergaw/pen/KpMmjZ?editors=101).
 
@@ -93,10 +99,39 @@ $.jribbble.shots('debuts', {
   'sort': 'views',
   'timeframe': 'month',
   'per_page': 35
+}).then(function(res) {
+  // Do cool stuff with response
 });
 ```
 
 See this [live on Codepen.io](http://codepen.io/tylergaw/pen/RPRVew/?editors=101).
+
+### `$.jribbble.shots(shotId).attachments(attachmentId, options)`
+
+**Description:** Gets the attachments or single attachment for a shot.
+
+**Parameters:**
+- shotId - *required* `String or Int` The id of the shot.
+- attachmentId - *optional* `String or Int` Only required if you want a single attachment.
+- options - *optional* `Object` Key:value pairs of options that will be included in the request as query parameters. Attachments only support paging options. `per_page` and `page`.
+
+**Example usage:**
+```javascript
+// Get all attachments for a shot
+$.jribbble.shots(2066347).attachments().then(function(res) {
+  // Do cool stuff with response
+});
+```
+See this [live on Codepen.io](http://codepen.io/tylergaw/pen/XbKgJy/?editors=101).
+
+```javascript
+// Get a single attachment for a shot
+$.jribbble.shots(2066347).attachments(370029).then(function(res) {
+  // Do cool stuff with response
+});
+```
+
+See this [live on Codepen.io](http://codepen.io/tylergaw/pen/ZGOyGM/?editors=101).
 
 ## Contributing
 Jribbble is open source. [Issues](https://github.com/tylergaw/jribbble/issues) and [pull requests](https://github.com/tylergaw/jribbble/pulls) gladly accepted.
