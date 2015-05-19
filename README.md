@@ -112,7 +112,7 @@ See this [live on Codepen.io](http://codepen.io/tylergaw/pen/RPRVew/?editors=101
 
 **Parameters:**
 - shotId - *required* `String or Int` The id of the shot.
-- attachmentId - *optional* `String or Int` Only required if you want a single attachment.
+- attachmentId - *optional* `String or Int` Only required if you want a single attachment. `options` are not rejected, but will have no effect when `attachmentId` is used.
 - options - *optional* `Object` Key:value pairs of options that will be included in the request as query parameters. Attachments only support paging options. `per_page` and `page`.
 
 **Example usage:**
@@ -150,6 +150,34 @@ $.jribbble.shots(2067006).buckets({'per_page': 36}).then(function(res) {
 ```
 
 See this [live on Codepen.io](http://codepen.io/tylergaw/pen/ZGOayV/?editors=101).
+
+#### `$.jribbble.shots(shotId).comments(commentId, options)`
+
+**Description:** Gets the comments or single comment for a shot.
+
+**Parameters:**
+- shotId - *required* `String or Int` The id of the shot.
+- commentId - *optional* `String or Int` Only required if you want a single comment. `options` are not rejected, but will have no effect when `commentId` is used.
+- options - *optional* `Object` Key:value pairs of options that will be included in the request as query parameters. Comments only support paging options. `per_page` and `page`.
+
+**Example usage:**
+```javascript
+// Get all comments for a shot
+$.jribbble.shots(2067969).comments().then(function(res) {
+  // Do cool stuff with response
+});
+```
+
+See this [live on Codepen.io](http://codepen.io/tylergaw/pen/LVZrBq/?editors=101).
+
+```javascript
+// Get a single comment for a shot
+$.jribbble.shots(2067969).comments(4448286).then(function(res) {
+  // Do cool stuff with response
+});
+```
+
+See this [live on Codepen.io](http://codepen.io/tylergaw/pen/yNJERz/?editors=101).
 
 ## Contributing
 Jribbble is open source. [Issues](https://github.com/tylergaw/jribbble/issues) and [pull requests](https://github.com/tylergaw/jribbble/pulls) gladly accepted.
