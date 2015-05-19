@@ -179,6 +179,25 @@ $.jribbble.shots(2067969).comments(4448286).then(function(res) {
 
 See this [live on Codepen.io](http://codepen.io/tylergaw/pen/yNJERz/?editors=101).
 
+#### `$.jribbble.shots(shotId).comments(commentId).likes(options)`
+
+**Description:** Gets the likes for a comment.
+
+**Parameters:**
+- shotId - *required* `String or Int` The id of the shot.
+- commentId - *required* `String or Int` The id of the comment
+- options - *optional* `Object` Key:value pairs of options that will be included in the request as query parameters. Likes only support paging options. `per_page` and `page`.
+
+**Example usage:**
+```javascript
+// Get the likes for a comment.
+$.jribbble.shots(2069352).comments(4450321).likes().then(function(res) {
+  // Do cool stuff with response
+});
+```
+
+---------------------------------------------------------------------------
+
 ## Contributing
 Jribbble is open source. [Issues](https://github.com/tylergaw/jribbble/issues) and [pull requests](https://github.com/tylergaw/jribbble/pulls) gladly accepted.
 
