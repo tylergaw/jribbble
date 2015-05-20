@@ -196,6 +196,8 @@ $.jribbble.shots(2069352).comments(4450321).likes().then(function(res) {
 });
 ```
 
+See this [live on Codepen.io](http://codepen.io/tylergaw/pen/LVZwQL/?editors=101).
+
 ---------------------------------------------------------------------------
 
 ## Contributing
