@@ -75,6 +75,12 @@ $.jribbble.setToken('123456789');
 
 ## Available methods
 
+- [$.jribbble.shots](#jribbbleshotsid-options)
+- [$.jribbble.shots.attachments](#jribbbleshotsshotidattachmentsattachmentid-options)
+- [$.jribbble.shots.buckets](#jribbbleshotsshotidbucketsoptions)
+- [$.jribbble.shots.comments](#jribbbleshotsshotidcommentscommentid-options)
+- [$.jribbble.shots.comments.likes](#jribbbleshotsshotidcommentscommentidlikesoptions)
+
 #### `$.jribbble.shots(id, options)`
 
 **Description:** Gets a list of shots.
@@ -90,7 +96,7 @@ $.jribbble.shots(2055068).then(function(res) {
   // Do cool stuff with response
 });
 ```
-See this [live on Codepen.io](http://codepen.io/tylergaw/pen/KpMmjZ?editors=101).
+Live example [on Codepen.io](http://codepen.io/tylergaw/pen/KpMmjZ?editors=101).
 
 ```javascript
 // Get the second page of debut shots from the past month sorted by number of
@@ -104,7 +110,7 @@ $.jribbble.shots('debuts', {
 });
 ```
 
-See this [live on Codepen.io](http://codepen.io/tylergaw/pen/RPRVew/?editors=101).
+Live example [on Codepen.io](http://codepen.io/tylergaw/pen/RPRVew/?editors=101).
 
 #### `$.jribbble.shots(shotId).attachments(attachmentId, options)`
 
@@ -122,7 +128,7 @@ $.jribbble.shots(2066347).attachments().then(function(res) {
   // Do cool stuff with response
 });
 ```
-See this [live on Codepen.io](http://codepen.io/tylergaw/pen/XbKgJy/?editors=101).
+Live example [on Codepen.io](http://codepen.io/tylergaw/pen/XbKgJy/?editors=101).
 
 ```javascript
 // Get a single attachment for a shot
@@ -131,7 +137,7 @@ $.jribbble.shots(2066347).attachments(370029).then(function(res) {
 });
 ```
 
-See this [live on Codepen.io](http://codepen.io/tylergaw/pen/ZGOyGM/?editors=101).
+Live example [on Codepen.io](http://codepen.io/tylergaw/pen/ZGOyGM/?editors=101).
 
 #### `$.jribbble.shots(shotId).buckets(options)`
 
@@ -149,7 +155,7 @@ $.jribbble.shots(2067006).buckets({'per_page': 36}).then(function(res) {
 });
 ```
 
-See this [live on Codepen.io](http://codepen.io/tylergaw/pen/ZGOayV/?editors=101).
+Live example [on Codepen.io](http://codepen.io/tylergaw/pen/ZGOayV/?editors=101).
 
 #### `$.jribbble.shots(shotId).comments(commentId, options)`
 
@@ -168,7 +174,7 @@ $.jribbble.shots(2067969).comments().then(function(res) {
 });
 ```
 
-See this [live on Codepen.io](http://codepen.io/tylergaw/pen/LVZrBq/?editors=101).
+Live example [on Codepen.io](http://codepen.io/tylergaw/pen/LVZrBq/?editors=101).
 
 ```javascript
 // Get a single comment for a shot
@@ -177,7 +183,7 @@ $.jribbble.shots(2067969).comments(4448286).then(function(res) {
 });
 ```
 
-See this [live on Codepen.io](http://codepen.io/tylergaw/pen/yNJERz/?editors=101).
+Live example [on Codepen.io](http://codepen.io/tylergaw/pen/yNJERz/?editors=101).
 
 #### `$.jribbble.shots(shotId).comments(commentId).likes(options)`
 
@@ -196,7 +202,7 @@ $.jribbble.shots(2069352).comments(4450321).likes().then(function(res) {
 });
 ```
 
-See this [live on Codepen.io](http://codepen.io/tylergaw/pen/LVZwQL/?editors=101).
+Live example [on Codepen.io](http://codepen.io/tylergaw/pen/LVZwQL/?editors=101).
 
 ---------------------------------------------------------------------------
 
