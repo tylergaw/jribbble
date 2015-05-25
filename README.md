@@ -70,11 +70,21 @@ $.jribbble.setToken('123456789');
 
 ## Available methods
 
+#### Shots
 - [$.jribbble.shots](#jribbbleshotsid-options)
 - [$.jribbble.shots.attachments](#jribbbleshotsshotidattachmentsattachmentid-options)
 - [$.jribbble.shots.buckets](#jribbbleshotsshotidbucketsoptions)
 - [$.jribbble.shots.comments](#jribbbleshotsshotidcommentscommentid-options)
 - [$.jribbble.shots.comments.likes](#jribbbleshotsshotidcommentscommentidlikesoptions)
+- [$.jribbble.shots.likes](jribbbleshotsshotidlikesoptions)
+
+#### Users
+
+#### Teams
+
+#### Buckets
+
+#### Projects
 
 #### `$.jribbble.shots(id, options)`
 
@@ -198,6 +208,24 @@ $.jribbble.shots(2069352).comments(4450321).likes().then(function(res) {
 ```
 
 Live example [on Codepen.io](http://codepen.io/tylergaw/pen/LVZwQL/?editors=101).
+
+#### `$.jribbble.shots(shotId).likes(options)`
+
+**Description:** Gets the likes for a shot.
+
+**Parameters:**
+- shotId - *required* `String or Int` The id of the shot.
+- options - *optional* `Object` Key:value pairs of options that will be included in the request as query parameters. Likes only support paging options. `per_page` and `page`.
+
+**Example usage:**
+```javascript
+// Get the likes for a comment.
+$.jribbble.shots(2058881).likes().then(function(res) {
+  // Do cool stuff with response
+});
+```
+
+Live example [on Codepen.io](http://codepen.io/tylergaw/pen/jPVVZb/?editors=101).
 
 ---------------------------------------------------------------------------
 
