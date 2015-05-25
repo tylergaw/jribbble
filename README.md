@@ -76,7 +76,8 @@ $.jribbble.setToken('123456789');
 - [$.jribbble.shots.buckets](#jribbbleshotsshotidbucketsoptions)
 - [$.jribbble.shots.comments](#jribbbleshotsshotidcommentscommentid-options)
 - [$.jribbble.shots.comments.likes](#jribbbleshotsshotidcommentscommentidlikesoptions)
-- [$.jribbble.shots.likes](jribbbleshotsshotidlikesoptions)
+- [$.jribbble.shots.likes](#jribbbleshotsshotidlikesoptions)
+- [$.jribbble.shots.projects](#jribbbleshotsshotidprojectsoptions)
 
 #### Users
 
@@ -226,6 +227,24 @@ $.jribbble.shots(2058881).likes().then(function(res) {
 ```
 
 Live example [on Codepen.io](http://codepen.io/tylergaw/pen/jPVVZb/?editors=101).
+
+#### `$.jribbble.shots(shotId).projects(options)`
+
+**Description:** Gets the projects for a shot.
+
+**Parameters:**
+- shotId - *required* `String or Int` The id of the shot.
+- options - *optional* `Object` Key:value pairs of options that will be included in the request as query parameters. Projects only support paging options. `per_page` and `page`.
+
+**Example usage:**
+```javascript
+// Get the likes for a comment.
+$.jribbble.shots(2077496).projects().then(function(res) {
+  // Do cool stuff with response
+});
+```
+
+Live example [on Codepen.io](http://codepen.io/tylergaw/pen/qdqqYo/?editors=101).
 
 ---------------------------------------------------------------------------
 
