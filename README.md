@@ -14,8 +14,8 @@ bower install --save jribbble
 ```
 
 or direct download:
-- [jribbble.min.js]()
-- [jribbble.js]()
+- [jribbble.min.js](https://github.com/tylergaw/jribbble/blob/master/dist/jribbble.min.js)
+- [jribbble.js](https://github.com/tylergaw/jribbble/blob/master/dist/jribbble.js)
 
 ## Using Jribbble
 Jribbble covers all non-authenticated methods of the [Dribbble API](http://developer.dribbble.com/v1/). All available methods are accessed from the `jribbble` object which is a member of the `jQuery` or `$` object.
