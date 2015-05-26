@@ -80,6 +80,9 @@ $.jribbble.setToken('123456789');
 
 #### Teams
 
+- [$.jribbble.teams.members](#jribbbleteamsteamidmembersoptions)
+- [$.jribbble.teams.shots](#jribbbleteamsteamidshotsoptions)
+
 #### Buckets
 
 - [$.jribbble.buckets](#jribbblebucketsbucketid)
@@ -275,7 +278,39 @@ TODO
 
 ### Teams
 
-TODO
+#### `$.jribbble.teams(teamId).members(options)`
+
+**Description:** Gets the members of a team.
+
+**Parameters:**
+- teamId - *required* `String`
+- options - *optional* `Object` Key:value pairs of options that will be included in the request as query parameters. Teams only support paging options. `per_page` and `page`.
+
+**Example usage:**
+```javascript
+$.jribbble.teams('eight2eight').members(options).then(function(res) {
+  // Do cool stuff with response
+});
+```
+
+Live example [on Codepen.io](http://codepen.io/tylergaw/pen/bdBrgv/?editors=101).
+
+#### `$.jribbble.teams(teamId).shots(options)`
+
+**Description:** Gets the shots for a team.
+
+**Parameters:**
+- teamId - *required* `String`
+- options - *optional* `Object` Key:value pairs of options that will be included in the request as query parameters. Shots only support paging options. `per_page` and `page`.
+
+**Example usage:**
+```javascript
+$.jribbble.teams('eight2eight').shots(options).then(function(res) {
+  // Do cool stuff with response
+});
+```
+
+Live example [on Codepen.io](http://codepen.io/tylergaw/pen/bdBrWM/?editors=101).
 
 ### Buckets
 
