@@ -1,5 +1,5 @@
 # Jribbble [![Build Status](https://travis-ci.org/tylergaw/jribbble.svg)](https://travis-ci.org/tylergaw/jribbble)
-A jQuery plugin to retrieve shot and player info from the [Dribbble API](http://developer.dribbble.com/v1/)
+A jQuery plugin to retrieve info from the [Dribbble API](http://developer.dribbble.com/v1/)
 
 Live demos available on [Codepen.io](http://codepen.io/collection/nWvjrg/)
 
@@ -23,7 +23,7 @@ Jribbble covers all non-authenticated methods of the [Dribbble API](http://devel
 *Note:* If you need access to Dribbble methods using `POST` or `PUT` you will need
 to access the API using OAuth. Jribbble only supports unauthenticated `GET` methods.
 
-```
+```html
 <body>
   <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
   <script src="jribbble.min.js"></script>
