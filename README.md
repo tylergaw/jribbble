@@ -84,8 +84,8 @@ $.jribbble.setToken('123456789');
 
 #### Projects
 
-- [$.jribbble.projects](#jribbbleprojectsprojectId)
-- [$.jribbble.projects.shots](#jribbbleprojectsprojectIdshotsoptions)
+- [$.jribbble.projects](#jribbbleprojectsprojectid)
+- [$.jribbble.projects.shots](#jribbbleprojectsprojectidshotsoptions)
 
 ### Shots
 
