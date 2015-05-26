@@ -24,12 +24,6 @@ Jribbble covers all non-authenticated methods of the [Dribbble API](http://devel
 to access the API using OAuth. Jribbble only supports unauthenticated `GET` methods.
 
 ```
-<!doctype html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <title>Jribbble Basic Usage</title>
-</head>
 <body>
   <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
   <script src="jribbble.min.js"></script>
@@ -47,6 +41,8 @@ to access the API using OAuth. Jribbble only supports unauthenticated `GET` meth
     // Before calling any methods of jribbble you must set your
     // dribbble client access token
     $.jribbble.setToken('<your_dribbble_client_access_token>');
+
+    // Jribbble methods return a promise
     $.jribbble.shots().then(success, error);
   </script>
 </body>
@@ -88,6 +84,11 @@ $.jribbble.setToken('123456789');
 
 #### Projects
 
+- [$.jribbble.projects](#jribbbleprojectsprojectId)
+- [$.jribbble.projects.shots](#jribbbleprojectsprojectIdshotsoptions)
+
+### Shots
+
 #### `$.jribbble.shots(id, options)`
 
 **Description:** Gets a list of shots.
@@ -124,7 +125,7 @@ Live example [on Codepen.io](http://codepen.io/tylergaw/pen/RPRVew/?editors=101)
 **Description:** Gets the attachments or single attachment for a shot.
 
 **Parameters:**
-- shotId - *required* `String or Int` The id of the shot.
+- shotId - *required* `String or Int`
 - attachmentId - *optional* `String or Int` Only required if you want a single attachment. `options` are not rejected, but will have no effect when `attachmentId` is used.
 - options - *optional* `Object` Key:value pairs of options that will be included in the request as query parameters. Attachments only support paging options. `per_page` and `page`.
 
@@ -151,7 +152,7 @@ Live example [on Codepen.io](http://codepen.io/tylergaw/pen/ZGOyGM/?editors=101)
 **Description:** Gets the buckets for a shot.
 
 **Parameters:**
-- shotId - *required* `String or Int` The id of the shot.
+- shotId - *required* `String or Int`
 - options - *optional* `Object` Key:value pairs of options that will be included in the request as query parameters. Buckets only support paging options. `per_page` and `page`.
 
 **Example usage:**
@@ -169,7 +170,7 @@ Live example [on Codepen.io](http://codepen.io/tylergaw/pen/ZGOayV/?editors=101)
 **Description:** Gets the comments or single comment for a shot.
 
 **Parameters:**
-- shotId - *required* `String or Int` The id of the shot.
+- shotId - *required* `String or Int`
 - commentId - *optional* `String or Int` Only required if you want a single comment. `options` are not rejected, but will have no effect when `commentId` is used.
 - options - *optional* `Object` Key:value pairs of options that will be included in the request as query parameters. Comments only support paging options. `per_page` and `page`.
 
@@ -197,7 +198,7 @@ Live example [on Codepen.io](http://codepen.io/tylergaw/pen/yNJERz/?editors=101)
 **Description:** Gets the likes for a comment.
 
 **Parameters:**
-- shotId - *required* `String or Int` The id of the shot.
+- shotId - *required* `String or Int`
 - commentId - *required* `String or Int` The id of the comment
 - options - *optional* `Object` Key:value pairs of options that will be included in the request as query parameters. Likes only support paging options. `per_page` and `page`.
 
@@ -216,7 +217,7 @@ Live example [on Codepen.io](http://codepen.io/tylergaw/pen/LVZwQL/?editors=101)
 **Description:** Gets the likes for a shot.
 
 **Parameters:**
-- shotId - *required* `String or Int` The id of the shot.
+- shotId - *required* `String or Int`
 - options - *optional* `Object` Key:value pairs of options that will be included in the request as query parameters. Likes only support paging options. `per_page` and `page`.
 
 **Example usage:**
@@ -234,7 +235,7 @@ Live example [on Codepen.io](http://codepen.io/tylergaw/pen/jPVVZb/?editors=101)
 **Description:** Gets the projects for a shot.
 
 **Parameters:**
-- shotId - *required* `String or Int` The id of the shot.
+- shotId - *required* `String or Int`
 - options - *optional* `Object` Key:value pairs of options that will be included in the request as query parameters. Projects only support paging options. `per_page` and `page`.
 
 **Example usage:**
@@ -252,7 +253,7 @@ Live example [on Codepen.io](http://codepen.io/tylergaw/pen/qdqqYo/?editors=101)
 **Description:** Gets the rebounds for a shot.
 
 **Parameters:**
-- shotId - *required* `String or Int` The id of the shot.
+- shotId - *required* `String or Int`
 - options - *optional* `Object` Key:value pairs of options that will be included in the request as query parameters. Rebounds only support paging options. `per_page` and `page`.
 
 **Example usage:**
@@ -264,6 +265,49 @@ $.jribbble.shots(2046896).rebounds().then(function(res) {
 ```
 
 Live example [on Codepen.io](http://codepen.io/tylergaw/pen/XbNpqx/?editors=101).
+
+### Users
+
+### Teams
+
+### Buckets
+
+### Projects
+
+#### `$.jribbble.projects(projectId)`
+
+**Description:** Gets a single project
+
+**Parameters:**
+- projectId - *required* `String or Int`
+
+**Example usage:**
+```javascript
+// Get the likes for a comment.
+$.jribbble.projects(267945).then(function(res) {
+  // Do cool stuff with response
+});
+```
+
+Live example [on Codepen.io](http://codepen.io/tylergaw/pen/MwbJPB/?editors=101).
+
+#### `$.jribbble.projects(projectId).shots(options)`
+
+**Description:** Gets the shots for a project
+
+**Parameters:**
+- projectId - *required* `String or Int`
+- options - *optional* `Object` Key:value pairs of options that will be included in the request as query parameters. Shots only support paging options. `per_page` and `page`.
+
+**Example usage:**
+```javascript
+// Get the likes for a comment.
+$.jribbble.projects(267945).shots(options).then(function(res) {
+  // Do cool stuff with response
+});
+```
+
+Live example [on Codepen.io](http://codepen.io/tylergaw/pen/mJORaE/?editors=101).
 
 ---------------------------------------------------------------------------
 
