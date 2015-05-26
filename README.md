@@ -82,6 +82,9 @@ $.jribbble.setToken('123456789');
 
 #### Buckets
 
+- [$.jribbble.buckets](#jribbblebucketsbucketid)
+- [$.jribbble.buckets.shots](#jribbblebucketsbucketidshotsoptions)
+
 #### Projects
 
 - [$.jribbble.projects](#jribbbleprojectsprojectid)
@@ -222,7 +225,7 @@ Live example [on Codepen.io](http://codepen.io/tylergaw/pen/LVZwQL/?editors=101)
 
 **Example usage:**
 ```javascript
-// Get the likes for a comment.
+// Get the likes for a shot.
 $.jribbble.shots(2058881).likes().then(function(res) {
   // Do cool stuff with response
 });
@@ -240,7 +243,7 @@ Live example [on Codepen.io](http://codepen.io/tylergaw/pen/jPVVZb/?editors=101)
 
 **Example usage:**
 ```javascript
-// Get the likes for a comment.
+// Get the projects for a shot.
 $.jribbble.shots(2077496).projects().then(function(res) {
   // Do cool stuff with response
 });
@@ -258,7 +261,7 @@ Live example [on Codepen.io](http://codepen.io/tylergaw/pen/qdqqYo/?editors=101)
 
 **Example usage:**
 ```javascript
-// Get the likes for a comment.
+// Get the rebounds for a shot.
 $.jribbble.shots(2046896).rebounds().then(function(res) {
   // Do cool stuff with response
 });
@@ -268,9 +271,47 @@ Live example [on Codepen.io](http://codepen.io/tylergaw/pen/XbNpqx/?editors=101)
 
 ### Users
 
+TODO
+
 ### Teams
 
+TODO
+
 ### Buckets
+
+#### `$.jribbble.buckets(bucketId)`
+
+**Description:** Gets a single bucket
+
+**Parameters:**
+- bucketId - *required* `String or Int`
+
+**Example usage:**
+```javascript
+$.jribbble.buckets(114550).then(function(res) {
+  // Do cool stuff with response
+});
+```
+
+Live example [on Codepen.io](http://codepen.io/tylergaw/pen/mJORor/?editors=101).
+
+#### `$.jribbble.buckets(bucketId).shots(options)`
+
+**Description:** Gets the shots for a project
+
+**Parameters:**
+- bucketId - *required* `String or Int`
+- options - *optional* `Object` Key:value pairs of options that will be included in the request as query parameters. Shots only support paging options. `per_page` and `page`.
+
+**Example usage:**
+```javascript
+// Get the shots for a bucket.
+$.jribbble.buckets(114550).shots(options).then(function(res) {
+  // Do cool stuff with response
+});
+```
+
+Live example [on Codepen.io](http://codepen.io/tylergaw/pen/ZGBLPq/?editors=101).
 
 ### Projects
 
@@ -283,7 +324,6 @@ Live example [on Codepen.io](http://codepen.io/tylergaw/pen/XbNpqx/?editors=101)
 
 **Example usage:**
 ```javascript
-// Get the likes for a comment.
 $.jribbble.projects(267945).then(function(res) {
   // Do cool stuff with response
 });
@@ -301,7 +341,7 @@ Live example [on Codepen.io](http://codepen.io/tylergaw/pen/MwbJPB/?editors=101)
 
 **Example usage:**
 ```javascript
-// Get the likes for a comment.
+// Get the shots for a project.
 $.jribbble.projects(267945).shots(options).then(function(res) {
   // Do cool stuff with response
 });
