@@ -78,6 +78,12 @@ $.jribbble.setToken('123456789');
 
 #### Users
 
+- [$.jribbble.users](#jribbbleusersuserid)
+- [$.jribbble.users.buckets](#jribbbleusersuseridbucketsoptions)
+- [$.jribbble.users.followers](#jribbbleusersuseridfollowersoptions)
+- [$.jribbble.users.following](#jribbbleusersuseridfollowingoptions)
+- [$.jribbble.users.isFollowing](#jribbbleusersuseridisfollowingtargetuserid)
+
 #### Teams
 
 - [$.jribbble.teams.members](#jribbbleteamsteamidmembersoptions)
@@ -274,7 +280,89 @@ Live example [on Codepen.io](http://codepen.io/tylergaw/pen/XbNpqx/?editors=101)
 
 ### Users
 
-TODO
+#### `$.jribbble.users(userId)`
+
+**Description:** Gets a single user
+
+**Parameters:**
+- userId - *required* `String or Int` The username or id for the user.
+
+**Example usage:**
+```javascript
+$.jribbble.users('tylergaw').then(function(res) {
+  // Do cool stuff with response
+});
+```
+
+Live example [on Codepen.io](http://codepen.io/tylergaw/pen/bdBrYK/?editors=101).
+
+#### `$.jribbble.users(userId).buckets(options)`
+
+**Description:** Gets a user's buckets
+
+**Parameters:**
+- userId - *required* `String or Int` The username or id for the user.
+- options - *optional* `Object` Key:value pairs of options that will be included in the request as query parameters. Buckets only support paging options. `per_page` and `page`.
+
+**Example usage:**
+```javascript
+$.jribbble.users('tylergaw').buckets().then(function(res) {
+  // Do cool stuff with response
+});
+```
+
+Live example [on Codepen.io](http://codepen.io/tylergaw/pen/bdBrXz/?editors=101).
+
+#### `$.jribbble.users(userId).followers(options)`
+
+**Description:** Gets a user's followers
+
+**Parameters:**
+- userId - *required* `String or Int` The username or id for the user.
+- options - *optional* `Object` Key:value pairs of options that will be included in the request as query parameters. Followers only support paging options. `per_page` and `page`.
+
+**Example usage:**
+```javascript
+$.jribbble.users('tylergaw').followers().then(function(res) {
+  // Do cool stuff with response
+});
+```
+
+Live example [on Codepen.io](http://codepen.io/tylergaw/pen/ZGBJdY/?editors=101).
+
+#### `$.jribbble.users(userId).following(options)`
+
+**Description:** Gets the users a user is following
+
+**Parameters:**
+- userId - *required* `String or Int` The username or id for the user.
+- options - *optional* `Object` Key:value pairs of options that will be included in the request as query parameters. Following only support paging options. `per_page` and `page`.
+
+**Example usage:**
+```javascript
+$.jribbble.users('tylergaw').following().then(function(res) {
+  // Do cool stuff with response
+});
+```
+
+Live example [on Codepen.io](http://codepen.io/tylergaw/pen/jPVLdR/?editors=101).
+
+#### `$.jribbble.users(userId).isFollowing(targetUserId)`
+
+**Description:** Check to see if a user is following another user.
+
+**Parameters:**
+- userId - *required* `String or Int` The username or id for the user.
+- targetUserId - *required* `String or Int` The username or id for the other user.
+
+**Example usage:**
+```javascript
+$.jribbble.users('tylergaw').isFollowing('jimniels').then(function(res) {
+  // Do cool stuff with response
+});
+```
+
+Live example [on Codepen.io](http://codepen.io/tylergaw/pen/bdBrjx/?editors=101).
 
 ### Teams
 
