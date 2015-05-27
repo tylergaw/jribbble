@@ -38,6 +38,7 @@ test:
 release:
 	git tag -a $(VERSION) -m "Releasing version: $(VERSION)"
 	git push origin $(VERSION)
+	npm publish
 
 clean:
 	@@echo "Removing Distribution directory:" ${DIST_DIR}
