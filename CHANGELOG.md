@@ -1,5 +1,9 @@
 # Jribbble Changelog
 
+## v2.0.2 2015-05-26
+
+Forgot to build before the 2.0.1 release
+
 ## v2.0.1 2015-05-26
 
 Modifications to Bower ignore. Added Changelog

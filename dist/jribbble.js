@@ -1,6 +1,6 @@
 /**
  * @preserve
- * Jribbble v2.0.0 | Sun May 17 20:04:57 2015 -0400
+ * Jribbble v2.0.2 | Tue May 26 21:20:00 2015 -0400
  * Copyright (c) 2015, Tyler Gaw me@tylergaw.com
  * Released under the ISC-LICENSE
  */
