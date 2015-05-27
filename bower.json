@@ -20,7 +20,9 @@
     "node_modules",
     "bower_components",
     "tests",
-    ".travis.yml"
+    ".travis.yml",
+    "Makefile",
+    "package.json"
   ],
   "dependencies": {
     "jquery": "~2.1.4"
