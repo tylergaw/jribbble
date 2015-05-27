@@ -493,7 +493,15 @@ make test
 The tests will also run when pull requests are submitted. See [Travis](https://travis-ci.org/tylergaw/jribbble) for build status.
 
 ### Building Jribbble
-Jribbble includes a small Makefile that includes a build task. The task copies the jribbble.js source to the `/dist` directory and creates a minified version of it using UglifyJS2. To build jribbble run:
+Jribbble includes a small Makefile that includes a build task. The task copies the jribbble.js source to the `/dist` directory–adding the version number and build date–and creates a minified version of it using UglifyJS2.
+
+To build Jribbble you'll need UglifyJS2:
+
+```
+npm install uglify-js -g
+```
+
+then run
 
 ```
 make

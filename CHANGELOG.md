@@ -1,5 +1,9 @@
 # Jribbble Changelog
 
+## v2.0.3 2015-05-26
+
+Messed up, did not include a minified version in 2.0.2.
+
 ## v2.0.2 2015-05-26
 
 Forgot to build before the 2.0.1 release
