@@ -22,7 +22,8 @@
     "tests",
     ".travis.yml",
     "Makefile",
-    "package.json"
+    "package.json",
+    "src"
   ],
   "dependencies": {
     "jquery": "~2.1.4"
