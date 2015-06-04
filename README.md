@@ -79,7 +79,11 @@ $.jribbble.setToken('123456789');
 #### Users
 
 - [$.jribbble.users](#jribbbleusersuserid)
+- [$.jribbble.users.shots](#jribbbleusersuseridshotsoptions)
 - [$.jribbble.users.buckets](#jribbbleusersuseridbucketsoptions)
+- [$.jribbble.users.projects](#jribbbleusersuseridprojectsoptions)
+- [$.jribbble.users.teams](#jribbbleusersuseridteamsoptions)
+- [$.jribbble.users.likes](#jribbbleusersuseridlikesoptions)
 - [$.jribbble.users.followers](#jribbbleusersuseridfollowersoptions)
 - [$.jribbble.users.following](#jribbbleusersuseridfollowingoptions)
 - [$.jribbble.users.isFollowing](#jribbbleusersuseridisfollowingtargetuserid)
@@ -296,6 +300,23 @@ $.jribbble.users('tylergaw').then(function(res) {
 
 Live example [on Codepen.io](http://codepen.io/tylergaw/pen/bdBrYK/?editors=101).
 
+#### `$.jribbble.users(userId).shots(options)`
+
+**Description:** Get a user's shots
+
+**Parameters:**
+- userId - *required* `String or Int` The username or id for the user.
+- options - *optional* `Object` Key:value pairs of options that will be included in the request as query parameters. User's shots only support paging options. `per_page` and `page`.
+
+**Example usage:**
+```javascript
+$.jribbble.users('tylergaw').shots().then(function(res) {
+  // Do cool stuff with response
+});
+```
+
+Live example [on Codepen.io](http://codepen.io/tylergaw/pen/NqpzvE/?editors=101).
+
 #### `$.jribbble.users(userId).buckets(options)`
 
 **Description:** Gets a user's buckets
@@ -306,12 +327,63 @@ Live example [on Codepen.io](http://codepen.io/tylergaw/pen/bdBrYK/?editors=101)
 
 **Example usage:**
 ```javascript
-$.jribbble.users('tylergaw').buckets().then(function(res) {
+$.jribbble.users('markbult').buckets().then(function(res) {
   // Do cool stuff with response
 });
 ```
 
 Live example [on Codepen.io](http://codepen.io/tylergaw/pen/bdBrXz/?editors=101).
+
+#### `$.jribbble.users(userId).projects(options)`
+
+**Description:** Gets a user's projects
+
+**Parameters:**
+- userId - *required* `String or Int` The username or id for the user.
+- options - *optional* `Object` Key:value pairs of options that will be included in the request as query parameters. User projects only support paging options. `per_page` and `page`.
+
+**Example usage:**
+```javascript
+$.jribbble.users('creativemints').projects().then(function(res) {
+  // Do cool stuff with response
+});
+```
+
+Live example [on Codepen.io](http://codepen.io/tylergaw/pen/xGqzjR/?editors=101).
+
+#### `$.jribbble.users(userId).teams(options)`
+
+**Description:** Gets the teams a user belongs to
+
+**Parameters:**
+- userId - *required* `String or Int` The username or id for the user.
+- options - *optional* `Object` Key:value pairs of options that will be included in the request as query parameters. User teams only support paging options. `per_page` and `page`.
+
+**Example usage:**
+```javascript
+$.jribbble.users('veerlepieters').teams().then(function(res) {
+  // Do cool stuff with response
+});
+```
+
+Live example [on Codepen.io](http://codepen.io/tylergaw/pen/RPpJJQ/?editors=101).
+
+#### `$.jribbble.users(userId).likes(options)`
+
+**Description:** Gets the shots a user likes
+
+**Parameters:**
+- userId - *required* `String or Int` The username or id for the user.
+- options - *optional* `Object` Key:value pairs of options that will be included in the request as query parameters. User likes only support paging options. `per_page` and `page`.
+
+**Example usage:**
+```javascript
+$.jribbble.users('op45').likes().then(function(res) {
+  // Do cool stuff with response
+});
+```
+
+Live example [on Codepen.io](http://codepen.io/tylergaw/pen/WvpyKm/?editors=101).
 
 #### `$.jribbble.users(userId).followers(options)`
 
