@@ -2,16 +2,16 @@
 
 A JavaScript library for the [Dribbble API](http://developer.dribbble.com/v1/)
 
+## Oauth Process
+
+If you’re new to Dribbble and need help with getting an Oauth access token or
+you want to see live examples, you should visit [https://jribbble.glitch.me](https://jribbble.glitch.me)
+
 ## Getting Jribbble
 
 ```
 npm install jribbble
 ```
-
-```
-bower install jribbble
-```
-
 or direct download:
 - [jribbble.min.js](https://github.com/tylergaw/jribbble/blob/master/dist/jribbble.min.js)
 - [jribbble.js](https://github.com/tylergaw/jribbble/blob/master/dist/jribbble.js)
@@ -32,18 +32,21 @@ Jribbble covers all public scope methods of the [Dribbble API](https://developer
 
 ## Setting your app's client access token
 Before you can use any of Jribbble's methods, you must set your Dribbble app's client access token.
-If you do not have a token, create a new app at [https://dribbble.com/account/applications/new](https://dribbble.com/account/applications/new)
+If you do not have a token, follow the setup guide on [https://jribbble.glitch.me](https://jribbble.glitch.me)
 
-#### `$.jribbble.setToken(token)`
+You can set the token as an option of any method call as shown above, or you
+can set it separately with `setToken`:
 
-**Description:** Sets the required Dribbble application client access token.
+#### `jribbble.setToken(token)`
+
+**Description:** Sets the required Dribbble access_token
 
 **Parameters:**
-- token - *required* `String or Int` Your Dribbble App client access token
+- token - *required* `String or Int` Your Dribbble access_token from the Oauth handshake
 
 **Example usage:**
 ```javascript
-$.jribbble.setToken('123456789');
+jribbble.setToken("123456789");
 ```
 
 ## Available methods
@@ -60,29 +63,24 @@ $.jribbble.setToken('123456789');
 
 #### `jribbble.shots(id, options)`
 
-**Description:** Gets a list of shots.
+**Description:** Gets your shots or a single shot by id.
 
 **Parameters:**
-- id - *optional* `String or Int` A shot id or a shot list name. See [API Docs](http://developer.dribbble.com/v1/shots/#list-shots) for list names.
-- options - *optional* `Object` Key:value pairs of options that will be included in the request as query parameters. See [API Docs](http://developer.dribbble.com/v1/shots/#list-shots) for a full list.
+- id - *optional* `String` A shot id
+- options - *optional* `Object` Key:value pairs. Options include `token`, `page`, `per_page`
+- callback - `Function`
 
 **Example usage:**
 ```javascript
 // Get a single shot
-jribbble.shots(2055068).then(function(res) {
+jribbble.shots("2055068", function(shotObject) {
   // Do cool stuff with response
 });
 ```
-Live example [on Codepen.io](http://codepen.io/tylergaw/pen/KpMmjZ?editors=101).
 
 ```javascript
-// Get the second page of debut shots from the past month sorted by number of
-// views at 35 per page.
-$.jribbble.shots('debuts', {
-  'sort': 'views',
-  'timeframe': 'month',
-  'per_page': 35
-}).then(function(res) {
+// Get a the second page of your shots at 10 per page.
+jribbble.shots({page: 2, per_page: 10}, function(shotsArray) {
   // Do cool stuff with response
 });
 ```
@@ -95,12 +93,53 @@ $.jribbble.shots('debuts', {
 
 **Example usage:**
 ```javascript
-jribbble.user(function(user) {
+jribbble.user(function(userObject) {
   // Do cool stuff with response
 });
 ```
 
-Live example [on Codepen.io](http://codepen.io/tylergaw/pen/bdBrYK/?editors=101).
+### Projects
+
+#### `jribbble.projects()`
+
+**Description:** Gets the current users projects
+
+**Example usage:**
+```javascript
+jribbble.projects(function(projectsArray) {
+  // Do cool stuff with response
+});
+```
+
+### Likes
+
+**Note: This will not work if you do not have a Dribbble-approved application**.
+
+#### `jribbble.likes()`
+
+**Description:** Gets the current users likes
+
+**Example usage:**
+```javascript
+jribbble.likes(function(likesArray) {
+  // Do cool stuff with response
+});
+```
+
+### Popular
+
+**Note: This will not work if you do not have a Dribbble-approved application**.
+
+#### `jribbble.popular()`
+
+**Description:** Gets a list of popular shots
+
+**Example usage:**
+```javascript
+jribbble.popular(function(shotsArray) {
+  // Do cool stuff with response
+});
+```
 
 ---------------------------------------------------------------------------
 

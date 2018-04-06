@@ -1,4 +1,4 @@
-/* Jribbble 3.0.0 | Thu Apr  5 22:47:12 EDT 2018 - Copyright (c) 2018, Tyler Gaw me@tylergaw.com - Released under the ISC-LICENSE @preserve */
+/* Jribbble 3.0.0-beta.1 | Fri Apr  6 19:01:36 EDT 2018 - Copyright (c) 2018, Tyler Gaw me@tylergaw.com - Released under the ISC-LICENSE @preserve */
 window.jribbble = (function() {
   var accessToken = null;
   var get = function(path, callback) {
