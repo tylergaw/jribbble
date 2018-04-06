@@ -1,0 +1,71 @@
+<ul id="shots"></ul>
+<ul id="projects"></ul>
+
+<script src="./dist/jribbble.min.js"></script>
+
+<script>
+  // jribbble.setToken("6a060d2cc766f58a7531a7988ef31c1086da6fd0a3d777760f728b4ba70fb433");
+  //
+  // jribbble.shots(
+  //   "4194054",
+  //   function(shot) {
+  //     var html = ['<img src="' + shot.images.normal + '">'];
+  //
+  //     // shots.forEach(function(shot) {
+  //     //   html.push('<li class="shots--shot">');
+  //     //   html.push('<a href="' + shot.html_url + '" target="_blank">');
+  //     //   html.push('<img src="' + shot.images.normal + '">');
+  //     //   html.push('</a></li>');
+  //     // });
+  //
+  //     document.getElementById("shots").innerHTML = html.join('');
+  //   }
+  // );
+
+  jribbble.shots(
+    {
+      token: "6a060d2cc766f58a7531a7988ef31c1086da6fd0a3d777760f728b4ba70fb433",
+      page: 2,
+      per_page: 23
+    },
+    function(shots) {
+      var html = [];
+
+      shots.forEach(function(shot) {
+        html.push('<li class="shots--shot">');
+        html.push('<a href="' + shot.html_url + '" target="_blank">');
+        html.push('<img src="' + shot.images.normal + '">');
+        html.push('</a></li>');
+      });
+
+      document.getElementById("shots").innerHTML = html.join('');
+    }
+  );
+
+  // jribbble.user({ token: "6a060d2cc766f58a7531a7988ef31c1086da6fd0a3d777760f728b4ba70fb433" });
+  // jribbble.projects({ token: "6a060d2cc766f58a7531a7988ef31c1086da6fd0a3d777760f728b4ba70fb433" }, function(projects) {
+  //   var html = [];
+  //
+  //   projects.forEach(function(project) {
+  //     html.push('<li>');
+  //     html.push('<h3>' + project.name + '</h3>');
+  //     html.push('<p>' + project.description + '</p>');
+  //     html.push('</li>');
+  //   });
+  //
+  //   document.getElementById("projects").innerHTML = html.join('');
+  // });
+
+  // jribbble.likes({ token: "6a060d2cc766f58a7531a7988ef31c1086da6fd0a3d777760f728b4ba70fb433" }, function(res) {
+  //   console.log(res);
+  // });
+
+  // jribbble.popular({ token: "6a060d2cc766f58a7531a7988ef31c1086da6fd0a3d777760f728b4ba70fb433" }, function(res) {
+  //   console.log(res);
+  // });
+
+
+// Select apps only.
+// jribbble.likes(); // /user/likes
+// jribbble.popular();
+</script>

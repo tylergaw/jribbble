@@ -3,9 +3,6 @@ A jQuery plugin to retrieve info from the [Dribbble API](http://developer.dribbb
 
 Live demos available on [Codepen.io](http://codepen.io/collection/nWvjrg/)
 
-## Dependencies
-* jQuery 1.8+
-
 ## Getting Jribbble
 
 with Bower
@@ -18,32 +15,16 @@ or direct download:
 - [jribbble.js](https://github.com/tylergaw/jribbble/blob/master/dist/jribbble.js)
 
 ## Using Jribbble
-Jribbble covers all non-authenticated methods of the [Dribbble API](http://developer.dribbble.com/v1/). All available methods are accessed from the `jribbble` object which is a member of the `jQuery` or `$` object.
-
-*Note:* If you need access to Dribbble methods using `POST` or `PUT` you will need
-to access the API using OAuth. Jribbble only supports unauthenticated `GET` methods.
+Jribbble covers all non-authenticated methods of the [Dribbble API](https://developer.dribbble.com/v2/). All available methods are accessed from the `jribbble` object which is a member of the `jQuery` or `$` object.
 
 ```html
 <body>
-  <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
-  <script src="jribbble.min.js"></script>
+  <script src="/path/to/jribbble.min.js"></script>
 
   <script>
-    function success(apiResponse) {
-      // do cool stuff with apiResponse
-    };
-
-    function error(jqxhr) {
-      // Handle errors
-    };
-    // To use Jribbble you will need to register an application at:
-    // https://dribbble.com/account/applications/new
-    // Before calling any methods of jribbble you must set your
-    // dribbble client access token
-    $.jribbble.setToken('<your_dribbble_client_access_token>');
-
-    // Jribbble methods return a promise
-    $.jribbble.shots().then(success, error);
+    jribbble.shots({token: "<your_oauth_access_token>"}, function(shots) {
+      console.log(shots); // The JSON object from the API Request.
+    });
   </script>
 </body>
 ```
@@ -66,46 +47,17 @@ $.jribbble.setToken('123456789');
 
 ## Available methods
 
-#### Shots
-- [$.jribbble.shots](#jribbbleshotsid-options)
-- [$.jribbble.shots.attachments](#jribbbleshotsshotidattachmentsattachmentid-options)
-- [$.jribbble.shots.buckets](#jribbbleshotsshotidbucketsoptions)
-- [$.jribbble.shots.comments](#jribbbleshotsshotidcommentscommentid-options)
-- [$.jribbble.shots.comments.likes](#jribbbleshotsshotidcommentscommentidlikesoptions)
-- [$.jribbble.shots.likes](#jribbbleshotsshotidlikesoptions)
-- [$.jribbble.shots.projects](#jribbbleshotsshotidprojectsoptions)
-- [$.jribbble.shots.rebounds](#jribbbleshotsshotidreboundsoptions)
+- [jribbble.shots](#jribbbleshotsid-options)
+- [jribbble.user](#jribbbleusersuserid)
+- [jribbble.projects](#jribbbleprojectsprojectid)
 
-#### Users
-
-- [$.jribbble.users](#jribbbleusersuserid)
-- [$.jribbble.users.shots](#jribbbleusersuseridshotsoptions)
-- [$.jribbble.users.buckets](#jribbbleusersuseridbucketsoptions)
-- [$.jribbble.users.projects](#jribbbleusersuseridprojectsoptions)
-- [$.jribbble.users.teams](#jribbbleusersuseridteamsoptions)
-- [$.jribbble.users.likes](#jribbbleusersuseridlikesoptions)
-- [$.jribbble.users.followers](#jribbbleusersuseridfollowersoptions)
-- [$.jribbble.users.following](#jribbbleusersuseridfollowingoptions)
-- [$.jribbble.users.isFollowing](#jribbbleusersuseridisfollowingtargetuserid)
-
-#### Teams
-
-- [$.jribbble.teams.members](#jribbbleteamsteamidmembersoptions)
-- [$.jribbble.teams.shots](#jribbbleteamsteamidshotsoptions)
-
-#### Buckets
-
-- [$.jribbble.buckets](#jribbblebucketsbucketid)
-- [$.jribbble.buckets.shots](#jribbblebucketsbucketidshotsoptions)
-
-#### Projects
-
-- [$.jribbble.projects](#jribbbleprojectsprojectid)
-- [$.jribbble.projects.shots](#jribbbleprojectsprojectidshotsoptions)
+### Methods that will only work with approved Dribbble apps
+- [jribbble.likes](#jribbbleprojectsprojectid)
+- [jribbble.popular](#jribbbleprojectsprojectid)
 
 ### Shots
 
-#### `$.jribbble.shots(id, options)`
+#### `jribbble.shots(id, options)`
 
 **Description:** Gets a list of shots.
 
@@ -116,7 +68,7 @@ $.jribbble.setToken('123456789');
 **Example usage:**
 ```javascript
 // Get a single shot
-$.jribbble.shots(2055068).then(function(res) {
+jribbble.shots(2055068).then(function(res) {
   // Do cool stuff with response
 });
 ```

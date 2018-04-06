@@ -1,5 +1,9 @@
 # Jribbble Changelog
 
+## 3.0.0 2018-04-06
+
+Rewrite for Dribbble API V2
+
 ## v2.0.4 2015-06-04
 
 Adding documentation for a couple of methods missed in the previous releases.

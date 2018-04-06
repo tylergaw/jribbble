@@ -1,25 +1,19 @@
 {
   "name": "jribbble",
-  "version": "2.0.4",
-  "description": "A jQuery plugin for the Dribbble API",
+  "version": "3.0.0",
+  "description": "A JavaScript library for the Dribbble API",
   "main": "dist/jribbble.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/tylergaw/jribbble.git"
   },
   "keywords": [
-    "dribbble",
-    "jquery"
+    "dribbble"
   ],
   "author": "Tyler Gaw",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/tylergaw/jribbble/issues"
   },
-  "homepage": "http://jribbble.com",
-  "devDependencies": {
-    "jquery": "^2.1.4",
-    "qunitjs": "^1.18.0",
-    "sinon": "^1.14.1"
-  }
+  "homepage": "https://jribbble.com"
 }
