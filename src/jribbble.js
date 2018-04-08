@@ -1,4 +1,4 @@
-/* Jribbble @VERSION | @DATE - Copyright (c) @YEAR, Tyler Gaw me@tylergaw.com - Released under the ISC-LICENSE @preserve */
+/* Jribbble @VERSION | @DATE - Copyright (c) @YEAR, Tyler Gaw me@tylergaw.com - Released under the ISC-LICENSE @license */
 var jribbble = (function() {
   var accessToken = null;
   var get = function(path, callback) {

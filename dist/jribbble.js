@@ -1,5 +1,5 @@
-/* Jribbble 3.0.0-beta.1 | Fri Apr  6 19:01:36 EDT 2018 - Copyright (c) 2018, Tyler Gaw me@tylergaw.com - Released under the ISC-LICENSE @preserve */
-window.jribbble = (function() {
+/* Jribbble 3.0.0 | Sun Apr  8 12:42:56 EDT 2018 - Copyright (c) 2018, Tyler Gaw me@tylergaw.com - Released under the ISC-LICENSE @license */
+var jribbble = (function() {
   var accessToken = null;
   var get = function(path, callback) {
     var url = "https://api.dribbble.com/v2/" + path;
@@ -7,21 +7,25 @@ window.jribbble = (function() {
     req.addEventListener("load", function() {
       if (callback) {
         if (typeof callback === "function") {
-          if (this.status === 200) {
+          var ret = {};
+
+          if (this.status < 400) {
             try {
-              callback(JSON.parse(this.responseText));
+              ret = JSON.parse(this.responseText);
             } catch (err) {
-              callback({
+              ret = {
                 error: "There was an error parsing the server response as JSON"
-              });
+              };
             }
           } else {
-            callback({
+            ret = {
               error:
                 "There was an error making the request to api.dribble.com.",
               status: this.status
-            });
+            };
           }
+
+          callback(ret);
         }
       }
     });
@@ -44,6 +48,7 @@ window.jribbble = (function() {
     for (var i = 0; i < args.length; i += 1) {
       switch (typeof args[i]) {
         case "string":
+        case "number":
           resourceId = args[i];
           break;
         case "object":
@@ -87,7 +92,7 @@ window.jribbble = (function() {
     };
   };
 
-  return {
+  var api = {
     setToken: function(token) {
       if (!token) {
         throw new Error("jribbble.setToken() expects a valid access_token");
@@ -95,7 +100,7 @@ window.jribbble = (function() {
       accessToken = token;
     },
     shots: function() {
-      var args = processArguments.apply(this.shots, arguments);
+      var args = processArguments.apply(null, arguments);
       var path = args.resourceId ? "shots/" + args.resourceId : "user/shots";
       get(path + args.query, args.callback);
     },
@@ -104,4 +109,25 @@ window.jribbble = (function() {
     likes: createApiMethod("user/likes"),
     popular: createApiMethod("popular_shots")
   };
+
+  // These are internal methods not needed in browser contexts. Only include
+  // them in the public api in node-looking context for testing purposes.
+  try {
+    if (module) {
+      api._createApiMethod = createApiMethod;
+      api._processArguments = processArguments;
+    }
+  } catch(e) {};
+
+  return api;
 })();
+
+if (window) {
+  window.jribbble = jribbble;
+}
+
+try {
+  if (module) {
+    module.exports = jribbble;
+  }
+} catch(e) {};
