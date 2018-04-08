@@ -15,5 +15,11 @@
   "bugs": {
     "url": "https://github.com/tylergaw/jribbble/issues"
   },
-  "homepage": "https://jribbble.com"
+  "homepage": "https://jribbble.com",
+  "devDependencies": {
+    "jest": "22.4.3"
+  },
+  "scripts": {
+    "test": "jest"
+  }
 }
