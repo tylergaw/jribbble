@@ -1,8 +1,9 @@
 SRC_DIR = src
 DIST_DIR = ./dist
 
-DATE = $(shell git log -1 --pretty=format:%ad)
-VERSION = $(shell echo "v$$(cat package.json | grep '"version"' | sed 's/[^0-9\.\-]//g')")
+DATE = $(shell date)
+YEAR = $(shell echo `date +%Y`)
+VERSION = $(shell echo "$$(cat package.json | grep '"version"' | sed 's/[^0-9\.\-]//g')")
 
 BASE_FILES = ${SRC_DIR}/jribbble.js
 JB = ${DIST_DIR}/jribbble.js
@@ -24,6 +25,7 @@ ${JB}: ${BASE_FILES} | ${DIST_DIR}
 
 	@@cat ${BASE_FILES} | \
 		sed 's/@DATE/'"${DATE}"'/' | \
+		sed 's/@YEAR/'"${YEAR}"'/' | \
 		sed "s/@VERSION/${VERSION}/" > ${JB};
 
 min: ${JB_MIN}
@@ -31,9 +33,6 @@ min: ${JB_MIN}
 ${JB_MIN}: ${JB}
 	@@echo "Minifying Jribbble" ${JB_MIN}
 	${UGLIFIER}
-
-test:
-	node-qunit-phantomjs tests/index.html --verbose
 
 release:
 	git tag -a $(VERSION) -m "Releasing version: $(VERSION)"

@@ -1,571 +1,237 @@
 # Jribbble [![Build Status](https://travis-ci.org/tylergaw/jribbble.svg)](https://travis-ci.org/tylergaw/jribbble)
-A jQuery plugin to retrieve info from the [Dribbble API](http://developer.dribbble.com/v1/)
 
-Live demos available on [Codepen.io](http://codepen.io/collection/nWvjrg/)
+A JavaScript library for the [Dribbble API](http://developer.dribbble.com/v2/)
 
-## Dependencies
-* jQuery 1.8+
+## The Oauth Process
+
+To use Jribbble, you must obtain a valid [Oauth access token](http://developer.dribbble.com/v2/oauth/).
+For help getting a token and live examples, see the guide at [https://jribbble.glitch.me](https://jribbble.glitch.me)
 
 ## Getting Jribbble
 
-with Bower
-```
-bower install --save jribbble
-```
+Jribbble is available on npm or by direct download.
 
+```
+npm install jribbble
+```
 or direct download:
-- [jribbble.min.js](https://github.com/tylergaw/jribbble/blob/master/dist/jribbble.min.js)
-- [jribbble.js](https://github.com/tylergaw/jribbble/blob/master/dist/jribbble.js)
+- [jribbble.min.js](https://github.com/tylergaw/jribbble/tree/3.0.0/dist/jribbble.min.js)
+- [jribbble.js](https://github.com/tylergaw/jribbble/tree/3.0.0/dist/jribbble.js)
 
 ## Using Jribbble
-Jribbble covers all non-authenticated methods of the [Dribbble API](http://developer.dribbble.com/v1/). All available methods are accessed from the `jribbble` object which is a member of the `jQuery` or `$` object.
-
-*Note:* If you need access to Dribbble methods using `POST` or `PUT` you will need
-to access the API using OAuth. Jribbble only supports unauthenticated `GET` methods.
+Jribbble works will all `public` scoped methods of the [Dribbble API](https://developer.dribbble.com/v2/).
 
 ```html
 <body>
-  <script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
-  <script src="jribbble.min.js"></script>
-
+  <script src="/path/to/jribbble.min.js"></script>
   <script>
-    function success(apiResponse) {
-      // do cool stuff with apiResponse
-    };
-
-    function error(jqxhr) {
-      // Handle errors
-    };
-    // To use Jribbble you will need to register an application at:
-    // https://dribbble.com/account/applications/new
-    // Before calling any methods of jribbble you must set your
-    // dribbble client access token
-    $.jribbble.setToken('<your_dribbble_client_access_token>');
-
-    // Jribbble methods return a promise
-    $.jribbble.shots().then(success, error);
+    jribbble.shots({token: "<your_oauth_access_token>"}, function(shotsArray) {
+      console.log(shotsArray); // The JSON from the API Request.
+    });
   </script>
 </body>
 ```
 
-## Setting your app's client access token
+Refer to the [Dribbble V2 API Docs](http://developer.dribbble.com/v2/) for details on response objects.
+
+## Setting your access token
 Before you can use any of Jribbble's methods, you must set your Dribbble app's client access token.
-If you do not have a token, create a new app at [https://dribbble.com/account/applications/new](https://dribbble.com/account/applications/new)
+If you do not have a token, follow the setup guide on [https://jribbble.glitch.me](https://jribbble.glitch.me)
 
-#### `$.jribbble.setToken(token)`
+You can set the token as an option of any method call as shown in the examples `{token: "<your_oauth_access_token>"}`, or you can set it with `jribbble.setToken`:
 
-**Description:** Sets the required Dribbble application client access token.
+#### `jribbble.setToken(token)`
+
+**Description:** Sets the required Dribbble access_token
 
 **Parameters:**
-- token - *required* `String or Int` Your Dribbble App client access token
+- token - *required* `String` Your Dribbble access_token from the Oauth handshake process
+
+Using `setToken` is optional. It’s probably most useful if you’re calling multiple `jribbble` methods on a single page.
 
 **Example usage:**
 ```javascript
-$.jribbble.setToken('123456789');
+jribbble.setToken("123456789");
 ```
 
 ## Available methods
 
-#### Shots
-- [$.jribbble.shots](#jribbbleshotsid-options)
-- [$.jribbble.shots.attachments](#jribbbleshotsshotidattachmentsattachmentid-options)
-- [$.jribbble.shots.buckets](#jribbbleshotsshotidbucketsoptions)
-- [$.jribbble.shots.comments](#jribbbleshotsshotidcommentscommentid-options)
-- [$.jribbble.shots.comments.likes](#jribbbleshotsshotidcommentscommentidlikesoptions)
-- [$.jribbble.shots.likes](#jribbbleshotsshotidlikesoptions)
-- [$.jribbble.shots.projects](#jribbbleshotsshotidprojectsoptions)
-- [$.jribbble.shots.rebounds](#jribbbleshotsshotidreboundsoptions)
+- [jribbble.shots](#shots)
+- [jribbble.user](#user)
+- [jribbble.projects](#projects)
 
-#### Users
+### Methods that will only work with Dribbble-approved apps
+- [jribbble.likes](#likes)
+- [jribbble.popular](#popular)
 
-- [$.jribbble.users](#jribbbleusersuserid)
-- [$.jribbble.users.shots](#jribbbleusersuseridshotsoptions)
-- [$.jribbble.users.buckets](#jribbbleusersuseridbucketsoptions)
-- [$.jribbble.users.projects](#jribbbleusersuseridprojectsoptions)
-- [$.jribbble.users.teams](#jribbbleusersuseridteamsoptions)
-- [$.jribbble.users.likes](#jribbbleusersuseridlikesoptions)
-- [$.jribbble.users.followers](#jribbbleusersuseridfollowersoptions)
-- [$.jribbble.users.following](#jribbbleusersuseridfollowingoptions)
-- [$.jribbble.users.isFollowing](#jribbbleusersuseridisfollowingtargetuserid)
-
-#### Teams
-
-- [$.jribbble.teams.members](#jribbbleteamsteamidmembersoptions)
-- [$.jribbble.teams.shots](#jribbbleteamsteamidshotsoptions)
-
-#### Buckets
-
-- [$.jribbble.buckets](#jribbblebucketsbucketid)
-- [$.jribbble.buckets.shots](#jribbblebucketsbucketidshotsoptions)
-
-#### Projects
-
-- [$.jribbble.projects](#jribbbleprojectsprojectid)
-- [$.jribbble.projects.shots](#jribbbleprojectsprojectidshotsoptions)
+*Note: You will need to contact Dribbble support to get an approved app, Jribbble can't approve apps.*
 
 ### Shots
 
-#### `$.jribbble.shots(id, options)`
+#### `jribbble.shots(id, options, callback)`
 
-**Description:** Gets a list of shots.
+**Description:** Gets your shots or a single shot by id.
 
 **Parameters:**
-- id - *optional* `String or Int` A shot id or a shot list name. See [API Docs](http://developer.dribbble.com/v1/shots/#list-shots) for list names.
-- options - *optional* `Object` Key:value pairs of options that will be included in the request as query parameters. See [API Docs](http://developer.dribbble.com/v1/shots/#list-shots) for a full list.
+- id - *optional* `String` or `Number` A shot id
+- options - *optional* `Object` Key:value pairs. Valid keys include `token`, `page`, and `per_page`
+- callback - `Function` Will receive a single argument. An single shot object if an id
+was provided, an array of shot objects if no id provided.
 
 **Example usage:**
 ```javascript
-// Get a single shot
-$.jribbble.shots(2055068).then(function(res) {
-  // Do cool stuff with response
+// Get a list of your shots and display them in the DOM.
+jribbble.shots({token: "<your_oauth_access_token>"}, function(shotsArray) {
+  document.querySelector(".dribbble-shots").innerHTML = shotsArray.reduce(function(html, shot) {
+    return html + '<li><a href="'+  shot.html_url + '" target="_blank"><img src="' + shot.images.normal + '"></a></li>';
+  }, "");
 });
 ```
-Live example [on Codepen.io](http://codepen.io/tylergaw/pen/KpMmjZ?editors=101).
 
 ```javascript
-// Get the second page of debut shots from the past month sorted by number of
-// views at 35 per page.
-$.jribbble.shots('debuts', {
-  'sort': 'views',
-  'timeframe': 'month',
-  'per_page': 35
-}).then(function(res) {
-  // Do cool stuff with response
+// Get a single shot by id and display it as an `img` in the DOM.
+jribbble.shots("2055068", {token: "<your_oauth_access_token>"}, function(shotObject) {
+  docment.getElementById("shot").innerHTML = '<img src="' + shot.images.normal + '">';
 });
 ```
 
-Live example [on Codepen.io](http://codepen.io/tylergaw/pen/RPRVew/?editors=101).
+```javascript
+// Get the second page of your shots at 12 per page and display them in the DOM.
+jribbble.shots({token: "<your_oauth_access_token>", page: 2, per_page: 12}, function(shotsArray) {
+  document.querySelector(".dribbble-shots").innerHTML = shotsArray.reduce(function(html, shot) {
+    return html + '<li><a href="'+  shot.html_url + '" target="_blank"><img src="' + shot.images.normal + '"></a></li>';
+  }, "");
+});
+```
 
-#### `$.jribbble.shots(shotId).attachments(attachmentId, options)`
+See the [Dribbble API Docs for Shots](http://developer.dribbble.com/v2/shots/) for the full response object.
 
-**Description:** Gets the attachments or single attachment for a shot.
+### User
+
+#### `jribbble.user(options, callback)`
+
+**Description:** Gets the current user based on the `access_token`.
 
 **Parameters:**
-- shotId - *required* `String or Int`
-- attachmentId - *optional* `String or Int` Only required if you want a single attachment. `options` are not rejected, but will have no effect when `attachmentId` is used.
-- options - *optional* `Object` Key:value pairs of options that will be included in the request as query parameters. Attachments only support paging options. `per_page` and `page`.
+- callback - `Function` Will receive a single argument. An single shot object if an id
+was provided, an array of shot objects if no id provided.
 
 **Example usage:**
 ```javascript
-// Get all attachments for a shot
-$.jribbble.shots(2066347).attachments().then(function(res) {
-  // Do cool stuff with response
-});
-```
-Live example [on Codepen.io](http://codepen.io/tylergaw/pen/XbKgJy/?editors=101).
-
-```javascript
-// Get a single attachment for a shot
-$.jribbble.shots(2066347).attachments(370029).then(function(res) {
-  // Do cool stuff with response
-});
-```
-
-Live example [on Codepen.io](http://codepen.io/tylergaw/pen/ZGOyGM/?editors=101).
-
-#### `$.jribbble.shots(shotId).buckets(options)`
-
-**Description:** Gets the buckets for a shot.
-
-**Parameters:**
-- shotId - *required* `String or Int`
-- options - *optional* `Object` Key:value pairs of options that will be included in the request as query parameters. Buckets only support paging options. `per_page` and `page`.
-
-**Example usage:**
-```javascript
-// Get all buckets for a shot at 36 per page
-$.jribbble.shots(2067006).buckets({'per_page': 36}).then(function(res) {
-  // Do cool stuff with response
+// Get your profile information and display it in the DOM
+jribbble.user({ token: "your_oauth_access_token" }, function(userObj) {
+  var html = [
+    '<img src="' + userObj.avatar_url + '">',
+    '<h3>' + userObj.name + '</h3>',
+    '<h4>' + userObj.bio + '</h4>',
+    '<p>Location: ' + userObj.location + '</p>'
+  ];
+  document.getElementById("user").innerHTML = html.join("");
 });
 ```
 
-Live example [on Codepen.io](http://codepen.io/tylergaw/pen/ZGOayV/?editors=101).
-
-#### `$.jribbble.shots(shotId).comments(commentId, options)`
-
-**Description:** Gets the comments or single comment for a shot.
-
-**Parameters:**
-- shotId - *required* `String or Int`
-- commentId - *optional* `String or Int` Only required if you want a single comment. `options` are not rejected, but will have no effect when `commentId` is used.
-- options - *optional* `Object` Key:value pairs of options that will be included in the request as query parameters. Comments only support paging options. `per_page` and `page`.
-
-**Example usage:**
-```javascript
-// Get all comments for a shot
-$.jribbble.shots(2067969).comments().then(function(res) {
-  // Do cool stuff with response
-});
-```
-
-Live example [on Codepen.io](http://codepen.io/tylergaw/pen/LVZrBq/?editors=101).
-
-```javascript
-// Get a single comment for a shot
-$.jribbble.shots(2067969).comments(4448286).then(function(res) {
-  // Do cool stuff with response
-});
-```
-
-Live example [on Codepen.io](http://codepen.io/tylergaw/pen/yNJERz/?editors=101).
-
-#### `$.jribbble.shots(shotId).comments(commentId).likes(options)`
-
-**Description:** Gets the likes for a comment.
-
-**Parameters:**
-- shotId - *required* `String or Int`
-- commentId - *required* `String or Int` The id of the comment
-- options - *optional* `Object` Key:value pairs of options that will be included in the request as query parameters. Likes only support paging options. `per_page` and `page`.
-
-**Example usage:**
-```javascript
-// Get the likes for a comment.
-$.jribbble.shots(2069352).comments(4450321).likes().then(function(res) {
-  // Do cool stuff with response
-});
-```
-
-Live example [on Codepen.io](http://codepen.io/tylergaw/pen/LVZwQL/?editors=101).
-
-#### `$.jribbble.shots(shotId).likes(options)`
-
-**Description:** Gets the likes for a shot.
-
-**Parameters:**
-- shotId - *required* `String or Int`
-- options - *optional* `Object` Key:value pairs of options that will be included in the request as query parameters. Likes only support paging options. `per_page` and `page`.
-
-**Example usage:**
-```javascript
-// Get the likes for a shot.
-$.jribbble.shots(2058881).likes().then(function(res) {
-  // Do cool stuff with response
-});
-```
-
-Live example [on Codepen.io](http://codepen.io/tylergaw/pen/jPVVZb/?editors=101).
-
-#### `$.jribbble.shots(shotId).projects(options)`
-
-**Description:** Gets the projects for a shot.
-
-**Parameters:**
-- shotId - *required* `String or Int`
-- options - *optional* `Object` Key:value pairs of options that will be included in the request as query parameters. Projects only support paging options. `per_page` and `page`.
-
-**Example usage:**
-```javascript
-// Get the projects for a shot.
-$.jribbble.shots(2077496).projects().then(function(res) {
-  // Do cool stuff with response
-});
-```
-
-Live example [on Codepen.io](http://codepen.io/tylergaw/pen/qdqqYo/?editors=101).
-
-#### `$.jribbble.shots(shotId).rebounds(options)`
-
-**Description:** Gets the rebounds for a shot.
-
-**Parameters:**
-- shotId - *required* `String or Int`
-- options - *optional* `Object` Key:value pairs of options that will be included in the request as query parameters. Rebounds only support paging options. `per_page` and `page`.
-
-**Example usage:**
-```javascript
-// Get the rebounds for a shot.
-$.jribbble.shots(2046896).rebounds().then(function(res) {
-  // Do cool stuff with response
-});
-```
-
-Live example [on Codepen.io](http://codepen.io/tylergaw/pen/XbNpqx/?editors=101).
-
-### Users
-
-#### `$.jribbble.users(userId)`
-
-**Description:** Gets a single user
-
-**Parameters:**
-- userId - *required* `String or Int` The username or id for the user.
-
-**Example usage:**
-```javascript
-$.jribbble.users('tylergaw').then(function(res) {
-  // Do cool stuff with response
-});
-```
-
-Live example [on Codepen.io](http://codepen.io/tylergaw/pen/bdBrYK/?editors=101).
-
-#### `$.jribbble.users(userId).shots(options)`
-
-**Description:** Get a user's shots
-
-**Parameters:**
-- userId - *required* `String or Int` The username or id for the user.
-- options - *optional* `Object` Key:value pairs of options that will be included in the request as query parameters. User's shots only support paging options. `per_page` and `page`.
-
-**Example usage:**
-```javascript
-$.jribbble.users('tylergaw').shots().then(function(res) {
-  // Do cool stuff with response
-});
-```
-
-Live example [on Codepen.io](http://codepen.io/tylergaw/pen/NqpzvE/?editors=101).
-
-#### `$.jribbble.users(userId).buckets(options)`
-
-**Description:** Gets a user's buckets
-
-**Parameters:**
-- userId - *required* `String or Int` The username or id for the user.
-- options - *optional* `Object` Key:value pairs of options that will be included in the request as query parameters. Buckets only support paging options. `per_page` and `page`.
-
-**Example usage:**
-```javascript
-$.jribbble.users('markbult').buckets().then(function(res) {
-  // Do cool stuff with response
-});
-```
-
-Live example [on Codepen.io](http://codepen.io/tylergaw/pen/bdBrXz/?editors=101).
-
-#### `$.jribbble.users(userId).projects(options)`
-
-**Description:** Gets a user's projects
-
-**Parameters:**
-- userId - *required* `String or Int` The username or id for the user.
-- options - *optional* `Object` Key:value pairs of options that will be included in the request as query parameters. User projects only support paging options. `per_page` and `page`.
-
-**Example usage:**
-```javascript
-$.jribbble.users('creativemints').projects().then(function(res) {
-  // Do cool stuff with response
-});
-```
-
-Live example [on Codepen.io](http://codepen.io/tylergaw/pen/xGqzjR/?editors=101).
-
-#### `$.jribbble.users(userId).teams(options)`
-
-**Description:** Gets the teams a user belongs to
-
-**Parameters:**
-- userId - *required* `String or Int` The username or id for the user.
-- options - *optional* `Object` Key:value pairs of options that will be included in the request as query parameters. User teams only support paging options. `per_page` and `page`.
-
-**Example usage:**
-```javascript
-$.jribbble.users('veerlepieters').teams().then(function(res) {
-  // Do cool stuff with response
-});
-```
-
-Live example [on Codepen.io](http://codepen.io/tylergaw/pen/RPpJJQ/?editors=101).
-
-#### `$.jribbble.users(userId).likes(options)`
-
-**Description:** Gets the shots a user likes
-
-**Parameters:**
-- userId - *required* `String or Int` The username or id for the user.
-- options - *optional* `Object` Key:value pairs of options that will be included in the request as query parameters. User likes only support paging options. `per_page` and `page`.
-
-**Example usage:**
-```javascript
-$.jribbble.users('op45').likes().then(function(res) {
-  // Do cool stuff with response
-});
-```
-
-Live example [on Codepen.io](http://codepen.io/tylergaw/pen/WvpyKm/?editors=101).
-
-#### `$.jribbble.users(userId).followers(options)`
-
-**Description:** Gets a user's followers
-
-**Parameters:**
-- userId - *required* `String or Int` The username or id for the user.
-- options - *optional* `Object` Key:value pairs of options that will be included in the request as query parameters. Followers only support paging options. `per_page` and `page`.
-
-**Example usage:**
-```javascript
-$.jribbble.users('tylergaw').followers().then(function(res) {
-  // Do cool stuff with response
-});
-```
-
-Live example [on Codepen.io](http://codepen.io/tylergaw/pen/ZGBJdY/?editors=101).
-
-#### `$.jribbble.users(userId).following(options)`
-
-**Description:** Gets the users a user is following
-
-**Parameters:**
-- userId - *required* `String or Int` The username or id for the user.
-- options - *optional* `Object` Key:value pairs of options that will be included in the request as query parameters. Following only support paging options. `per_page` and `page`.
-
-**Example usage:**
-```javascript
-$.jribbble.users('tylergaw').following().then(function(res) {
-  // Do cool stuff with response
-});
-```
-
-Live example [on Codepen.io](http://codepen.io/tylergaw/pen/jPVLdR/?editors=101).
-
-#### `$.jribbble.users(userId).isFollowing(targetUserId)`
-
-**Description:** Check to see if a user is following another user.
-
-**Parameters:**
-- userId - *required* `String or Int` The username or id for the user.
-- targetUserId - *required* `String or Int` The username or id for the other user.
-
-**Example usage:**
-```javascript
-$.jribbble.users('tylergaw').isFollowing('jimniels').then(function(res) {
-  // Do cool stuff with response
-});
-```
-
-Live example [on Codepen.io](http://codepen.io/tylergaw/pen/bdBrjx/?editors=101).
-
-### Teams
-
-#### `$.jribbble.teams(teamId).members(options)`
-
-**Description:** Gets the members of a team.
-
-**Parameters:**
-- teamId - *required* `String`
-- options - *optional* `Object` Key:value pairs of options that will be included in the request as query parameters. Teams only support paging options. `per_page` and `page`.
-
-**Example usage:**
-```javascript
-$.jribbble.teams('eight2eight').members(options).then(function(res) {
-  // Do cool stuff with response
-});
-```
-
-Live example [on Codepen.io](http://codepen.io/tylergaw/pen/bdBrgv/?editors=101).
-
-#### `$.jribbble.teams(teamId).shots(options)`
-
-**Description:** Gets the shots for a team.
-
-**Parameters:**
-- teamId - *required* `String`
-- options - *optional* `Object` Key:value pairs of options that will be included in the request as query parameters. Shots only support paging options. `per_page` and `page`.
-
-**Example usage:**
-```javascript
-$.jribbble.teams('eight2eight').shots(options).then(function(res) {
-  // Do cool stuff with response
-});
-```
-
-Live example [on Codepen.io](http://codepen.io/tylergaw/pen/bdBrWM/?editors=101).
-
-### Buckets
-
-#### `$.jribbble.buckets(bucketId)`
-
-**Description:** Gets a single bucket
-
-**Parameters:**
-- bucketId - *required* `String or Int`
-
-**Example usage:**
-```javascript
-$.jribbble.buckets(114550).then(function(res) {
-  // Do cool stuff with response
-});
-```
-
-Live example [on Codepen.io](http://codepen.io/tylergaw/pen/mJORor/?editors=101).
-
-#### `$.jribbble.buckets(bucketId).shots(options)`
-
-**Description:** Gets the shots for a project
-
-**Parameters:**
-- bucketId - *required* `String or Int`
-- options - *optional* `Object` Key:value pairs of options that will be included in the request as query parameters. Shots only support paging options. `per_page` and `page`.
-
-**Example usage:**
-```javascript
-// Get the shots for a bucket.
-$.jribbble.buckets(114550).shots(options).then(function(res) {
-  // Do cool stuff with response
-});
-```
-
-Live example [on Codepen.io](http://codepen.io/tylergaw/pen/ZGBLPq/?editors=101).
+See the [Dribbble API Docs for User](http://developer.dribbble.com/v2/user/) for the full response object.
 
 ### Projects
 
-#### `$.jribbble.projects(projectId)`
+#### `jribbble.projects(options, callback)`
 
-**Description:** Gets a single project
-
-**Parameters:**
-- projectId - *required* `String or Int`
+**Description:** Gets the current users projects
 
 **Example usage:**
 ```javascript
-$.jribbble.projects(267945).then(function(res) {
+// Get a list of your projects and display them in the DOM.
+jribbble.projects({token: "your_oauth_access_token"}, function(projectsArray) {
+  document.querySelector(".dribbble-projects").innerHTML = projectsArray.reduce(function(html, project) {
+    return html + '<li><h4>' + project.name + '</h4><p>' + project.description + '</p></li>';
+  }, "");
+});
+```
+
+See the [Dribbble API Docs for Projects](http://developer.dribbble.com/v2/projects/) for the full response object.
+
+### Likes
+
+**Note: This will only work for Dribbble-approved applications**.
+
+#### `jribbble.likes(options, callback)`
+
+**Description:** Gets the current users likes
+
+**Example usage:**
+```javascript
+jribbble.likes({token: "your_oauth_access_token"}, function(likesArray) {
   // Do cool stuff with response
 });
 ```
 
-Live example [on Codepen.io](http://codepen.io/tylergaw/pen/MwbJPB/?editors=101).
+See the [Dribbble API Docs for Likes](http://developer.dribbble.com/v2/likes/) for the full response object.
 
-#### `$.jribbble.projects(projectId).shots(options)`
+### Popular
 
-**Description:** Gets the shots for a project
+**Note: This will only work for Dribbble-approved applications**.
 
-**Parameters:**
-- projectId - *required* `String or Int`
-- options - *optional* `Object` Key:value pairs of options that will be included in the request as query parameters. Shots only support paging options. `per_page` and `page`.
+#### `jribbble.popular(options, callback)`
+
+**Description:** Gets a list of popular shots
 
 **Example usage:**
 ```javascript
-// Get the shots for a project.
-$.jribbble.projects(267945).shots(options).then(function(res) {
+jribbble.popular({token: "your_oauth_access_token"}, function(shotsArray) {
   // Do cool stuff with response
 });
 ```
 
-Live example [on Codepen.io](http://codepen.io/tylergaw/pen/mJORaE/?editors=101).
+See the [Dribbble API Docs for popular shots](http://developer.dribbble.com/v2/shots/#list-popular-shots) for the full response object.
+
+#### Pagination
+Methods that get a list of items can use pagination as described in the [Dribbble Docs](https://developer.dribbble.com/v2/#pagination)
+
+You can provide `page` and `per_page` via the `options` object of Jribbble methods.
+
+**Example**
+```javascript
+jribbble.shots({page: 2, per_page: 13}, function(shotsArray) {});
+```
 
 ---------------------------------------------------------------------------
 
 ## Contributing
 Jribbble is open source. [Issues](https://github.com/tylergaw/jribbble/issues) and [pull requests](https://github.com/tylergaw/jribbble/pulls) gladly accepted.
 
+Install development dependencies:
+
+```
+npm install
+```
+
 ### Tests
-Jribbble uses Qunit and PhantomJS for tests. If you submit a pull request, you should most likely write a new test or modify an existing test. All tests must pass for a pull request to be accepted.
+For PRs to be accepted, all tests must pass. They in [Travis](https://travis-ci.org/tylergaw/jribbble) for all PRs. There are two options to run tests locally.
 
-Installing test dependencies:
+Watch all files and rerun tests on change:
 ```
-npm install && npm install -g node-qunit-phantomjs
-```
-
-running the tests:
-```
-make test
+npm run test-watch
 ```
 
-The tests will also run when pull requests are submitted. See [Travis](https://travis-ci.org/tylergaw/jribbble) for build status.
+Run all tests once:
+```
+npm test
+```
+
+### Using Jribbble locally
+We don't have any type of built in setup for this. To work locally, I create a
+file in the root directory `sandbox.html`. This file is ignored by git. In there
+I add HTML as an end-user would, expect I point to the `src` version of Jribbble
+to test new changes as I'm working.
+
+I view `sandbox.html` in a browser using a Python server:
+
+```
+python -m http.server
+```
 
 ### Building Jribbble
-Jribbble includes a small Makefile that includes a build task. The task copies the jribbble.js source to the `/dist` directory–adding the version number and build date–and creates a minified version of it using UglifyJS2.
+Jribbble includes a Makefile that includes a build task. The task copies the jribbble.js source to the `/dist` directory–adding the version number and build date–and creates a minified version of it using UglifyJS2.
 
 To build Jribbble you'll need UglifyJS2:
 
@@ -573,10 +239,8 @@ To build Jribbble you'll need UglifyJS2:
 npm install uglify-js -g
 ```
 
-then run
+then from the root directory run
 
 ```
 make
 ```
-
-from the root directory
