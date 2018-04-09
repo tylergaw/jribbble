@@ -5,7 +5,7 @@ A JavaScript library for the [Dribbble API](http://developer.dribbble.com/v2/)
 ## The Oauth Process
 
 To use Jribbble, you must obtain a valid [Oauth access token](http://developer.dribbble.com/v2/oauth/).
-If you need help getting a token or you want to see live examples, follow the guide at [https://jribbble.glitch.me](https://jribbble.glitch.me)
+For help getting a token and live examples, see the guide at [https://jribbble.glitch.me](https://jribbble.glitch.me)
 
 ## Getting Jribbble
 
@@ -61,8 +61,8 @@ jribbble.setToken("123456789");
 - [jribbble.projects](#projects)
 
 ### Methods that will only work with Dribbble-approved apps
-- [jribbble.likes](#jribbbleprojectsprojectid)
-- [jribbble.popular](#jribbbleprojectsprojectid)
+- [jribbble.likes](#likes)
+- [jribbble.popular](#popular)
 
 *Note: You will need to contact Dribbble support to get an approved app, Jribbble can't approve apps.*
 
@@ -183,6 +183,16 @@ jribbble.popular({token: "your_oauth_access_token"}, function(shotsArray) {
 ```
 
 See the [Dribbble API Docs for popular shots](http://developer.dribbble.com/v2/shots/#list-popular-shots) for the full response object.
+
+#### Pagination
+Methods that get a list of items can use pagination as described in the [Dribbble Docs](https://developer.dribbble.com/v2/#pagination)
+
+You can provide `page` and `per_page` via the `options` object of Jribbble methods.
+
+**Example**
+```javascript
+jribbble.shots({page: 2, per_page: 13}, function(shotsArray) {});
+```
 
 ---------------------------------------------------------------------------
 
